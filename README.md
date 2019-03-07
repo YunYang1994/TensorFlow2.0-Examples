@@ -1,9 +1,4 @@
 
-|Author|YunYang1994|
-|---|---
-|E-mail|dreameryangyun@sjtu.edu.cn
-
-
 # Tensorflow2.0 Tutorials
 This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation.
 
