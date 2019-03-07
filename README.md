@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://www.tensorflow.org/" target="_blank">
-    <img width="40%" src="https://github.com/MorvanZhou/tutorials/blob/master/tensorflowTUT/logo.jpeg" style="max-width:100%;">
+    <img width="40%" src="https://github.com/YunYang1994/tensorflow2.0-tutorial/blob/master/common/logo.jpeg" style="max-width:100%;">
     </a>
 </p>
 
