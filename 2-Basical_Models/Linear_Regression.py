@@ -51,7 +51,7 @@ def plot(epoch):
     plt.title("epoch %2d, loss = %s" %(epoch, str(compute_loss(outputs, model(inputs)).numpy())))
     plt.legend()
     plt.draw()
-    plt.ion()
+    plt.ion()   # replacing plt.show()
     plt.pause(1)
     plt.close()
 
