@@ -12,4 +12,4 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **GradientTape** ([notebook](1-Introduction/GradientTape.ipynb)) ([code](1-Introduction/GradientTape.py)). Introduce a key technique for automatic differentiation
 
 #### 2 - Basical Models
-- **Linear Regression** ([notebook](1-Introduction/helloworld.ipynb)) ([code](1-Introduction/helloworld.py)). Implement a Linear Regression with TensorFlow.
+- **Linear Regression** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement a Linear Regression with TensorFlow.
