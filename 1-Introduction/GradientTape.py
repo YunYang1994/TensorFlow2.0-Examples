@@ -27,7 +27,7 @@ with tf.GradientTape(persistent=True) as t:
 dz_dx = t.gradient(z, x)  # 108.0 (4*x^3 at x = 3)
 dy_dx = t.gradient(y, x)  # 6.0
 print("dz/dx=", dz_dx.numpy())
-print("dy_dx=", dy_dx.numpy())
+print("dy/dx=", dy_dx.numpy())
 del t  # Drop the reference to the tape
 
 
