@@ -1,5 +1,8 @@
 
 # Tensorflow2.0 Tutorials
+
+> continue to learn, continue to work, continue to update!
+
 This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation.
 
 #### 1 - Introduction
