@@ -21,7 +21,7 @@ import tensorflow as tf
 
 x = tf.constant(3.0)
 with tf.GradientTape(persistent=True) as t:
-    t.watch(x)
+    t.watch(x)       # Ensures that `tensor` is being traced by this tape.
     y = x * x
     z = y * y
 dz_dx = t.gradient(z, x)  # 108.0 (4*x^3 at x = 3)
