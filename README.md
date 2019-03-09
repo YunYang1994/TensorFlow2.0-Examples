@@ -19,7 +19,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 3 - Image Classification
 
-- **ResNet** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement a Linear Regression with TensorFlow.
+- **ResNet** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement ResNet network with TensorFlow.
 
 #### 4 - Object Detection
 
