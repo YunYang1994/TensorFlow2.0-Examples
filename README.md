@@ -22,7 +22,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 4 - Object Detection
 
-- **YOLOV2** ([notebook](4-Object_Detection/YOLOV2.ipynb)) ([code](4-Object_Detection/YOLOV2.py)). Implement You Only Look Once(V2) in tensorflow
+- **YOLOV2** ([notebook](4-Object_Detection/YOLOV2.ipynb)) ([code](4-Object_Detection/YOLOV2.py)). Implement You Only Look Once(V2) in Tensorflow
 
 #### 5 - Generative Adversarial Networks
 - **Pix2Pix** ([notebook](5-Generative_Adversarial_Networks/Pix2Pix.ipynb)) ([code](5-Generative_Adversarial_Networks/Pix2Pix.py)).  Image-to-Image Translation with Conditional Adversarial Networks.
