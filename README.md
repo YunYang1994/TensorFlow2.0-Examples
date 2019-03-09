@@ -16,5 +16,22 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **Linear Regression** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement a Linear Regression with TensorFlow.
 - **Logistic Regression** ([notebook](2-Basical_Models/Logistic_Regression.ipynb)) ([code](2-Basical_Models/Logistic_Regression.py)). Implement a Logistic Regression with TensorFlow.
 
-#### 3 - Advanced Models
-- **Pix2Pix** ([notebook](3-Advanced_Models/Pix2Pix.ipynb)) ([code](3-Advanced_Models/Pix2Pix.py)).  Image-to-Image Translation with Conditional Adversarial Networks.
+#### 3 - Image Classification
+
+- **ResNet** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement a Linear Regression with TensorFlow.
+
+#### 4 - Object Detection
+
+- **YOLOV2** ([notebook](4-Object_Detection/YOLOV2.ipynb)) ([code](4-Object_Detection/YOLOV2.py)). Implement You Only Look Once(V2) in tensorflow
+
+#### 5 - Generative Adversarial Networks
+- **Pix2Pix** ([notebook](5-Generative_Adversarial_Networks/Pix2Pix.ipynb)) ([code](5-Generative_Adversarial_Networks/Pix2Pix.py)).  Image-to-Image Translation with Conditional Adversarial Networks.
+
+#### 6 - Reinforcement Learning
+
+- **DQN** ([notebook](6-Reinforcement_Learning/YOLOV2.ipynb)) ([code](6-Reinforcement_Learning/YOLOV2.py)). deep Q-network (DQN)
+
+#### 7 - Utilities
+
+
+
