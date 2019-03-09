@@ -15,6 +15,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 #### 2 - Basical Models
 - **Linear Regression** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement a Linear Regression with TensorFlow.
 - **Logistic Regression** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/2-Basical_Models/Logistic_Regression.ipynb)) ([code](2-Basical_Models/Logistic_Regression.py)). Implement a Logistic Regression with TensorFlow.
+- **Multilayer Perceptron Layer** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/2-Basical_Models/Multilayer_Perceptron.ipynb)) ([code](2-Basical_Models/Multilayer_Perceptron.py)). Implement Multi-Layer Perceptron Model with TensorFlow.
 
 #### 3 - Image Classification
 
@@ -22,7 +23,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 4 - Object Detection
 
-- **YOLOV2** ([notebook](4-Object_Detection/YOLOV2.ipynb)) ([code](4-Object_Detection/YOLOV2.py)). Implement You Only Look Once(V2) in Tensorflow
+- **YOLOV2** ([notebook](4-Object_Detection/YOLOV2.ipynb)) ([code](4-Object_Detection/YOLOV2.py)). Implement You Only Look Once(V2) with Tensorflow
 
 #### 5 - Generative Adversarial Networks
 - **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/5-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](5-Generative_Adversarial_Networks/dcgan.py)).  Deep Convolutional Generative Adversarial Network
