@@ -16,5 +16,5 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **Linear Regression** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Implement a Linear Regression with TensorFlow.
 - **Logistic Regression** ([notebook](2-Basical_Models/Logistic_Regression.ipynb)) ([code](2-Basical_Models/Logistic_Regression.py)). Implement a Logistic Regression with TensorFlow.
 
-#### 2 - Advanced Models
+#### 3 - Advanced Models
 - **Pix2Pix** ([notebook](3-Advanced_Models/Pix2Pix.ipynb)) ([code](3-Advanced_Models/Pix2Pix.py)).  Image-to-Image Translation with Conditional Adversarial Networks.
