@@ -23,7 +23,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 4 - Object Detection
 
-- **YOLOV2** ([notebook](4-Object_Detection/YOLOV2.ipynb)) ([code](4-Object_Detection/YOLOV2.py)). YOLO9000: Better, Faster, Stronger.
+- **YOLOV3** ([notebook](4-Object_Detection/YOLOV3.ipynb)) ([code](4-Object_Detection/YOLOV3.py)). YOLOv3: An Incremental Improvement.
 
 #### 5 - Generative Adversarial Networks
 - **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/5-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](5-Generative_Adversarial_Networks/dcgan.py)).  Deep Convolutional Generative Adversarial Network.
