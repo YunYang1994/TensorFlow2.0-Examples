@@ -1,4 +1,4 @@
-# Tensorflow2.x-YOLOv3
+# TensorFlow2.x-YOLOv3
 A minimal tensorflow implementation of YOLOv3, with support for training, inference and evaluation.
 
 ## Installation
