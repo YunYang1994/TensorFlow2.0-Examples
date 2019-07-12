@@ -3,7 +3,7 @@ A minimal tensorflow implementation of YOLOv3, with support for training, infere
 
 ## Installation
 
-install requirements and Download pretrained weights
+Install requirements and download pretrained weights
 
 ```
 $ pip3 install -r ./docs/requirements.txt
