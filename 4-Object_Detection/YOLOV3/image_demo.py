@@ -21,16 +21,15 @@ from PIL import Image
 num_classes     = 80
 input_size      = 416
 graph           = tf.Graph()
-image_path      = "./docs/road.jpeg"
+image_path      = "./docs/kite.jpg"
 
 original_image = cv2.imread(image_path)
 original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
 original_image_size = original_image.shape[:2]
 image_data = utils.image_preporcess(np.copy(original_image), [input_size, input_size])
-image_data = image_data[np.newaxis, ...]
-image_data = image_data.astype(np.float32)
+image_data = image_data[np.newaxis, ...].astype(np.float32)
 
-input_data = tf.keras.layers.Input([416, 416, 3])
+input_data = tf.keras.layers.Input([input_size, input_size, 3])
 model = yolov3.YOLOV3(input_data).model
 utils.load_weights(model, "./yolov3.weights")
 
@@ -43,7 +42,8 @@ bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, 0.3
 bboxes = utils.nms(bboxes, 0.45, method='nms')
 image = utils.draw_bbox(original_image, bboxes)
 image = Image.fromarray(image)
-image.show()
+# image.show()
+image.save("./docs/kite_result.jpg")
 
 
 
