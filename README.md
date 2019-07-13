@@ -1,9 +1,10 @@
 
 # Tensorflow2.0 Examples
 
-> I am working on it, welcome to star!
+> "Talk is cheap,Show me the code." <br>
+>                                   --------- Linus Torvalds
 
-This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation.
+This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. This Repo will be continuously updated ! 🐍🐍🐍🐍🐍🐍
 
 #### 1 - Introduction
 - **Hello World** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/1-Introduction/helloworld.ipynb)) ([code](1-Introduction/helloworld.py)). Very simple example to learn how to print "hello world" using TensorFlow.
