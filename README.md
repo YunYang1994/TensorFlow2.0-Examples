@@ -2,7 +2,7 @@
 # Tensorflow2.0 Examples
 
 > "Talk is cheap,Show me the code." <br>
->                                   --------- Linus Torvalds
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------- Linus Torvalds
 
 This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. This Repo will be continuously updated ! 🐍🐍🐍🐍🐍🐍
 
