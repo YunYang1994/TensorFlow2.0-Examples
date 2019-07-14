@@ -14,6 +14,7 @@
 import tensorflow as tf
 import core.common as common
 
+
 def darknet53(input_data):
 
     input_data = common.convolutional(input_data, filters_shape=(3, 3,  3,  32))
@@ -45,8 +46,5 @@ def darknet53(input_data):
         input_data = common.residual_block(input_data, 1024, 512, 1024)
 
     return route_1, route_2, input_data
-
-
-
 
 

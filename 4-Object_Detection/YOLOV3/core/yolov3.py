@@ -20,7 +20,7 @@ from core.config import cfg
 
 class YOLOV3(object):
      """Implement tensoflow yolov3 here"""
-     def __init__(self, input_data):
+     def __init__(self, input_layer):
 
         self.classes          = utils.read_class_names(cfg.YOLO.CLASSES)
         self.num_class        = len(self.classes)
@@ -29,10 +29,9 @@ class YOLOV3(object):
         self.anchor_per_scale = cfg.YOLO.ANCHOR_PER_SCALE
         self.iou_loss_thresh  = cfg.YOLO.IOU_LOSS_THRESH
         self.upsample_method  = cfg.YOLO.UPSAMPLE_METHOD
-        self.x                = input_data
 
         try:
-            self.conv_lbbox, self.conv_mbbox, self.conv_sbbox = self.__build_nework(input_data)
+            self.conv_lbbox, self.conv_mbbox, self.conv_sbbox = self.__build_nework(input_layer)
         except:
             raise NotImplementedError("Can not build up yolov3 network!")
 
@@ -40,7 +39,49 @@ class YOLOV3(object):
         self.pred_mbbox = self.decode(self.conv_mbbox, self.anchors[1], self.strides[1])
         self.pred_lbbox = self.decode(self.conv_lbbox, self.anchors[2], self.strides[2])
 
-        self.model = tf.keras.Model(self.x, [self.pred_sbbox, self.pred_mbbox, self.pred_lbbox])
+        self.model = tf.keras.Model(input_layer, [self.pred_sbbox, self.pred_mbbox, self.pred_lbbox])
+
+     def load_weights(self, weights_file):
+        """
+        I agree that this code is very ugly, but I don’t know any better way of doing it.
+        """
+        wf = open(weights_file, 'rb')
+        major, minor, revision, seen, _ = np.fromfile(wf, dtype=np.int32, count=5)
+
+        j = 0
+        for i in range(75):
+            conv_layer_name = 'conv2d_%d' %i if i > 0 else 'conv2d'
+            bn_layer_name = 'batch_normalization_v2_%d' %j if j > 0 else 'batch_normalization_v2'
+
+            conv_layer = self.model.get_layer(conv_layer_name)
+            filters = conv_layer.filters
+            k_size = conv_layer.kernel_size[0]
+            in_dim = conv_layer.input_shape[-1]
+
+            if i not in [58, 66, 74]:
+                # darknet weights: [beta, gamma, mean, variance]
+                bn_weights = np.fromfile(wf, dtype=np.float32, count=4 * filters)
+                # tf weights: [gamma, beta, mean, variance]
+                bn_weights = bn_weights.reshape((4, filters))[[1, 0, 2, 3]]
+                bn_layer = self.model.get_layer(bn_layer_name)
+                j += 1
+            else:
+                conv_bias = np.fromfile(wf, dtype=np.float32, count=filters)
+
+            # darknet shape (out_dim, in_dim, height, width)
+            conv_shape = (filters, in_dim, k_size, k_size)
+            conv_weights = np.fromfile(wf, dtype=np.float32, count=np.product(conv_shape))
+            # tf shape (height, width, in_dim, out_dim)
+            conv_weights = conv_weights.reshape(conv_shape).transpose([2, 3, 1, 0])
+
+            if i not in [58, 66, 74]:
+                conv_layer.set_weights([conv_weights])
+                bn_layer.set_weights(bn_weights)
+            else:
+                conv_layer.set_weights([conv_weights, conv_bias])
+
+        assert len(wf.read()) == 0, 'failed to read all data'
+        wf.close()
 
      def decode(self, conv_output, anchors, stride):
         """
@@ -76,45 +117,49 @@ class YOLOV3(object):
 
         return tf.concat([pred_xywh, pred_conf, pred_prob], axis=-1)
 
-     def __build_nework(self, input_data):
+     def inference(self, image_data):
+        return self.model(image_data)
 
-        route_1, route_2, input_data = backbone.darknet53(input_data)
+     def __build_nework(self, input_layer):
 
-        input_data = common.convolutional(input_data, (1, 1, 1024,  512))
-        input_data = common.convolutional(input_data, (3, 3,  512, 1024))
-        input_data = common.convolutional(input_data, (1, 1, 1024,  512))
-        input_data = common.convolutional(input_data, (3, 3,  512, 1024))
-        input_data = common.convolutional(input_data, (1, 1, 1024,  512))
+        route_1, route_2, conv = backbone.darknet53(input_layer)
 
-        conv_lobj_branch = common.convolutional(input_data, (3, 3, 512, 1024))
+        conv = common.convolutional(conv, (1, 1, 1024,  512))
+        conv = common.convolutional(conv, (3, 3,  512, 1024))
+        conv = common.convolutional(conv, (1, 1, 1024,  512))
+        conv = common.convolutional(conv, (3, 3,  512, 1024))
+        conv = common.convolutional(conv, (1, 1, 1024,  512))
+
+        conv_lobj_branch = common.convolutional(conv, (3, 3, 512, 1024))
         conv_lbbox = common.convolutional(conv_lobj_branch, (1, 1, 1024, 3*(80 + 5)), activate=False, bn=False)
 
-        input_data = common.convolutional(input_data, (1, 1,  512,  256))
-        input_data = common.upsample(input_data)
+        conv = common.convolutional(conv, (1, 1,  512,  256))
+        conv = common.upsample(conv)
 
-        input_data = tf.concat([input_data, route_2], axis=-1)
+        conv = tf.concat([conv, route_2], axis=-1)
 
-        input_data = common.convolutional(input_data, (1, 1, 768, 256))
-        input_data = common.convolutional(input_data, (3, 3, 256, 512))
-        input_data = common.convolutional(input_data, (1, 1, 512, 256))
-        input_data = common.convolutional(input_data, (3, 3, 256, 512))
-        input_data = common.convolutional(input_data, (1, 1, 512, 256))
+        conv = common.convolutional(conv, (1, 1, 768, 256))
+        conv = common.convolutional(conv, (3, 3, 256, 512))
+        conv = common.convolutional(conv, (1, 1, 512, 256))
+        conv = common.convolutional(conv, (3, 3, 256, 512))
+        conv = common.convolutional(conv, (1, 1, 512, 256))
 
-        conv_mobj_branch = common.convolutional(input_data, (3, 3, 256, 512))
+        conv_mobj_branch = common.convolutional(conv, (3, 3, 256, 512))
         conv_mbbox = common.convolutional(conv_mobj_branch, (1, 1, 512, 3*(80 + 5)), activate=False, bn=False)
 
-        input_data = common.convolutional(input_data, (1, 1, 256, 128))
-        input_data = common.upsample(input_data)
+        conv = common.convolutional(conv, (1, 1, 256, 128))
+        conv = common.upsample(conv)
 
-        input_data = tf.concat([input_data, route_1], axis=-1)
+        conv = tf.concat([conv, route_1], axis=-1)
 
-        input_data = common.convolutional(input_data, (1, 1, 384, 128))
-        input_data = common.convolutional(input_data, (3, 3, 128, 256))
-        input_data = common.convolutional(input_data, (1, 1, 256, 128))
-        input_data = common.convolutional(input_data, (3, 3, 128, 256))
-        input_data = common.convolutional(input_data, (1, 1, 256, 128))
+        conv = common.convolutional(conv, (1, 1, 384, 128))
+        conv = common.convolutional(conv, (3, 3, 128, 256))
+        conv = common.convolutional(conv, (1, 1, 256, 128))
+        conv = common.convolutional(conv, (3, 3, 128, 256))
+        conv = common.convolutional(conv, (1, 1, 256, 128))
 
-        conv_sobj_branch = common.convolutional(input_data, (3, 3, 128, 256))
+        conv_sobj_branch = common.convolutional(conv, (3, 3, 128, 256))
         conv_sbbox = common.convolutional(conv_sobj_branch, (1, 1, 256, 3*(80 +5)), activate=False, bn=False)
 
         return conv_lbbox, conv_mbbox, conv_sbbox
+
