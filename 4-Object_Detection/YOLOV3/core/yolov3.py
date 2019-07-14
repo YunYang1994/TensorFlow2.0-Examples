@@ -51,7 +51,7 @@ class YOLOV3(object):
         j = 0
         for i in range(75):
             conv_layer_name = 'conv2d_%d' %i if i > 0 else 'conv2d'
-            bn_layer_name = 'batch_normalization_v2_%d' %j if j > 0 else 'batch_normalization_v2'
+            bn_layer_name = 'batch_normalization_%d' %j if j > 0 else 'batch_normalization'
 
             conv_layer = self.model.get_layer(conv_layer_name)
             filters = conv_layer.filters
