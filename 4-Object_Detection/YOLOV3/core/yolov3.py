@@ -40,6 +40,7 @@ class YOLOV3(object):
         self.pred_lbbox = self.decode(self.conv_lbbox, self.anchors[2], self.strides[2])
 
         self.model = tf.keras.Model(input_layer, [self.pred_sbbox, self.pred_mbbox, self.pred_lbbox])
+        self.model.summary()
 
      def load_weights(self, weights_file):
         """
