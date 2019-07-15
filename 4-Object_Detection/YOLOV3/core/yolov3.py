@@ -20,7 +20,7 @@ from core.config import cfg
 
 class YOLOV3(object):
      """Implement tensoflow yolov3 here"""
-     def __init__(self, input_layer):
+     def __init__(self, input_layer, training=False):
 
         self.classes          = utils.read_class_names(cfg.YOLO.CLASSES)
         self.num_class        = len(self.classes)
@@ -31,7 +31,7 @@ class YOLOV3(object):
         self.upsample_method  = cfg.YOLO.UPSAMPLE_METHOD
 
         try:
-            self.conv_lbbox, self.conv_mbbox, self.conv_sbbox = self.__build_nework(input_layer)
+            self.conv_lbbox, self.conv_mbbox, self.conv_sbbox = self.__build_nework(input_layer, training)
         except:
             raise NotImplementedError("Can not build up yolov3 network!")
 
@@ -121,46 +121,46 @@ class YOLOV3(object):
      def inference(self, image_data):
         return self.model(image_data)
 
-     def __build_nework(self, input_layer):
+     def __build_nework(self, input_layer, training):
 
-        route_1, route_2, conv = backbone.darknet53(input_layer)
+        route_1, route_2, conv = backbone.darknet53(input_layer, training)
 
-        conv = common.convolutional(conv, (1, 1, 1024,  512))
-        conv = common.convolutional(conv, (3, 3,  512, 1024))
-        conv = common.convolutional(conv, (1, 1, 1024,  512))
-        conv = common.convolutional(conv, (3, 3,  512, 1024))
-        conv = common.convolutional(conv, (1, 1, 1024,  512))
+        conv = common.convolutional(conv, (1, 1, 1024,  512), training)
+        conv = common.convolutional(conv, (3, 3,  512, 1024), training)
+        conv = common.convolutional(conv, (1, 1, 1024,  512), training)
+        conv = common.convolutional(conv, (3, 3,  512, 1024), training)
+        conv = common.convolutional(conv, (1, 1, 1024,  512), training)
 
-        conv_lobj_branch = common.convolutional(conv, (3, 3, 512, 1024))
-        conv_lbbox = common.convolutional(conv_lobj_branch, (1, 1, 1024, 3*(80 + 5)), activate=False, bn=False)
+        conv_lobj_branch = common.convolutional(conv, (3, 3, 512, 1024), training)
+        conv_lbbox = common.convolutional(conv_lobj_branch, (1, 1, 1024, 3*(80 + 5)), training, activate=False, bn=False)
 
-        conv = common.convolutional(conv, (1, 1,  512,  256))
+        conv = common.convolutional(conv, (1, 1,  512,  256), training)
         conv = common.upsample(conv)
 
         conv = tf.concat([conv, route_2], axis=-1)
 
-        conv = common.convolutional(conv, (1, 1, 768, 256))
-        conv = common.convolutional(conv, (3, 3, 256, 512))
-        conv = common.convolutional(conv, (1, 1, 512, 256))
-        conv = common.convolutional(conv, (3, 3, 256, 512))
-        conv = common.convolutional(conv, (1, 1, 512, 256))
+        conv = common.convolutional(conv, (1, 1, 768, 256), training)
+        conv = common.convolutional(conv, (3, 3, 256, 512), training)
+        conv = common.convolutional(conv, (1, 1, 512, 256), training)
+        conv = common.convolutional(conv, (3, 3, 256, 512), training)
+        conv = common.convolutional(conv, (1, 1, 512, 256), training)
 
-        conv_mobj_branch = common.convolutional(conv, (3, 3, 256, 512))
-        conv_mbbox = common.convolutional(conv_mobj_branch, (1, 1, 512, 3*(80 + 5)), activate=False, bn=False)
+        conv_mobj_branch = common.convolutional(conv, (3, 3, 256, 512), training)
+        conv_mbbox = common.convolutional(conv_mobj_branch, (1, 1, 512, 3*(80 + 5)), training, activate=False, bn=False)
 
-        conv = common.convolutional(conv, (1, 1, 256, 128))
+        conv = common.convolutional(conv, (1, 1, 256, 128), training)
         conv = common.upsample(conv)
 
         conv = tf.concat([conv, route_1], axis=-1)
 
-        conv = common.convolutional(conv, (1, 1, 384, 128))
-        conv = common.convolutional(conv, (3, 3, 128, 256))
-        conv = common.convolutional(conv, (1, 1, 256, 128))
-        conv = common.convolutional(conv, (3, 3, 128, 256))
-        conv = common.convolutional(conv, (1, 1, 256, 128))
+        conv = common.convolutional(conv, (1, 1, 384, 128), training)
+        conv = common.convolutional(conv, (3, 3, 128, 256), training)
+        conv = common.convolutional(conv, (1, 1, 256, 128), training)
+        conv = common.convolutional(conv, (3, 3, 128, 256), training)
+        conv = common.convolutional(conv, (1, 1, 256, 128), training)
 
-        conv_sobj_branch = common.convolutional(conv, (3, 3, 128, 256))
-        conv_sbbox = common.convolutional(conv_sobj_branch, (1, 1, 256, 3*(80 +5)), activate=False, bn=False)
+        conv_sobj_branch = common.convolutional(conv, (3, 3, 128, 256), training)
+        conv_sbbox = common.convolutional(conv_sobj_branch, (1, 1, 256, 3*(80 +5)), training, activate=False, bn=False)
 
         return conv_lbbox, conv_mbbox, conv_sbbox
 

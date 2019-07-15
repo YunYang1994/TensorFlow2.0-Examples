@@ -14,7 +14,7 @@
 import tensorflow as tf
 
 
-def convolutional(input_layer, filters_shape, downsample=False, activate=True, bn=True):
+def convolutional(input_layer, filters_shape, training=False, downsample=False, activate=True, bn=True):
     if downsample:
         input_layer = tf.keras.layers.ZeroPadding2D(((1, 0), (1, 0)))(input_layer)
         padding = 'valid'
@@ -27,16 +27,16 @@ def convolutional(input_layer, filters_shape, downsample=False, activate=True, b
                                   use_bias=not bn, kernel_regularizer=tf.keras.regularizers.l2(0.0005))(input_layer)
 
     if bn:
-        conv = tf.keras.layers.BatchNormalization()(conv)
+        conv = tf.keras.layers.BatchNormalization()(conv, training=training)
 
     if activate == True: conv = tf.nn.leaky_relu(conv, alpha=0.1)
 
     return conv
 
-def residual_block(input_layer, input_channel, filter_num1, filter_num2):
+def residual_block(input_layer, input_channel, filter_num1, filter_num2, training=False):
     short_cut = input_layer
-    conv = convolutional(input_layer, filters_shape=(1, 1, input_channel, filter_num1))
-    conv = convolutional(conv       , filters_shape=(3, 3, filter_num1,   filter_num2))
+    conv = convolutional(input_layer, filters_shape=(1, 1, input_channel, filter_num1), training=training)
+    conv = convolutional(conv       , filters_shape=(3, 3, filter_num1,   filter_num2), training=training)
 
     residual_output = short_cut + conv
     return residual_output

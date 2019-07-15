@@ -32,7 +32,10 @@ image_data = image_data[np.newaxis, ...].astype(np.float32)
 input_layer = tf.keras.layers.Input([input_size, input_size, 3])
 model = yolov3.YOLOV3(input_layer)
 model.load_weights("./yolov3.weights")
+# model = model.model
+# model.load_weights("./yolov3")
 
+# pred_sbbox, pred_mbbox, pred_lbbox = model(image_data)
 pred_sbbox, pred_mbbox, pred_lbbox = model.inference(image_data)
 pred_bbox = np.concatenate([np.reshape(pred_sbbox, (-1, 5 + num_classes)),
                             np.reshape(pred_mbbox, (-1, 5 + num_classes)),
