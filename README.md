@@ -20,7 +20,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 3 - Image Classification
 
-- **VGG16** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py))([paper](https://arxiv.org/pdf/1409.1556.pdf)). VGG16: Very Deep Convolutional Networks for Large-Scale Image Recognition 
+- **VGG16** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Image_Classification/vgg16)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Image_Classification/vgg16/vgg16.py))([paper](https://arxiv.org/pdf/1409.1556.pdf)). VGG16: Very Deep Convolutional Networks for Large-Scale Image Recognition 
 
 #### 4 - Object Detection
 
