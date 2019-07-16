@@ -20,16 +20,16 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 3 - Image Classification
 
-- **ResNet** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py)). Deep Residual Learning for Image Recognition.
+- **VGG16** ([notebook](2-Basical_Models/Linear_Regression.ipynb)) ([code](2-Basical_Models/Linear_Regression.py))([paper](https://arxiv.org/pdf/1409.1556.pdf)). VGG16: Very Deep Convolutional Networks for Large-Scale Image Recognition 
 
 #### 4 - Object Detection
 
-- **YOLOv3** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3/core/yolov3.py)). YOLOv3: An Incremental Improvement.🔥🔥🔥🔥🔥
+- **YOLOv3** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3/core/yolov3.py))([paper](https://arxiv.org/pdf/1804.02767.pdf)). YOLOv3: An Incremental Improvement.🔥🔥🔥🔥🔥
 - **RPN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN)). RPN:RegionProposal Network, Backbone of [Faster R-CNN](https://arxiv.org/pdf/1506.01497.pdf) 🔥🔥🔥
 
 #### 5 - Generative Adversarial Networks
-- **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/5-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](5-Generative_Adversarial_Networks/dcgan.py)).  Deep Convolutional Generative Adversarial Network.🔥
-- **Pix2Pix** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/5-Generative_Adversarial_Networks/Pix2Pix.ipynb)) ([code](5-Generative_Adversarial_Networks/Pix2Pix.py)).  Image-to-Image Translation with Conditional Adversarial Networks.🔥🔥
+- **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/5-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](5-Generative_Adversarial_Networks/dcgan.py))([paper](https://arxiv.org/pdf/1511.06434.pdf)).  Deep Convolutional Generative Adversarial Network.
+- **Pix2Pix** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/5-Generative_Adversarial_Networks/Pix2Pix.ipynb)) ([code](5-Generative_Adversarial_Networks/Pix2Pix.py))([paper](https://arxiv.org/pdf/1611.07004.pdf)).  Image-to-Image Translation with Conditional Adversarial Networks.
 
 #### 6 - Reinforcement Learning
 
