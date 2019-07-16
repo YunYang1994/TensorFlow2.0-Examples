@@ -13,7 +13,7 @@ n02123045 tabby, tabby cat
 
 ![image](./docs/cat.jpg)
 
-## Keypoints
+## About vgg16
 - **No BatchNorm layers**
 - **The first one to use small kernel-sized filters**
 - **The network architecture weights themselves are quite large (553MB)**
