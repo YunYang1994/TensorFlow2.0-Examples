@@ -27,5 +27,15 @@ $ git clone https://github.com/YunYang1994/yymnist.git
 $ python yymnist/make_data.py --images_num 1000 --images_path ./data/dataset/train --labels_txt ./data/dataset/yymnist_train.txt
 $ python yymnist/make_data.py --images_num 200  --images_path ./data/dataset/test  --labels_txt ./data/dataset/yymnist_test.txt
 ```
+Open `./core/config.py` and do some configurations
+```
+__C.YOLO.CLASSES                = "./data/classes/yymnist.names"
+```
+
+Finally, you can train it now
+```
+$ python train.py
+```
+
 
 
