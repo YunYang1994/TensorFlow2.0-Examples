@@ -37,7 +37,6 @@ for i, conv_tensor in enumerate(conv_tensors):
 model = tf.keras.Model(input_tensor, output_tensors)
 optimizer = tf.keras.optimizers.Adam(1e-5)
 
-# @tf.function
 def train_step(image_data, target):
     with tf.GradientTape() as tape:
         pred_result = model(image_data, training=True)
