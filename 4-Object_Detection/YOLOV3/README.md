@@ -24,8 +24,8 @@ Download [yymnist](https://github.com/YunYang1994/yymnist) dataset and make data
 
 ```
 $ git clone https://github.com/YunYang1994/yymnist.git
-$ python yymnist/make_data.py --images_num 1000 --images_path ./dataset/train --labels_txt ./dataset/yymnist_train.txt
-$ python yymnist/make_data.py --images_num 200  --images_path ./dataset/test  --labels_txt ./dataset/yymnist_test.txt
+$ python yymnist/make_data.py --images_num 1000 --images_path ./data/dataset/train --labels_txt ./data/dataset/yymnist_train.txt
+$ python yymnist/make_data.py --images_num 200  --images_path ./data/dataset/test  --labels_txt ./data/dataset/yymnist_test.txt
 ```
 
 
