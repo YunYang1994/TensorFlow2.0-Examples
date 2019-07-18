@@ -20,7 +20,7 @@ $ python video_demo.py # if use camera, set video_path = 0
 
 ## Train yymnist
 
-Download yymnist [dataset](https://github.com/YunYang1994/yymnist).
+Download yymnist [dataset](https://github.com/YunYang1994/yymnist) and make data.
 
 ```
 $ git clone https://github.com/YunYang1994/yymnist.git
