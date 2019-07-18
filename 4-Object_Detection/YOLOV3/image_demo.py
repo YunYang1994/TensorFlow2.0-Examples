@@ -41,7 +41,7 @@ bbox_tensors = tf.concat(bbox_tensors, axis=0)
 model = tf.keras.Model(input_layer, bbox_tensors)
 utils.load_weights(model, "./yolov3.weights")
 
-pred_bbox = model(image_data)
+pred_bbox = model(image_data, training=False)
 bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, 0.3)
 bboxes = utils.nms(bboxes, 0.45, method='nms')
 image = utils.draw_bbox(original_image, bboxes)
