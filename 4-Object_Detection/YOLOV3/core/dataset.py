@@ -90,8 +90,11 @@ class Dataset(object):
                     batch_lbboxes[num, :, :] = lbboxes
                     num += 1
                 self.batch_count += 1
-                return batch_image, batch_label_sbbox, batch_label_mbbox, batch_label_lbbox, \
-                       batch_sbboxes, batch_mbboxes, batch_lbboxes
+                batch_smaller_target = batch_label_sbbox, batch_sbboxes
+                batch_medium_target  = batch_label_mbbox, batch_mbboxes
+                batch_larger_target  = batch_label_lbbox, batch_lbboxes
+
+                return batch_image, (batch_smaller_target, batch_medium_target, batch_larger_target)
             else:
                 self.batch_count = 0
                 np.random.shuffle(self.annotations)
