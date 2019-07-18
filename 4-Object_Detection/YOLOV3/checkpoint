@@ -1,0 +1,2 @@
+model_checkpoint_path: "yolov3"
+all_model_checkpoint_paths: "yolov3"
