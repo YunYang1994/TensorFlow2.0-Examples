@@ -18,5 +18,14 @@ $ python video_demo.py # if use camera, set video_path = 0
 ```
 ![image](./docs/kite_result.jpg)
 
+## Train yymnist
+
+Download yymnist [dataset](https://github.com/YunYang1994/yymnist).
+
+```
+$ git clone https://github.com/YunYang1994/yymnist.git
+$ python yymnist/make_data.py --images_num 1000 --images_path ./dataset/train --labels_txt ./dataset/yymnist_train.txt
+$ python yymnist/make_data.py --images_num 1000 --images_path ./dataset/test  --labels_txt ./dataset/yymnist_test.txt
+```
 
 
