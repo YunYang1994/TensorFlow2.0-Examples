@@ -35,8 +35,8 @@ for i, conv_tensor in enumerate(conv_tensors):
     output_tensors.append(pred_tensor)
 
 model = tf.keras.Model(input_tensor, output_tensors)
-
 optimizer = tf.keras.optimizers.Adam(1e-5)
+
 def train_step(image_data, target):
     with tf.GradientTape() as tape:
         pred_result = model(image_data, training=True)
@@ -53,16 +53,12 @@ def train_step(image_data, target):
         total_loss = giou_loss + conf_loss + prob_loss
         gradients = tape.gradient(total_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-        tf.print("=> STEP ", steps,
-                 " giou_loss:", giou_loss,
-                 "conf_loss", conf_loss,
-                 "prob_loss", prob_loss,
-                 "total_loss", total_loss)
+        tf.print("=> STEP ", steps, " giou_loss:", giou_loss, " conf_loss:", conf_loss,
+                 " prob_loss:", prob_loss, " total_loss:", total_loss)
 
 
 for epoch in range(cfg.TRAIN.EPOCHS):
     for image_data, target in trainset:
         train_step(image_data, target)
-    global_step.assign_add(1.0)
     model.save_weights("./yolov3")
 

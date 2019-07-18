@@ -75,7 +75,6 @@ def decode(conv_output, i=0):
     conv_shape       = tf.shape(conv_output)
     batch_size       = conv_shape[0]
     output_size      = conv_shape[1]
-    anchor_per_scale = len(ANCHORS[i])
 
     conv_output = tf.reshape(conv_output, (batch_size, output_size, output_size, 3, 5 + NUM_CLASS))
 
