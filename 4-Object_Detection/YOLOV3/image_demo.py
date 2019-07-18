@@ -19,23 +19,24 @@ from core.yolov3 import YOLOv3, decode
 from PIL import Image
 from core.config import cfg
 
-num_class       = 80
-input_size      = 416
+input_size   = 416
+NUM_CLASS    = len(utils.read_class_names(cfg.YOLO.CLASSES))
+image_path   = "./docs/kite.jpg"
 
-image_path      = "./docs/kite.jpg"
-original_image = cv2.imread(image_path)
-original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
+input_layer  = tf.keras.layers.Input([input_size, input_size, 3])
+feature_maps = YOLOv3(input_layer)
+
+original_image      = cv2.imread(image_path)
+original_image      = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
 original_image_size = original_image.shape[:2]
+
 image_data = utils.image_preporcess(np.copy(original_image), [input_size, input_size])
 image_data = image_data[np.newaxis, ...].astype(np.float32)
-
-input_layer = tf.keras.layers.Input([input_size, input_size, 3])
-feature_maps = YOLOv3(input_layer)
 
 bbox_tensors = []
 for i, fm in enumerate(feature_maps):
     bbox_tensor = decode(fm, i)
-    bbox_tensors.append(tf.reshape(bbox_tensor, (-1, 5+num_class)))
+    bbox_tensors.append(tf.reshape(bbox_tensor, (-1, 5+NUM_CLASS)))
 
 bbox_tensors = tf.concat(bbox_tensors, axis=0)
 model = tf.keras.Model(input_layer, bbox_tensors)
@@ -44,10 +45,9 @@ utils.load_weights(model, "./yolov3.weights")
 pred_bbox = model(image_data, training=False)
 bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, 0.3)
 bboxes = utils.nms(bboxes, 0.45, method='nms')
+
 image = utils.draw_bbox(original_image, bboxes)
 image = Image.fromarray(image)
 image.show()
-# image.save("./docs/kite_result.jpg")
-
 
 
