@@ -24,6 +24,7 @@ from core.config import cfg
 
 
 trainset = Dataset('train')
+steps_per_epoch    = len(trainset)
 
 input_tensor = tf.keras.layers.Input([416, 416, 3])
 conv_tensors = YOLOv3(input_tensor)
@@ -35,8 +36,17 @@ for i, conv_tensor in enumerate(conv_tensors):
     output_tensors.append(pred_tensor)
 
 model = tf.keras.Model(input_tensor, output_tensors)
-optimizer = tf.keras.optimizers.Adam(1e-5)
 
+global_step = tf.Variable(1.0, dtype=tf.float32, trainable=False)
+warmup_steps = tf.constant(cfg.TRAIN.WARMUP_EPOCHS * steps_per_epoch, dtype=tf.float32)
+
+learn_rate = tf.cond(
+    pred=global_step < warmup_steps,
+    true_fn=lambda: global_step / warmup_steps * cfg.TRAIN.LEARN_RATE_INIT,
+    false_fn=lambda: cfg.TRAIN.LEARN_RATE_END + 0.5 * (cfg.TRAIN.LEARN_RATE_INIT - cfg.TRAIN.LEARN_RATE_END) *
+                        (1 + tf.cos((global_step - warmup_steps) / (train_steps - warmup_steps) * np.pi)))
+
+optimizer = tf.keras.optimizers.Adam(learn_rate)
 def train_step(image_data, target):
     with tf.GradientTape() as tape:
         pred_result = model(image_data, training=True)
@@ -56,8 +66,9 @@ def train_step(image_data, target):
 
 
 for epoch in range(cfg.TRAIN.EPOCHS):
+    print("===========================> epoch %d, lr %.7f" %(epoch, learn_rate.numpy()))
     for image_data, target in trainset:
         train_step(image_data, target)
-
+    global_step.assign_add(1.0)
     model.save_weights("./yolov3")
 

@@ -38,8 +38,8 @@ __C.TRAIN.BATCH_SIZE            = 2
 # __C.TRAIN.INPUT_SIZE            = [320, 352, 384, 416, 448, 480, 512, 544, 576, 608]
 __C.TRAIN.INPUT_SIZE            = [416]
 __C.TRAIN.DATA_AUG              = True
-__C.TRAIN.LEARN_RATE_INIT       = 1e-3
-__C.TRAIN.LEARN_RATE_END        = 1e-4
+__C.TRAIN.LEARN_RATE_INIT       = 1e-4
+__C.TRAIN.LEARN_RATE_END        = 1e-6
 __C.TRAIN.WARMUP_EPOCHS         = 2
 __C.TRAIN.EPOCHS                = 20
 

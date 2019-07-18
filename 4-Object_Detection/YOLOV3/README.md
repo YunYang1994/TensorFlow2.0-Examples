@@ -36,6 +36,7 @@ Finally, you can train it now
 ```
 $ python train.py
 ```
-
-
+| train |test|
+|---|---
+|![image](./docs/01554.jpg)|![image](./docs/01567.jpg)|
 
