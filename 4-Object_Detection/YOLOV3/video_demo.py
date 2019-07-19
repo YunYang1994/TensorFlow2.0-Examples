@@ -16,25 +16,31 @@ import time
 import numpy as np
 import core.utils as utils
 import tensorflow as tf
-import core.yolov3 as yolov3
-from PIL import Image
+from core.yolov3 import YOLOv3, decode
 
 
 video_path      = "./docs/road.mp4"
-video_path      = 0
+# video_path      = 0
 num_classes     = 80
 input_size      = 416
 
-input_layer = tf.keras.layers.Input([input_size, input_size, 3])
-model = yolov3.YOLOV3(input_layer)
-model.load_weights("./yolov3.weights")
+input_layer  = tf.keras.layers.Input([input_size, input_size, 3])
+feature_maps = YOLOv3(input_layer)
+
+bbox_tensors = []
+for i, fm in enumerate(feature_maps):
+    bbox_tensor = decode(fm, i)
+    bbox_tensors.append(tf.reshape(bbox_tensor, (-1, 5+num_classes)))
+
+bbox_tensors = tf.concat(bbox_tensors, axis=0)
+model = tf.keras.Model(input_layer, bbox_tensors)
+utils.load_weights(model, "./yolov3.weights")
 
 vid = cv2.VideoCapture(video_path)
 while True:
     return_value, frame = vid.read()
     if return_value:
-        image = Image.fromarray(frame)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     else:
         raise ValueError("No image!")
     frame_size = frame.shape[:2]
@@ -42,11 +48,7 @@ while True:
     image_data = image_data[np.newaxis, ...].astype(np.float32)
     prev_time = time.time()
 
-    pred_sbbox, pred_mbbox, pred_lbbox = model.inference(image_data)
-    pred_bbox = np.concatenate([np.reshape(pred_sbbox, (-1, 5 + num_classes)),
-                                np.reshape(pred_mbbox, (-1, 5 + num_classes)),
-                                np.reshape(pred_lbbox, (-1, 5 + num_classes))], axis=0)
-
+    pred_bbox = model(image_data, training=False)
     bboxes = utils.postprocess_boxes(pred_bbox, frame_size, input_size, 0.3)
     bboxes = utils.nms(bboxes, 0.45, method='nms')
     image = utils.draw_bbox(frame, bboxes)
