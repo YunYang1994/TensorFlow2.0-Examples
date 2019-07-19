@@ -86,7 +86,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
 
 
         if cfg.TEST.DECTECTED_IMAGE_PATH is not None:
-            image = utils.draw_bbox(image, bboxes, True)
+            image = utils.draw_bbox(image, bboxes)
             cv2.imwrite(cfg.TEST.DECTECTED_IMAGE_PATH+image_name, image)
 
         with open(predict_result_path, 'w') as f:
