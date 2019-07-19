@@ -32,9 +32,14 @@ Open `./core/config.py` and do some configurations
 __C.YOLO.CLASSES                = "./data/classes/yymnist.names"
 ```
 
-Finally, you can train it now
+Finally, you can train it and then evaluate your model
+
 ```
 $ python train.py
+$ python test.py
+$ cd ../mAP
+$ python main.py
+
 ```
 | train |test|
 |---|---
