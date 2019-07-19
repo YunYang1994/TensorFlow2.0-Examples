@@ -16,23 +16,24 @@ import os
 import shutil
 import numpy as np
 import tensorflow as tf
-
+import core.utils as utils
 from core.config import cfg
 from core.yolov3 import YOLOv3, decode
 
 
 INPUT_SIZE   = 416
 NUM_CLASS    = len(utils.read_class_names(cfg.YOLO.CLASSES))
+CLASSES      = utils.read_class_names(cfg.YOLO.CLASSES)
 
 predicted_dir_path = '../mAP/predicted'
 ground_truth_dir_path = '../mAP/ground-truth'
 if os.path.exists(predicted_dir_path): shutil.rmtree(predicted_dir_path)
 if os.path.exists(ground_truth_dir_path): shutil.rmtree(ground_truth_dir_path)
-if os.path.exists(cfg.TEST.WRITE_IMAGE_PATH): shutil.rmtree(cfg.TEST.WRITE_IMAGE_PATH)
+if os.path.exists(cfg.TEST.DECTECTED_IMAGE_PATH): shutil.rmtree(cfg.TEST.DECTECTED_IMAGE_PATH)
 
 os.mkdir(predicted_dir_path)
 os.mkdir(ground_truth_dir_path)
-os.mkdir(cfg.TEST.WRITE_IMAGE_PATH)
+os.mkdir(cfg.TEST.DECTECTED_IMAGE_PATH)
 
 # Build Model
 input_layer  = tf.keras.layers.Input([INPUT_SIZE, INPUT_SIZE, 3])
@@ -66,7 +67,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
         num_bbox_gt = len(bboxes_gt)
         with open(ground_truth_path, 'w') as f:
             for i in range(num_bbox_gt):
-                class_name = self.classes[classes_gt[i]]
+                class_name = CLASSES[classes_gt[i]]
                 xmin, ymin, xmax, ymax = list(map(str, bboxes_gt[i]))
                 bbox_mess = ' '.join([class_name, xmin, ymin, xmax, ymax]) + '\n'
                 f.write(bbox_mess)
@@ -79,7 +80,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
         image_data = image_data[np.newaxis, ...].astype(np.float32)
 
         pred_bbox = model(image_data, training=False)
-        bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, cfg.TEST.SCORE_THRESHOLD)
+        bboxes = utils.postprocess_boxes(pred_bbox, image_size, INPUT_SIZE, cfg.TEST.SCORE_THRESHOLD)
         bboxes = utils.nms(bboxes, cfg.TEST.IOU_THRESHOLD, method='nms')
 
 
@@ -92,7 +93,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
                 coor = np.array(bbox[:4], dtype=np.int32)
                 score = bbox[4]
                 class_ind = int(bbox[5])
-                class_name = self.classes[class_ind]
+                class_name = CLASSES[class_ind]
                 score = '%.4f' % score
                 xmin, ymin, xmax, ymax = list(map(str, coor))
                 bbox_mess = ' '.join([class_name, score, xmin, ymin, xmax, ymax]) + '\n'
