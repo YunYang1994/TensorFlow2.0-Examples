@@ -12,6 +12,8 @@ $ wget https://pjreddie.com/media/files/yolov3.weights
 
 ## Quick start
 
+In this part, we will use pretrained weights to make predictions on both image and video.
+
 ```
 $ python image_demo.py
 $ python video_demo.py # if use camera, set video_path = 0
@@ -38,9 +40,9 @@ Finally, you can train it and then evaluate your model
 $ python train.py
 $ python test.py
 $ cd ../mAP
-$ python main.py
-
+$ python main.py        # Detection images are expected to save in `YOLOV3/data/detection`
 ```
+
 | train |test|
 |---|---
 |![image](./docs/01554.jpg)|![image](./docs/01567.jpg)|
