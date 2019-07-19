@@ -34,6 +34,7 @@ while True:
     return_value, frame = vid.read()
     if return_value:
         image = Image.fromarray(frame)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     else:
         raise ValueError("No image!")
     frame_size = frame.shape[:2]

@@ -54,6 +54,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
         image_path = annotation[0]
         image_name = image_path.split('/')[-1]
         image = cv2.imread(image_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         bbox_data_gt = np.array([list(map(int, box.split(','))) for box in annotation[1:]])
 
         if len(bbox_data_gt) == 0:

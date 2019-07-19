@@ -27,6 +27,7 @@ input_layer  = tf.keras.layers.Input([input_size, input_size, 3])
 feature_maps = YOLOv3(input_layer)
 
 original_image      = cv2.imread(image_path)
+original_image      = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
 original_image_size = original_image.shape[:2]
 
 image_data = utils.image_preporcess(np.copy(original_image), [input_size, input_size])
