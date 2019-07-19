@@ -53,7 +53,7 @@ def train_step(image_data, target):
         total_loss = giou_loss + conf_loss + prob_loss
         gradients = tape.gradient(total_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-        tf.print("=> STEP%8d giou_loss: %.2f conf_loss: %.2f prob_loss: %.2f total_loss: %.2f"
+        tf.print("=> STEP%4d   giou_loss: %4.2f   conf_loss: %4.2f   prob_loss: %4.2f   total_loss: %4.2f"
                                         %(steps, giou_loss, conf_loss, prob_loss, total_loss))
 
 
