@@ -101,9 +101,3 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
                 f.write(bbox_mess)
                 print('\t' + str(bbox_mess).strip())
 
-
-
-
-
-
-

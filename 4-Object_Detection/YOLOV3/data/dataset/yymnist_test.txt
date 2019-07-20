@@ -1,0 +1,6 @@
+/home/yang/test/TensorFlow2.0-Examples/4-Object_Detection/YOLOV3/data/dataset/test/000001.jpg 122,187,136,201,7 71,209,85,223,4 78,7,100,29,2 366,244,394,272,3 344,383,372,411,3 238,243,294,299,8 24,233,136,345,8
+/home/yang/test/TensorFlow2.0-Examples/4-Object_Detection/YOLOV3/data/dataset/test/000002.jpg 343,279,357,293,4 258,168,280,190,7 277,354,333,410,6 5,24,61,80,3 124,227,152,255,9 140,285,224,369,3 105,42,217,154,4
+/home/yang/test/TensorFlow2.0-Examples/4-Object_Detection/YOLOV3/data/dataset/test/000003.jpg 285,100,313,128,2 99,16,183,100,1
+/home/yang/test/TensorFlow2.0-Examples/4-Object_Detection/YOLOV3/data/dataset/test/000004.jpg 365,140,387,162,0 70,332,92,354,1 278,373,292,387,0 341,14,383,56,0 10,143,52,185,8 214,109,242,137,1 112,282,140,310,0 312,130,368,186,0 180,180,236,236,3 271,192,383,304,2 20,10,132,122,4 66,147,150,231,4
+/home/yang/test/TensorFlow2.0-Examples/4-Object_Detection/YOLOV3/data/dataset/test/000005.jpg 194,13,216,35,9 126,34,168,76,2 80,183,108,211,6 341,332,397,388,6
+/home/yang/test/TensorFlow2.0-Examples/4-Object_Detection/YOLOV3/data/dataset/test/000006.jpg 251,179,265,193,9 22,43,36,57,8 315,132,337,154,4 155,372,197,414,4 239,18,295,74,1 89,53,131,95,1 81,296,165,380,1 208,257,320,369,9 86,173,170,257,7
