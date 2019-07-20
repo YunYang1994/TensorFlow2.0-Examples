@@ -38,7 +38,6 @@ __C.TRAIN.BATCH_SIZE            = 4
 __C.TRAIN.LR                    = 1e-5
 __C.TRAIN.INPUT_SIZE            = [416]
 __C.TRAIN.DATA_AUG              = True
-__C.TRAIN.WARMUP_EPOCHS         = 4
 __C.TRAIN.EPOCHS                = 30
 
 
