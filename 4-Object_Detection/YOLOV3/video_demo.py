@@ -35,7 +35,7 @@ for i, fm in enumerate(feature_maps):
 bbox_tensors = tf.concat(bbox_tensors, axis=0)
 model = tf.keras.Model(input_layer, bbox_tensors)
 utils.load_weights(model, "./yolov3.weights")
-
+model.summary()
 vid = cv2.VideoCapture(video_path)
 while True:
     return_value, frame = vid.read()
@@ -48,7 +48,7 @@ while True:
     image_data = image_data[np.newaxis, ...].astype(np.float32)
     prev_time = time.time()
 
-    pred_bbox = model(image_data, training=False)
+    pred_bbox = model.predict(image_data)
     bboxes = utils.postprocess_boxes(pred_bbox, frame_size, input_size, 0.3)
     bboxes = utils.nms(bboxes, 0.45, method='nms')
     image = utils.draw_bbox(frame, bboxes)
