@@ -80,7 +80,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
         image_data = utils.image_preporcess(np.copy(image), [INPUT_SIZE, INPUT_SIZE])
         image_data = image_data[np.newaxis, ...].astype(np.float32)
 
-        pred_bbox = model(image_data, training=False)
+        pred_bbox = model.predict(image_data)
         bboxes = utils.postprocess_boxes(pred_bbox, image_size, INPUT_SIZE, cfg.TEST.SCORE_THRESHOLD)
         bboxes = utils.nms(bboxes, cfg.TEST.IOU_THRESHOLD, method='nms')
 
