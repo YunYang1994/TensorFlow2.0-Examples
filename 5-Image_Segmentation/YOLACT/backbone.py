@@ -79,27 +79,29 @@ class DarkNetBackbone(tf.keras.Model):
     def _make_layer(self, block, channels, num_blocks, strides=2):
         """ Here one layer means a string of n blocks. """
 
+        layer_list = []
         # The downsample layer
-        self.conv_layers.add(
+        layer_list.append(
             darknetconvlayer(self.in_channels, channels * block.expansion,
                              kernel_size=3, strides=strides))
 
         # Each block inputs channels and outputs channels * expansion
         self.in_channels = channels * block.expansion
         for _ in range(num_blocks):
-        	self.conv_layers.add(block(self.in_channels, channels))
+        	layer_list.append(block(self.in_channels, channels))
 
         self.channels.append(self.in_channels)
+        self.conv_layers.add(tf.keras.Sequential(layer_list))
 
     def call(self, x):
         """ Returns a list of convouts for each layer. """
 
-        x = self._preconv(x)
+        y = self._preconv(x)
 
         outs = []
         for layer in self.conv_layers:
-            x = layer(x)
-            outs.append(x)
+            y = layer(y)
+            outs.append(y)
 
         return tuple(outs)
 
