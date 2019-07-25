@@ -28,7 +28,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **RPN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN)). RegionProposal Network, Backbone of [Faster R-CNN](https://arxiv.org/pdf/1506.01497.pdf) 🔥🔥🔥
 
 #### 5 - Image Segmentation
-- **Yolact** ([notebook](6-Reinforcement_Learning/YOLOV2.ipynb)) ([code](6-Reinforcement_Learning/YOLOV2.py))([paper](https://arxiv.org/abs/1904.02689)). YOLACT: Real-time Instance Segmentation.
+- **YOLACT** ([notebook](6-Reinforcement_Learning/YOLOV2.ipynb)) ([code](6-Reinforcement_Learning/YOLOV2.py))([paper](https://arxiv.org/abs/1904.02689)). YOLACT: Real-time Instance Segmentation.
 
 
 #### 6 - Generative Adversarial Networks
