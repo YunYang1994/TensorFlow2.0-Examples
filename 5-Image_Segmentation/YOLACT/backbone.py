@@ -13,21 +13,14 @@
 
 import tensorflow as tf
 
-def darknetconvlayer(in_channels, out_channels, kernel_size, strides=1):
+def darknetconvlayer(in_channels, out_channels, kernel_size, strides=1, padding=0):
     """
     Implements a conv, activation, then batch norm.
     Arguments are passed into the conv layer.
     """
     x = tf.keras.layers.Input([None, None, in_channels])
-    if strides == 1:
-    	y = x
-    	padding = 'same'
-    else:
-    	y = tf.keras.layers.ZeroPadding2D(1)(x)
-    	padding = 'valid'
-
-    y = tf.keras.layers.Conv2D(out_channels, kernel_size, strides=strides,
-    						   padding=padding, use_bias=False,
+    y = tf.keras.layers.ZeroPadding2D(padding)(x)
+    y = tf.keras.layers.Conv2D(out_channels, kernel_size, strides=strides, use_bias=False,
     						   kernel_initializer=tf.random_normal_initializer(stddev=0.01),
     						   bias_initializer=tf.constant_initializer(0.))(y)
     y = tf.keras.layers.BatchNormalization()(y)
@@ -45,7 +38,7 @@ class DarkNetBlock(tf.keras.Model):
         super(DarkNetBlock, self).__init__()
 
         self.conv1 = darknetconvlayer(in_channels,  out_channels,                  kernel_size=1)
-        self.conv2 = darknetconvlayer(out_channels, out_channels * self.expansion, kernel_size=3)
+        self.conv2 = darknetconvlayer(out_channels, out_channels * self.expansion, kernel_size=3, padding=1)
 
     def call(self, x):
         return self.conv2(self.conv1(x)) + x
@@ -67,7 +60,7 @@ class DarkNetBackbone(tf.keras.Model):
         self.conv_layers = []
         self.channels = []
 
-        self._preconv = darknetconvlayer(3, 32, 3, 1)
+        self._preconv = darknetconvlayer(3, 32, kernel_size=3, padding=1)
         self.in_channels = 32
 
         self._make_layer(block, 32,  layers[0])
@@ -83,7 +76,7 @@ class DarkNetBackbone(tf.keras.Model):
         # The downsample layer
         layer_list.append(
             darknetconvlayer(self.in_channels, channels * block.expansion,
-                             kernel_size=3, strides=strides))
+                             kernel_size=3, strides=strides, padding=1))
 
         # Each block inputs channels and outputs channels * expansion
         self.in_channels = channels * block.expansion
