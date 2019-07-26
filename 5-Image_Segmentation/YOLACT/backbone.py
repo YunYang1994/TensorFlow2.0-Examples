@@ -13,7 +13,7 @@
 
 import tensorflow as tf
 
-def darknetconvlayer(in_channels, out_channels, kernel_size, strides=2):
+def darknetconvlayer(in_channels, out_channels, kernel_size, strides=1):
     """
     Implements a conv, activation, then batch norm.
     Arguments are passed into the conv layer.
@@ -64,10 +64,10 @@ class DarkNetBackbone(tf.keras.Model):
 
         # These will be populated by _make_layer
         self.num_base_layers = len(layers)
-        self.conv_layers = tf.keras.Sequential()
+        self.conv_layers = []
         self.channels = []
 
-        self._preconv = darknetconvlayer(3, 32, 3, 2)
+        self._preconv = darknetconvlayer(3, 32, 3, 1)
         self.in_channels = 32
 
         self._make_layer(block, 32,  layers[0])
@@ -91,7 +91,7 @@ class DarkNetBackbone(tf.keras.Model):
         	layer_list.append(block(self.in_channels, channels))
 
         self.channels.append(self.in_channels)
-        self.conv_layers.add(tf.keras.Sequential(layer_list))
+        self.conv_layers.append(tf.keras.Sequential(layer_list))
 
     def call(self, x):
         """ Returns a list of convouts for each layer. """
