@@ -103,10 +103,7 @@ class DarkNetBackbone(tf.keras.Model):
         self._make_layer(block, conv_channels // block.expansion, num_blocks=depth, strides=strides)
 
 
-
-
-
-
+darknet53 = DarkNetBackbone()
 
 
 
