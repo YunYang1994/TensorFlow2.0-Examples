@@ -57,10 +57,10 @@ class DarkNetBackbone(tf.keras.Model):
 
         # These will be populated by _make_layer
         self.num_base_layers = len(layers)
-        self.conv_layers = []
         self.channels = []
 
         self._preconv = darknetconvlayer(3, 32, kernel_size=3, padding=1)
+        self.conv_layers = []
         self.in_channels = 32
 
         self._make_layer(block, 32,  layers[0])

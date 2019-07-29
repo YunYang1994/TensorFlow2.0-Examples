@@ -13,13 +13,15 @@
 
 import tensorflow as tf
 from backbone import darknet53
+from itertools import product
+from math import sqrt
 from typing import List
 
 
 def conv_layer(in_channels, out_channels, kernel_size, strides=1, padding=0, activation=None):
     x = tf.keras.layers.Input([None, None, in_channels])
     y = tf.keras.layers.ZeroPadding2D(padding)(x)
-    y = tf.keras.layers.Conv2D(out_channels, kernel_size, strides, use_bias=False, activation=activation,
+    y = tf.keras.layers.Conv2D(out_channels, kernel_size, strides, use_bias=True, activation=activation,
                                kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                                bias_initializer=tf.constant_initializer(0.))(y)
     return tf.keras.Model(x, y)
@@ -56,11 +58,6 @@ class Protonet(tf.keras.Model):
         return x
 
 
-
-
-
-
-
 class FPN(tf.keras.Model):
     """
     Implements a general version of the FPN introduced in
@@ -76,11 +73,11 @@ class FPN(tf.keras.Model):
         super(FPN, self).__init__()
 
         self.lat_layers  = [conv_layer(x,   256, kernel_size=1)
-                                                       for _ in reversed(in_channels)]
+                                                       for x in reversed(in_channels)]
         # This is here for backwards compatability
         self.pred_layers = [conv_layer(256, 256, kernel_size=3, padding=1)
                                                        for _ in in_channels]
-        self.downsample_layers = [conv_layer(256, 256, kernel_size=1, padding=1, strides=2)
+        self.downsample_layers = [conv_layer(256, 256, kernel_size=3, padding=1, strides=2)
                                                        for _ in range(2)]
 
     def call(self, convouts:List[tf.Tensor]):
@@ -98,6 +95,8 @@ class FPN(tf.keras.Model):
         # For backward compatability, the conv layers are stored in reverse but the input and output is
         # given in the correct order. Thus, use j=-i-1 for the input and output and i for the conv layers.
         j = len(convouts)
+        print(self.lat_layers)
+        print(convouts)
         for lat_layer in self.lat_layers:
             j -= 1
 
@@ -156,9 +155,9 @@ class PredictionModule(tf.keras.Model):
 
         if parent is None:
             self.upfeature  = conv_layer(in_channels, 256, 3, padding=1, activation='relu')
-            self.bbox_layer = conv_layer(3, self.num_priors * 4,                3, padding=1)
-            self.conf_layer = conv_layer(3, self.num_priors * self.num_classes, 3, padding=1)
-            self.mask_layer = conv_layer(3, self.num_priors * self.mask_dim,    3, padding=1)
+            self.bbox_layer = conv_layer(out_channels, self.num_priors * 4,                3, padding=1)
+            self.conf_layer = conv_layer(out_channels, self.num_priors * self.num_classes, 3, padding=1)
+            self.mask_layer = conv_layer(out_channels, self.num_priors * self.mask_dim,    3, padding=1)
 
             self.bbox_extra, self.conf_extra, self.mask_extra = lambda x:x, lambda x:x, lambda x:x
 
@@ -182,7 +181,7 @@ class PredictionModule(tf.keras.Model):
         """
         src = self if self.parent[0] is None else self.parent[0]
 
-        conv_h, conv_w = x.shape[1:2]
+        conv_h, conv_w = x.shape[1:3]
 
         x = src.upfeature(x)
         bbox_x = src.bbox_extra(x)
@@ -193,7 +192,7 @@ class PredictionModule(tf.keras.Model):
         conf = tf.reshape(src.conf_layer(conf_x), [-1, self.num_classes])
         mask = tf.reshape(src.mask_layer(mask_x), [-1, self.mask_dim])
 
-        mask = torch.tanh(mask)
+        mask = tf.nn.tanh(mask)
         priors = self.make_priors(conv_h, conv_w)
 
         return { 'loc': bbox, 'conf': conf, 'mask': mask, 'priors': priors }
@@ -276,14 +275,19 @@ class Yolact(tf.keras.Model):
                                     aspect_ratios = pred_aspect_ratios[idx],
                                     scales        = pred_scales[idx],
                                     parent        = parent)
+            print(parent)
             self.prediction_layers.append(pred)
+            print(pred.layers)
 
         self.semantic_seg_conv = conv_layer(src_channels[0], 80, 1)
 
     def call(self, x):
         """ The input should be of size [batch_size, img_h, img_w, 3] """
 
+        print(x)
+
         outs = self.backbone(x)
+        print(outs)
         # Use backbone.selected_layers because we overwrote self.selected_layers
         outs = [outs[i] for i in [2, 3, 4]]
         outs = self.fpn(outs)
