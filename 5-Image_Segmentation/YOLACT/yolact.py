@@ -284,10 +284,8 @@ class Yolact(tf.keras.Model):
     def call(self, x):
         """ The input should be of size [batch_size, img_h, img_w, 3] """
 
-        print(x)
-
         outs = self.backbone(x)
-        print(outs)
+        return outs
         # Use backbone.selected_layers because we overwrote self.selected_layers
         outs = [outs[i] for i in [2, 3, 4]]
         outs = self.fpn(outs)

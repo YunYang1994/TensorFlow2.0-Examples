@@ -21,8 +21,7 @@ def darknetconvlayer(in_channels, out_channels, kernel_size, strides=1, padding=
     x = tf.keras.layers.Input([None, None, in_channels])
     y = tf.keras.layers.ZeroPadding2D(padding)(x)
     y = tf.keras.layers.Conv2D(out_channels, kernel_size, strides=strides, use_bias=False,
-    						   kernel_initializer=tf.random_normal_initializer(stddev=0.01),
-    						   bias_initializer=tf.constant_initializer(0.))(y)
+    						   kernel_initializer=tf.random_normal_initializer(stddev=0.01))(y)
     y = tf.keras.layers.BatchNormalization()(y)
     y = tf.nn.leaky_relu(y, alpha=0.1)
 
@@ -90,6 +89,7 @@ class DarkNetBackbone(tf.keras.Model):
         """ Returns a list of convouts for each layer. """
 
         y = self._preconv(x)
+        return y
 
         outs = []
         for layer in self.conv_layers:

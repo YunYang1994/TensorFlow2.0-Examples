@@ -67,7 +67,7 @@ image = cv2.resize(image, (550, 550))
 image = image / 255.
 image = np.expand_dims(image, 0).astype(np.float32)
 result = model(image)
-
+print(result[0][0][0])
 
 
 
