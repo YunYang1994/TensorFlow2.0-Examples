@@ -4,9 +4,9 @@
 #   Copyright (C) 2019 * Ltd. All rights reserved.
 #
 #   Editor      : VIM
-#   File name   : model.py
+#   File name   : Unet.py
 #   Author      : YunYang1994
-#   Created date: 2019-09-19 14:48:32
+#   Created date: 2019-09-20 16:49:08
 #   Description :
 #
 #================================================================
@@ -59,5 +59,3 @@ def Unet(num_class, image_size):
     conv10 = Conv2D(num_class, 1)(conv9)
 
     return Model(inputs = inputs, outputs = conv10)
-
-
