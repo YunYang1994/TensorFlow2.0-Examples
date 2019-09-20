@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/30433053/65319495-52c88980-dbd2-11e9-8797-9bd8959556fe.png)
+![image](https://user-images.githubusercontent.com/30433053/65319751-ee59fa00-dbd2-11e9-9065-10629dfd6d2f.png)
 
 # Train VOC dataset
 Download VOC PASCAL trainval and test data
