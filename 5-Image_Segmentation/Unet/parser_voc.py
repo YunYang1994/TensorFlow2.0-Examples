@@ -12,8 +12,12 @@
 #================================================================
 
 import os
+import argparse
 
-VOC_path = "/home/yang/dataset/VOC"
+parser = argparse.ArgumentParser()
+parser.add_argument("--voc_path", default="/home/yang/dataset/VOC")
+
+VOC_path = parser.parse_args().voc_path
 
 train_label_write = open(os.path.join(os.getcwd(), "data/train_label.txt"), "a+")
 train_image_write = open(os.path.join(os.getcwd(), "data/train_image.txt"), "a+")

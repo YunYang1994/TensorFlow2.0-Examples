@@ -10,7 +10,7 @@ $ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 Extract all of these tars into one directory and rename them, which should have the following basic structure.
 
 ```bashrc
-VOC           # path:  /home/yang/test/VOC/
+VOC           # path:  /home/yang/dataset/VOC
 ├── test
 |    └──VOCdevkit
 |       └──VOC2007 (from VOCtest_06-Nov-2007.tar)
@@ -23,6 +23,6 @@ VOC           # path:  /home/yang/test/VOC/
 Then you need to parser VOC dataset and train it
 
 ```bashrc
-$ python parser_voc.py
+$ python parser_voc.py --voc_path /home/yang/dataset/VOC
 $ python train.py
 ```
