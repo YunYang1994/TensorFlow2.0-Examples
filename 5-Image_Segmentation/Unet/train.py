@@ -21,10 +21,12 @@ from Unet import Unet
 
 image_size = 512
 epochs = 1
+lr = 0.001
 batch_size = 2
 model = Unet(21, image_size)
-logdir = "./data/log"
+logdir = "./log"
 global_steps = 0
+optimizer = tf.keras.optimizers.Adam(lr)
 
 image_paths = open("./data/train_image.txt").readlines()
 label_paths = open("./data/train_label.txt").readlines()
@@ -44,7 +46,7 @@ for epoch in range(epochs):
         for i in range(batch_size):
             image = cv2.imread(image_paths.pop().rstrip())
             image = cv2.resize(image, dsize=(image_size, image_size), interpolation=cv2.INTER_NEAREST)
-            batch_image[i] = image
+            batch_image[i] = image / 255.
 
             label_image = cv2.imread(label_paths.pop().rstrip())
             label_image = cv2.resize(label_image, dsize=(image_size, image_size), interpolation=cv2.INTER_NEAREST)
@@ -59,18 +61,15 @@ for epoch in range(epochs):
 
         with tf.GradientTape() as tape:
             pred_result = model(batch_image, training=True)
-            print(pred_result.shape)
-            loss = tf.nn.softmax_cross_entropy_with_logits(pred_result, batch_label)
+            loss = tf.nn.softmax_cross_entropy_with_logits(logits=pred_result, labels=batch_label)
             loss = tf.reduce_mean(tf.reduce_sum(loss, axis=[1,2]))
-        # writing summary data
+            gradients = tape.gradient(loss, model.trainable_variables)
+            optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+            # writing summary data
         with writer.as_default():
             tf.summary.scalar("loss", loss, step=global_steps)
             print("=> Epoch: %2d, global_steps: %5d loss: %.6f" %(epoch+1, global_steps, loss.numpy()))
         writer.flush()
-
-
-
-
 
 
 
