@@ -20,16 +20,14 @@ import tensorflow as tf
 from Unet import Unet
 
 image_size = 512
-epochs = 1
-lr = 0.001
+epochs = 50
+lr = 0.0005
 batch_size = 2
 model = Unet(21, image_size)
 logdir = "./log"
 global_steps = 0
 optimizer = tf.keras.optimizers.Adam(lr)
 
-image_paths = open("./data/train_image.txt").readlines()
-label_paths = open("./data/train_label.txt").readlines()
 voc_colormap = json.load(open("./data/voc_colormap.json"))
 
 if os.path.exists(logdir): shutil.rmtree(logdir)
@@ -39,6 +37,8 @@ class_name = sorted(voc_colormap.keys())
 colormap = [voc_colormap[cls] for cls in class_name]
 
 for epoch in range(epochs):
+    image_paths = open("./data/train_image.txt").readlines()
+    label_paths = open("./data/train_label.txt").readlines()
     batch_image = np.zeros(shape=[batch_size, image_size, image_size, 3], dtype=np.float32)
     batch_label = np.zeros(shape=[batch_size, image_size, image_size, 21], dtype=np.float32)
     while len(image_paths):
@@ -70,6 +70,7 @@ for epoch in range(epochs):
             tf.summary.scalar("loss", loss, step=global_steps)
             print("=> Epoch: %2d, global_steps: %5d loss: %.6f" %(epoch+1, global_steps, loss.numpy()))
         writer.flush()
+    model.save_weights("Unet.h5")
 
 
 
