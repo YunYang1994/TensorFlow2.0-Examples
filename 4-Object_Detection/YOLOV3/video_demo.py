@@ -20,7 +20,7 @@ from core.yolov3 import YOLOv3, decode
 
 
 video_path      = "./docs/road.mp4"
-# video_path      = 0
+video_path      = 0
 num_classes     = 80
 input_size      = 416
 
@@ -30,9 +30,8 @@ feature_maps = YOLOv3(input_layer)
 bbox_tensors = []
 for i, fm in enumerate(feature_maps):
     bbox_tensor = decode(fm, i)
-    bbox_tensors.append(tf.reshape(bbox_tensor, (-1, 5+num_classes)))
+    bbox_tensors.append(bbox_tensor)
 
-bbox_tensors = tf.concat(bbox_tensors, axis=0)
 model = tf.keras.Model(input_layer, bbox_tensors)
 utils.load_weights(model, "./yolov3.weights")
 model.summary()
@@ -46,15 +45,18 @@ while True:
     frame_size = frame.shape[:2]
     image_data = utils.image_preporcess(np.copy(frame), [input_size, input_size])
     image_data = image_data[np.newaxis, ...].astype(np.float32)
-    prev_time = time.time()
 
+    prev_time = time.time()
     pred_bbox = model.predict(image_data)
+    curr_time = time.time()
+    exec_time = curr_time - prev_time
+
+    pred_bbox = [tf.reshape(x, (-1, tf.shape(x)[-1])) for x in pred_bbox]
+    pred_bbox = tf.concat(pred_bbox, axis=0)
     bboxes = utils.postprocess_boxes(pred_bbox, frame_size, input_size, 0.3)
     bboxes = utils.nms(bboxes, 0.45, method='nms')
     image = utils.draw_bbox(frame, bboxes)
 
-    curr_time = time.time()
-    exec_time = curr_time - prev_time
     result = np.asarray(image)
     info = "time: %.2f ms" %(1000*exec_time)
     cv2.putText(result, text=info, org=(50, 70), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
@@ -63,4 +65,6 @@ while True:
     result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     cv2.imshow("result", result)
     if cv2.waitKey(1) & 0xFF == ord('q'): break
+
+
 
