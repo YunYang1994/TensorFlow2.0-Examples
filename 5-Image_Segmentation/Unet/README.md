@@ -1,7 +1,7 @@
 
 # U-Net: Convolutional Networks for Biomedical Image Segmentation.
 
-![image](https://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a/u-net-architecture.png)
+![image](./data/u-net-architecture.png)
 
 
 ```bashrc
