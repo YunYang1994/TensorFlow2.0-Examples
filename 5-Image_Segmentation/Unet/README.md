@@ -10,7 +10,7 @@
 | input | ground truth | prediction |
 |---|---|:---:|
 |![image](./results/origin_0.png)|![image](./results/gt_0.png)|![image](./results/pred_0.png)|
-|![image](./results/origin_1.png)|![image](./results/gt_1.png)|![image](./results/pred_0.png)|
+|![image](./results/origin_1.png)|![image](./results/gt_1.png)|![image](./results/pred_1.png)|
 
 Finally, you can train it and then evaluate your model
 
