@@ -69,10 +69,11 @@ for idx, (img, mask) in enumerate(testSet):
             else:
                 img[i][j] = img[i][j]*255
     image_accuracy = np.mean(mask == pred_mask)
-    image_path = "./results/"+str(idx)+".png"
+    image_path = "./results/pred_"+str(idx)+".png"
     print("=> accuracy: %.4f, saving %s" %(image_accuracy, image_path))
     cv2.imwrite(image_path, img)
     cv2.imwrite("./results/origin_%d.png" %idx, oring_img*255)
+    cv2.imwrite("./results/gt_%d.png" %idx, mask*255)
     if idx == 1: break
 
 
