@@ -1,4 +1,4 @@
-# TensorFlow2.x-YOLOv3 [[代码思路]](https://github.com/YunYang1994/CodeFun/blob/master/002-deep_learning/YOLOv3.md)
+# TensorFlow2.x-YOLOv3 [[代码思路]](https://github.com/YunYang1994/CodeFun/blob/master/computer_vision/YOLOv3.md)
 A minimal tensorflow implementation of YOLOv3, with support for training, inference and evaluation.
 
 ## Installation
