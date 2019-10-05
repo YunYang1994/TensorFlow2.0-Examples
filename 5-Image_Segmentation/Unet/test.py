@@ -74,6 +74,6 @@ for idx, (img, mask) in enumerate(testSet):
     cv2.imwrite(image_path, img)
     cv2.imwrite("./results/origin_%d.png" %idx, oring_img*255)
     cv2.imwrite("./results/gt_%d.png" %idx, mask*255)
-    if idx == 1: break
+    if idx == 29: break
 
 
