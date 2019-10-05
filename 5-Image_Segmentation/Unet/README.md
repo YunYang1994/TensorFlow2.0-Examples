@@ -19,3 +19,19 @@ $ git clone https://github.com/YunYang1994/membrane.git
 $ python train.py
 $ python test.py
 ```
+## Citation
+
+```
+@InProceedings{RFB15a,
+  author       = "O. Ronneberger and P.Fischer and T. Brox",
+  title        = "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+  booktitle    = "Medical Image Computing and Computer-Assisted Intervention (MICCAI)",
+  series       = "LNCS",
+  volume       = "9351",
+  pages        = "234--241",
+  year         = "2015",
+  publisher    = "Springer",
+  note         = "(available on arXiv:1505.04597 [cs.CV])",
+  url          = "http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a"
+}
+```
