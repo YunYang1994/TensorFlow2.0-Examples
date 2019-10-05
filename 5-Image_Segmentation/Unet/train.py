@@ -14,9 +14,6 @@
 from Unet import Unet
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-def adjustData(img,mask):
-    pass
-
 def trainGenerator(batch_size):
     """
     generate image and mask at the same time
