@@ -11,66 +11,57 @@
 #
 #================================================================
 
-import os
-import cv2
-import json
-import shutil
-import numpy as np
-import tensorflow as tf
 from Unet import Unet
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-image_size = 512
-epochs = 50
-lr = 0.0005
-batch_size = 2
-model = Unet(21, image_size)
-logdir = "./log"
-global_steps = 0
-optimizer = tf.keras.optimizers.Adam(lr)
+def adjustData(img,mask):
+    pass
 
-voc_colormap = json.load(open("./data/voc_colormap.json"))
+def trainGenerator(batch_size):
+    """
+    generate image and mask at the same time
+    use the same seed for image_datagen and mask_datagen
+    to ensure the transformation for image and mask is the same
+    """
+    aug_dict = dict(rotation_range=0.2,
+                        width_shift_range=0.05,
+                        height_shift_range=0.05,
+                        shear_range=0.05,
+                        zoom_range=0.05,
+                        horizontal_flip=True,
+                        fill_mode='nearest')
+    aug_dict = dict(horizontal_flip=True,
+                        fill_mode='nearest')
 
-if os.path.exists(logdir): shutil.rmtree(logdir)
-writer = tf.summary.create_file_writer(logdir)
+    image_datagen = ImageDataGenerator(**aug_dict)
+    mask_datagen = ImageDataGenerator(**aug_dict)
+    image_generator = image_datagen.flow_from_directory(
+        "membrane/train",
+        classes=["images"],
+        color_mode = "grayscale",
+        target_size = (256, 256),
+        class_mode = None,
+        batch_size = batch_size, seed=1)
 
-class_name = sorted(voc_colormap.keys())
-colormap = [voc_colormap[cls] for cls in class_name]
+    mask_generator = mask_datagen.flow_from_directory(
+        "membrane/train",
+        classes=["labels"],
+        color_mode = "grayscale",
+        target_size = (256, 256),
+        class_mode = None,
+        batch_size = batch_size, seed=1)
 
-for epoch in range(epochs):
-    image_paths = open("./data/train_image.txt").readlines()
-    label_paths = open("./data/train_label.txt").readlines()
-    batch_image = np.zeros(shape=[batch_size, image_size, image_size, 3], dtype=np.float32)
-    batch_label = np.zeros(shape=[batch_size, image_size, image_size, 21], dtype=np.float32)
-    while len(image_paths):
-        global_steps += 1
-        for i in range(batch_size):
-            image = cv2.imread(image_paths.pop().rstrip())
-            image = cv2.resize(image, dsize=(image_size, image_size), interpolation=cv2.INTER_NEAREST)
-            batch_image[i] = image / 255.
+    train_generator = zip(image_generator, mask_generator)
+    for (img,mask) in train_generator:
+        img = img / 255.
+        mask = mask / 255.
+        mask[mask > 0.5] = 1
+        mask[mask <= 0.5] = 0
+        yield (img,mask)
 
-            label_image = cv2.imread(label_paths.pop().rstrip())
-            label_image = cv2.resize(label_image, dsize=(image_size, image_size), interpolation=cv2.INTER_NEAREST)
-
-            H,W,C = label_image.shape
-            for x in range(H):
-                for y in range(W):
-                    pixel_color = image[x][y].tolist()
-                    if pixel_color in colormap:
-                        cls_idx = colormap.index(pixel_color)
-                        batch_label[i][x][y][cls_idx] = 1.
-
-        with tf.GradientTape() as tape:
-            pred_result = model(batch_image, training=True)
-            loss = tf.nn.softmax_cross_entropy_with_logits(logits=pred_result, labels=batch_label)
-            loss = tf.reduce_mean(tf.reduce_sum(loss, axis=[1,2]))
-            gradients = tape.gradient(loss, model.trainable_variables)
-            optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-            # writing summary data
-        with writer.as_default():
-            tf.summary.scalar("loss", loss, step=global_steps)
-            print("=> Epoch: %2d, global_steps: %5d loss: %.6f" %(epoch+1, global_steps, loss.numpy()))
-        writer.flush()
-    model.save_weights("Unet.h5")
-
+trainset = trainGenerator(batch_size=2)
+model = Unet(1, image_size=256)
+model.fit_generator(trainset,steps_per_epoch=2000,epochs=5)
+model.save_weights("model.h5")
 
 

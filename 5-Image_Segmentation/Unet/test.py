@@ -6,50 +6,73 @@
 #   Editor      : VIM
 #   File name   : test.py
 #   Author      : YunYang1994
-#   Created date: 2019-09-23 14:57:12
+#   Created date: 2019-10-05 12:55:29
 #   Description :
 #
 #================================================================
 
-import os
 import cv2
-import json
 import numpy as np
-import tensorflow as tf
 from Unet import Unet
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+def testGenerator(batch_size):
+    """
+    generate image and mask at the same time
+    use the same seed for image_datagen and mask_datagen
+    to ensure the transformation for image and mask is the same
+    """
+    aug_dict = dict(horizontal_flip=False,fill_mode='nearest')
 
-batch_size = 2
-image_size = 512
-alpha = 0.3
-model = Unet(21, image_size)
-model.load_weights("Unet.h5")
+    image_datagen = ImageDataGenerator(**aug_dict)
+    mask_datagen = ImageDataGenerator(**aug_dict)
+    image_generator = image_datagen.flow_from_directory(
+        "membrane/test",
+        classes=["images"],
+        color_mode = "grayscale",
+        target_size = (256, 256),
+        class_mode = None,
+        batch_size = batch_size, seed=1)
 
-image_paths = open("./data/test_image.txt").readlines()
-label_paths = open("./data/test_label.txt").readlines()
-voc_colormap = json.load(open("./data/voc_colormap.json"))
-if not os.path.exists("./images"): os.mkdir("./images")
+    mask_generator = mask_datagen.flow_from_directory(
+        "membrane/test",
+        classes=["labels"],
+        color_mode = "grayscale",
+        target_size = (256, 256),
+        class_mode = None,
+        batch_size = batch_size, seed=1)
 
-class_name = sorted(voc_colormap.keys())
-colormap = [voc_colormap[cls] for cls in class_name]
+    train_generator = zip(image_generator, mask_generator)
+    for (img,mask) in train_generator:
+        img = img / 255.
+        mask = mask / 255.
+        mask[mask > 0.5] = 1
+        mask[mask <= 0.5] = 0
+        yield (img, mask[0])
 
-while len(image_paths):
-    output_mask = np.zeros([image_size, image_size, 3], np.uint8)
-    image_path = image_paths.pop().rstrip()
-    image_name = image_path.split("/")[-1]
-    image = cv2.imread(image_path)
-    image = cv2.resize(image, dsize=(image_size, image_size), interpolation=cv2.INTER_NEAREST)
-    batch_image = np.expand_dims(image / 255., 0)
+testSet = testGenerator(batch_size=1)
+alpha   = 0.3
+model   = Unet(1, image_size=256)
+model.load_weights("model.hf5")
 
-    pred_mask = model.predict(batch_image)[0]
-    pred_mask = tf.nn.softmax(pred_mask, axis=-1)
-    pred_mask = tf.argmax(pred_mask, axis=-1).numpy()
-    for i in range(image_size):
-        for j in range(image_size):
-            cls_idx = pred_mask[i][j]
-            color = colormap[cls_idx]
-            output_mask[i][j] = color
-    image = (1-alpha) * output_mask + alpha * image
-    cv2.imwrite("./images/"+image_name, image)
+for idx, (img, mask) in enumerate(testSet):
+    oring_img = img[0]
+    pred_mask = model.predict(img)[0]
+    pred_mask[pred_mask > 0.5] = 1
+    pred_mask[pred_mask <= 0.5] = 0
+    img = cv2.cvtColor(img[0], cv2.COLOR_GRAY2RGB)
+    H, W, C = img.shape
+    for i in range(H):
+        for j in range(W):
+            if pred_mask[i][j][0] <= 0.5:
+                img[i][j] = (1-alpha)*img[i][j]*255 + alpha*np.array([0, 0, 255])
+            else:
+                img[i][j] = img[i][j]*255
+    image_accuracy = np.mean(mask == pred_mask)
+    image_path = "./results/"+str(idx)+".png"
+    print("=> accuracy: %.4f, saving %s" %(image_accuracy, image_path))
+    cv2.imwrite(image_path, img)
+    cv2.imwrite("./results/origin_%d.png" %idx, oring_img*255)
+    if idx == 1: break
 
 
