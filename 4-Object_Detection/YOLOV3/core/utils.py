@@ -15,7 +15,6 @@ import cv2
 import random
 import colorsys
 import numpy as np
-import tensorflow as tf
 from core.config import cfg
 
 def load_weights(model, weights_file):
