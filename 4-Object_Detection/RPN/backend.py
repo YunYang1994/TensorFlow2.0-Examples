@@ -64,7 +64,7 @@ conv5_3 = tf.keras.layers.Conv2D(filters=512, kernel_size=3, strides=[1, 1],
 
 
 
-model = tf.keras.Model(inputs, conv)
+# model = tf.keras.Model(inputs, conv)
 
 
 
