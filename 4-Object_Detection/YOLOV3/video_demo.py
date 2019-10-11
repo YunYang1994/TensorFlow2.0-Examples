@@ -20,7 +20,7 @@ from core.yolov3 import YOLOv3, decode
 
 
 video_path      = "./docs/road.mp4"
-video_path      = 0
+# video_path      = 0
 num_classes     = 80
 input_size      = 416
 
