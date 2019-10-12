@@ -13,7 +13,6 @@
 
 import tensorflow as tf
 
-
 class FCN8s(tf.keras.Model):
     def __init__(self, n_class=21):
         super(FCN8s, self).__init__()
@@ -66,7 +65,7 @@ class FCN8s(tf.keras.Model):
 
     def call(self, x, training=False):
         h = x
-        h = self.conv1_1(tf.keras.layers.ZeroPadding2D(100)(h))
+        h = self.conv1_1(tf.keras.layers.ZeroPadding2D(padding=(100, 100))(h))
         h = self.conv1_2(h)
         h = self.pool1(h)
 
@@ -85,6 +84,7 @@ class FCN8s(tf.keras.Model):
         h = self.conv4_3(h)
         h = self.pool4(h)
         pool4 = h # 1/16
+        print(pool4.shape)
 
         h = self.conv5_1(h)
         h = self.conv5_2(h)
@@ -100,30 +100,27 @@ class FCN8s(tf.keras.Model):
         h = self.socre_fr(h)
         h = self.upscore2(h)
         upscore2 = h # 1/16
+        # print(upscore2.shape)
 
-        h = self.score_pool4(pool4)
-        h = h[:, :, 5:5+upscore2.shape[2], 5:5+upscore2.shape[3]]
+        h = self.score_pool4(pool4 * 0.01) # XXX: scaling to train at onece
+        h = h[:, 5:5+upscore2.shape[1], 5:5+upscore2.shape[2], :] # channel last
         score_pool4c = h # 1/16
 
         h = upscore2 + score_pool4c # 1/16
         h = self.upscore_pool4(h)
         upscore_pool4 = h # 1/8
 
-        h = self.score_pool3(pool3)
-        h = h[:, :,
-              9:9+upscore_pool4.shape[2],
-              9:9+upscore_pool4.shape[3]]
+        h = self.score_pool3(pool3 * 0.0001) # XXX: scaling to train at onece
+        h = h[:,
+              9:9+upscore_pool4.shape[1],
+              9:9+upscore_pool4.shape[2], :] # channel last
         score_pool3c = h # 1/8
 
         h = upscore_pool4 + score_pool3c # 1/8
 
         h = self.upscore8(h)
-        h = h[:, :, 31:31+x.shape[2], 31:31+x.shape[3]]
+        h = h[:, 31:31+x.shape[1], 31:31+x.shape[2], :] # channel last
 
         return h
-
-
-
-
 
 

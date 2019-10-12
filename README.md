@@ -22,7 +22,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 #### 3 - Neural Network Architecture
 
 - **VGG16** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/vgg16)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/vgg16/vgg16.py))([paper](https://arxiv.org/pdf/1409.1556.pdf)). VGG16: Very Deep Convolutional Networks for Large-Scale Image Recognition. 
-- **Resnet** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/Resnet)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/Resnet/Resnet.py))([paper](https://arxiv.org/pdf/1512.03385.pdf)). Resnet: Deep Residual Learning for Image Recognition. 🔥🔥🔥
+- **Resnet** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/Resnet)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/Resnet/Resnet.py))([paper](https://arxiv.org/pdf/1512.03385.pdf)). Resnet: Deep Residual Learning for Image Recognition. 🔥🔥
 
 #### 4 - Object Detection
 
@@ -30,6 +30,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 5 - Image Segmentation
 - **Unet** ([notebook](5-Image_Segmentation/Unet)) ([code](5-Image_Segmentation/Unet/train.py))([paper](https://arxiv.org/abs/1505.04597)). U-Net: Convolutional Networks for Biomedical Image Segmentation. 🔥🔥🔥
+- **FCN** ([notebook](5-Image_Segmentation/FCN)) ([code](5-Image_Segmentation/FCN/train.py))([paper](https://arxiv.org/abs/1411.4038)). FCN: Fully Convolutional Networks for Semantic Segmentation. 🔥🔥🔥
 
 
 #### 6 - Generative Adversarial Networks
