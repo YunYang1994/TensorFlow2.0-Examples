@@ -88,7 +88,6 @@ class ResNet(tf.keras.Model):
         out = self.avg_pool(out)
         out = tf.reshape(out, (out.shape[0], -1))
         out = self.fc(out)
-        # return tf.argmax(tf.nn.softmax(out, axis=-1), axis=-1)
         return tf.nn.softmax(out, axis=-1)
 
 # Load and prepare the cifar10 dataset.
