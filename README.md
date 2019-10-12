@@ -30,7 +30,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 #### 5 - Image Segmentation
 - **Unet** ([notebook](5-Image_Segmentation/Unet)) ([code](5-Image_Segmentation/Unet/train.py))([paper](https://arxiv.org/abs/1505.04597)). U-Net: Convolutional Networks for Biomedical Image Segmentation. 🔥🔥🔥
-- **FCN** ([notebook](5-Image_Segmentation/FCN)) ([code](5-Image_Segmentation/FCN/train.py))([paper](https://arxiv.org/abs/1411.4038)). FCN: Fully Convolutional Networks for Semantic Segmentation. 🔥🔥🔥
+- **FCN** ([notebook](5-Image_Segmentation/FCN)) ([code](5-Image_Segmentation/FCN/fcn8s.py))([paper](https://arxiv.org/abs/1411.4038)). FCN: Fully Convolutional Networks for Semantic Segmentation. 🔥🔥🔥
 
 
 #### 6 - Generative Adversarial Networks
