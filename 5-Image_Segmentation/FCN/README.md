@@ -28,11 +28,5 @@ $ python parser_voc.py --data_path /home/yang/test/VOC
 
 |![image](https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg)|![image](https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg)|![image](https://user-images.githubusercontent.com/30433053/66732795-da32b100-ee8f-11e9-9d85-f0ddba7a3ab1.jpg)|
 |---|---|:---:|
-|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|![weibo-logo](https://github.com/YunYang1994/SphereFace/blob/master/image/original_softmax.png)|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|
+|![image](https://user-images.githubusercontent.com/30433053/66732795-da32b100-ee8f-11e9-9d85-f0ddba7a3ab1.jpg)|![weibo-logo](https://github.com/YunYang1994/SphereFace/blob/master/image/original_softmax.png)|![image](https://user-images.githubusercontent.com/30433053/66732795-da32b100-ee8f-11e9-9d85-f0ddba7a3ab1.jpg)|
 
