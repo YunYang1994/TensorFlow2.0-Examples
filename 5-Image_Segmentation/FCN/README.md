@@ -26,9 +26,7 @@ Then you need to make some transformation.
 $ python parser_voc.py --data_path /home/yang/test/VOC
 ```
 
-|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="https://user-images.githubusercontent.com/30433053/66732795-da32b100-ee8f-11e9-9d85-f0ddba7a3ab1.jpg" style="max-width:50%;">|
+|![image](https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg)|![image](https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg)|![image](https://user-images.githubusercontent.com/30433053/66732795-da32b100-ee8f-11e9-9d85-f0ddba7a3ab1.jpg)|
 |---|---|:---:|
 |<p align="center">
     <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
@@ -37,22 +35,4 @@ $ python parser_voc.py --data_path /home/yang/test/VOC
     <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
     </a>
 </p>|
-|m<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|![weibo-logo](https://github.com/YunYang1994/SphereFace/blob/master/image/modified_softmax.png)|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|
-|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|!<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|<p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg" style="max-width:50%;">
-    </a>
-</p>|
-
 
