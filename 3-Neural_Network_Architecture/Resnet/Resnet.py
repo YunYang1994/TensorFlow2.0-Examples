@@ -120,6 +120,7 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 def train_step(images, labels):
     with tf.GradientTape() as tape:
         predictions = model(images, training=True)
+        print("=> label shape: ", labels.shape, "pred shape", predictions.shape)
         loss = loss_object(labels, predictions)
     gradients = tape.gradient(loss, model.trainable_variables)
     optimizer.apply_gradients(zip(gradients, model.trainable_variables))
@@ -141,12 +142,12 @@ for epoch in range(EPOCHS):
     for test_images, test_labels in test_ds:
         test_step(test_images, test_labels)
 
-    template = 'Epoch {}, Loss: {}, Accuracy: {}, Test Loss: {}, Test Accuracy: {}'
+    template = '=> Epoch {}, Loss: {:.4}, Accuracy: {:.2%}, Test Loss: {:.4}, Test Accuracy: {:.2%}'
     print(template.format(epoch+1,
                           train_loss.result(),
-                          train_accuracy.result()*100,
+                          train_accuracy.result(),
                           test_loss.result(),
-                          test_accuracy.result()*100))
+                          test_accuracy.result()))
     # Reset the metrics for the next epoch
     train_loss.reset_states()
     train_accuracy.reset_states()
