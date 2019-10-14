@@ -12,15 +12,17 @@
 #================================================================
 
 import os
+import numpy as np
+from config import colormap
+from scipy import misc
 
 VOC_path = "/home/yang/dataset/VOC"
+train_labels = "./data/train_labels"
 
 if not os.path.exists("./data"): os.mkdir("./data")
+if not os.path.exists("./data/train_labels"): os.mkdir("./data/train_labels")
 
-train_label_write = open(os.path.join(os.getcwd(), "data/train_label.txt"), "w")
 train_image_write = open(os.path.join(os.getcwd(), "data/train_image.txt"), "w")
-test_label_write = open(os.path.join(os.getcwd(), "data/test_label.txt"), "w")
-test_image_write = open(os.path.join(os.getcwd(), "data/test_image.txt"), "w")
 
 for mode in ["train", "test"]:
     for year in [2007, 2012]:
@@ -33,6 +35,23 @@ for mode in ["train", "test"]:
             label_name = train_label_image[:-4]
             image_path = os.path.join(train_image_folder, label_name + ".jpg")
             if not os.path.exists(image_path): continue
-            label_path = os.path.join(train_label_folder, train_label_image)
-            train_label_write.writelines(label_path+"\n")
             train_image_write.writelines(image_path+"\n")
+            label_path = os.path.join(train_label_folder, train_label_image)
+            label_image = np.array(misc.imread(label_path))
+            write_label = open("./data/train_labels/"+label_name+".txt", 'w')
+            print("=> processing %s" %label_path)
+            H, W, C = label_image.shape
+            for i in range(H):
+                write_line = []
+                for j in range(W):
+                    pixel_color = label_image[i, j].tolist()
+                    if pixel_color in colormap:
+                        cls_idx = colormap.index(pixel_color)
+                    else:
+                        cls_idx = 0
+                    write_line.append(str(cls_idx))
+                write_label.writelines(" ".join(write_line) + "\n")
+
+
+
+
