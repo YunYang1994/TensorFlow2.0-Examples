@@ -19,7 +19,7 @@ VOC           # path:  /home/yang/test/VOC/
 └── train
      └──VOCdevkit
              └──VOC2007 (from VOCtrainval_06-Nov-2007.tar)
-                     └──VOC2012 (from VOCtrainval_11-May-2012.tar)
+             └──VOC2012 (from VOCtrainval_11-May-2012.tar)
 ```
 Then you need to make some transformation.
 ```bashrc
