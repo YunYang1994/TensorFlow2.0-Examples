@@ -4,7 +4,7 @@
 > "Talk is cheap, show me the code." <br>
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------- Linus Torvalds
 
-This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. It will be continuously updated ! 🐍🐍🐍🐍🐍🐍
+This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. **It will be continuously updated !** 🐍🐍🐍🐍🐍🐍
 
 #### 1 - Introduction
 - **Hello World** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/1-Introduction/helloworld.ipynb)) ([code](1-Introduction/helloworld.py)). Very simple example to learn how to print "hello world" using TensorFlow.
