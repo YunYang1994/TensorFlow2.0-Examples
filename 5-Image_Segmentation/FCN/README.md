@@ -31,3 +31,15 @@ $ python train.py
 |---|---|:---:|
 |![image](https://user-images.githubusercontent.com/30433053/66732799-dd2da180-ee8f-11e9-9025-3a3e0e94a20b.jpg)|![image](https://user-images.githubusercontent.com/30433053/66733895-aa85a800-ee93-11e9-8eae-405235aa8564.jpg)|![image](https://user-images.githubusercontent.com/30433053/66733897-ace80200-ee93-11e9-84e4-21f7d94d06eb.jpg)|
 
+## Citation
+--------------------
+```
+@inproceedings{Tensorflow2.0-Examples
+  author       = YunYang1994,
+  email        = www.dreameryangyun@sjtu.edu.cn,
+  title        = "FCN: Fully Convolutional Networks for Semantic Segmentation.",
+  url          = https://github.com/YunYang1994/TensorFlow2.0-Examples,
+  year         = 2019,
+}
+```
+
