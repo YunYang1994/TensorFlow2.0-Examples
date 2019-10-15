@@ -33,11 +33,11 @@ Epoch 2/5
 ## Citation
 --------------------
 ```
-@InProceedings{RFB15a,
-  author       = "O. Ronneberger and P.Fischer and T. Brox",
+@Tensorflow2.0-Examples{,
+  author       = YunYang1994,
+  email        = www.dreameryangyun@sjtu.edu.cn,
   title        = "U-Net: Convolutional Networks for Biomedical Image Segmentation",
-  booktitle    = "Medical Image Computing and Computer-Assisted Intervention (MICCAI)",
-  note         = "(available on arXiv:1505.04597 [cs.CV])",
-  url          = "http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a"
+  url          = https://github.com/YunYang1994/TensorFlow2.0-Examples,
+  year         = 2019,
 }
 ```
