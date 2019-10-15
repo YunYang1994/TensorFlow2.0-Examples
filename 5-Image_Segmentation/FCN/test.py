@@ -11,4 +11,10 @@
 #
 #================================================================
 
+import numpy as np
+from fcn8s import FCN8s
 
+data = np.arange(224*224*3).reshape([1, 224,224,3]).astype(np.float)
+
+model = FCN8s()
+y = model(data)

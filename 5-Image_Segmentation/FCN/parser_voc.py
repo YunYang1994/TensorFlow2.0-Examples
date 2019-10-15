@@ -17,14 +17,14 @@ from config import colormap
 from scipy import misc
 
 VOC_path = "/home/yang/dataset/VOC"
-train_labels = "./data/train_labels"
 
 if not os.path.exists("./data"): os.mkdir("./data")
 if not os.path.exists("./data/train_labels"): os.mkdir("./data/train_labels")
+if not os.path.exists("./data/test_labels"): os.mkdir("./data/test_labels")
 
-train_image_write = open(os.path.join(os.getcwd(), "data/train_image.txt"), "w")
 
 for mode in ["train", "test"]:
+    image_write = open(os.path.join(os.getcwd(), "data/%s_image.txt" %mode), "w")
     for year in [2007, 2012]:
         if mode == "test" and year == 2012: continue
         train_label_folder = os.path.join(VOC_path, "%s/VOCdevkit/VOC%d/SegmentationClass" %(mode, year))
@@ -35,10 +35,10 @@ for mode in ["train", "test"]:
             label_name = train_label_image[:-4]
             image_path = os.path.join(train_image_folder, label_name + ".jpg")
             if not os.path.exists(image_path): continue
-            train_image_write.writelines(image_path+"\n")
+            image_write.writelines(image_path+"\n")
             label_path = os.path.join(train_label_folder, train_label_image)
             label_image = np.array(misc.imread(label_path))
-            write_label = open("./data/train_labels/"+label_name+".txt", 'w')
+            write_label = open(("./data/%s_labels/" % mode)+label_name+".txt", 'w')
             print("=> processing %s" %label_path)
             H, W, C = label_image.shape
             for i in range(H):

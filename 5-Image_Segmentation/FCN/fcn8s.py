@@ -84,7 +84,6 @@ class FCN8s(tf.keras.Model):
         h = self.conv4_3(h)
         h = self.pool4(h)
         pool4 = h # 1/16
-        print(pool4.shape)
 
         h = self.conv5_1(h)
         h = self.conv5_2(h)
@@ -121,6 +120,5 @@ class FCN8s(tf.keras.Model):
         h = self.upscore8(h)
         h = h[:, 31:31+x.shape[1], 31:31+x.shape[2], :] # channel last
 
-        return h
-
+        return tf.nn.softmax(h, axis=-1)
 
