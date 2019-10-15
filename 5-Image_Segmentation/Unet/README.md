@@ -33,7 +33,7 @@ Epoch 2/5
 ## Citation
 --------------------
 ```
-@Tensorflow2.0-Examples{,
+@inproceedings{Tensorflow2.0-Examples
   author       = YunYang1994,
   email        = www.dreameryangyun@sjtu.edu.cn,
   title        = "U-Net: Convolutional Networks for Biomedical Image Segmentation",
