@@ -17,8 +17,19 @@ Finally, you can train it and then evaluate your model
 ```bashrc
 $ git clone https://github.com/YunYang1994/membrane.git
 $ python train.py
-$ python test.py
+
+Epoch 1/5
+Found 90 images belonging to 1 classes.
+Found 90 images belonging to 1 classes.
+5000/5000 [==============================] - 1443s 289ms/step - loss: 0.1926 - accuracy: 0.9456
+Epoch 2/5
+5000/5000 [==============================] - 1438s 288ms/step - loss: 0.1026 - accuracy: 0.9874
+...
+=> accuracy: 0.7934, saving ./results/pred_0.png
+=> accuracy: 0.8132, saving ./results/pred_1.png
+...
 ```
+
 ## Citation
 --------------------
 ```
