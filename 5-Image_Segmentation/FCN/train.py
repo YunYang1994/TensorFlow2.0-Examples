@@ -75,25 +75,33 @@ def DataGenerator(train_image_txt, train_labels_dir, batch_size):
         yield images, labels
 
 
-def visual_result(image, label):
+def visual_result(image, label, alpha=0.7):
+    """
+    image shape -> [H, W, C]
+    label shape -> [H, W]
+    """
     image = (image * rgb_std + rgb_mean) * 255
     image, label = image.astype(np.int), label.astype(np.int)
     H, W, C = image.shape
-    new_label = np.zeros(shape=[H, W, C])
+    masks_color = np.zeros(shape=[H, W, C])
+    inv_masks_color = np.zeros(shape=[H, W, C])
     cls = []
     for i in range(H):
         for j in range(W):
             cls_idx = label[i, j]
-            new_label[i, j] = np.array(colormap[cls_idx])
+            masks_color[i, j] = np.array(colormap[cls_idx])
             cls.append(cls_idx)
+            if classes[cls_idx] == "background":
+                inv_masks_color[i, j] = alpha * image[i, j]
 
     # show_image = 0.7*new_label + 0.3*image
-    show_image = np.zeros(shape=[224, 448, 3])
+    show_image = np.zeros(shape=[224, 672, 3])
     cls = set(cls)
     for x in cls:
         print(classes[x])
     show_image[:, :224, :] = image
-    show_image[:, 224:, :] = new_label
+    show_image[:, 224:448, :] = masks_color
+    show_image[:, 448:, :] = (1-alpha)*image + alpha*masks_color + inv_masks_color
     misc.imshow(show_image)
 
 TrainSet = DataGenerator("./data/train_image.txt", "./data/train_labels", 2)
