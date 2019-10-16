@@ -1,5 +1,7 @@
 ## output
 ```bashrc
+$ python Resnet.py
+
 => label shape:  (32,) pred shape (32, 10)
 => label shape:  (32,) pred shape (32, 10)
 => label shape:  (16,) pred shape (16, 10)
