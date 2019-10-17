@@ -20,30 +20,30 @@ class RPNplus(tf.keras.Model):
         # conv1
         self.conv1_1 = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')
         self.conv1_2 = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')
-        self.pool1   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same') # 1/2
+        self.pool1   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
 
         # conv2
         self.conv2_1 = tf.keras.layers.Conv2D(128, 3, activation='relu', padding='same')
         self.conv2_2 = tf.keras.layers.Conv2D(128, 3, activation='relu', padding='same')
-        self.pool2   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same') # 1/4
+        self.pool2   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
 
         # conv3
         self.conv3_1 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')
         self.conv3_2 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')
         self.conv3_3 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')
-        self.pool3   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same') # 1/8
+        self.pool3   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
 
         # conv4
         self.conv4_1 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
         self.conv4_2 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
         self.conv4_3 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.pool4   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same') # 1/16
+        self.pool4   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
 
         # conv5
         self.conv5_1 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
         self.conv5_2 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
         self.conv5_3 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.pool5   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same') # 1/32
+        self.pool5   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
 
         ## region_proposal_conv
         self.region_proposal_conv1 = tf.keras.layers.Conv2D(256, kernel_size=[5,2],
@@ -91,12 +91,11 @@ class RPNplus(tf.keras.Model):
         h = self.conv5_2(h)
         h = self.conv5_3(h)
         pool5_p = self.region_proposal_conv2(h) # [1, 45, 60, 512]
-                                                # [1, 45, 60, 1280]
-        region_proposal = tf.concat([pool3_p, pool4_p, pool5_p], axis=-1)
-                                                # [1, 45, 60, 18]
-        conv_cls_scores = self.scores_conv(region_proposal)
-                                                # [1, 45, 60, 36]
-        conv_cls_bboxes = self.bboxes_conv(region_proposal)
+
+        region_proposal = tf.concat([pool3_p, pool4_p, pool5_p], axis=-1) # [1, 45, 60, 1280]
+
+        conv_cls_scores = self.scores_conv(region_proposal) # [1, 45, 60, 18]
+        conv_cls_bboxes = self.bboxes_conv(region_proposal) # [1, 45, 60, 36]
 
         cls_scores = tf.reshape(conv_cls_scores, [-1, 2])
         cls_bboxes = tf.reshape(conv_cls_bboxes, [-1, 4])
