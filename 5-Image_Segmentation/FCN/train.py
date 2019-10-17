@@ -17,7 +17,7 @@ import random
 import tensorflow as tf
 import numpy as np
 from fcn8s import FCN8s
-from scipy import misc
+from PIL import Image
 from config import colormap, classes, rgb_mean, rgb_std
 
 
@@ -94,35 +94,48 @@ def visual_result(image, label, alpha=0.7):
             if classes[cls_idx] == "background":
                 inv_masks_color[i, j] = alpha * image[i, j]
 
-    # show_image = 0.7*new_label + 0.3*image
     show_image = np.zeros(shape=[224, 672, 3])
     cls = set(cls)
     for x in cls:
-        print(classes[x])
+        print("=> ", classes[x])
     show_image[:, :224, :] = image
     show_image[:, 224:448, :] = masks_color
     show_image[:, 448:, :] = (1-alpha)*image + alpha*masks_color + inv_masks_color
-    misc.imshow(show_image)
+    show_image = Image.fromarray(np.uint8(show_image))
+    return show_image
 
 TrainSet = DataGenerator("./data/train_image.txt", "./data/train_labels", 2)
-TestSet  = DataGenerator("./data/test_image.txt", "./data/test_labels", 2)
+TestSet  = DataGenerator("./data/test_image.txt", "./data/test_labels", 1)
 
-model = FCN8s()
+model = FCN8s(n_class=21)
 callback = tf.keras.callbacks.ModelCheckpoint("model.h5", verbose=1, save_weights_only=True)
 model.compile(optimizer=tf.keras.optimizers.Adam(lr=1e-4),
               callback=callback,
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
+
+## train your FCN8s model
 model.fit_generator(TrainSet, steps_per_epoch=6000, epochs=30)
 model.save_weights("model.h5")
 
-# data = np.arange(224*224*3).reshape([1,224,224,3]).astype(np.float)
+## load weights and test your model after training
+## if you want to test model, first you need to initialize your model
+## with "model(data)", and then load model weights
+
+# data = np.ones(shape=[1,224,224,3], dtype=np.float)
 # model(data)
 # model.load_weights("model.h5")
 
-for x, y in TrainSet:
+for idx, (x, y) in enumerate(TestSet):
     result = model(x)
     pred_label = tf.argmax(result, axis=-1)
-    visual_result(x[0], pred_label[0].numpy())
+    result = visual_result(x[0], pred_label[0].numpy())
+    save_file = "./data/prediction/%d.jpg" %idx
+    print("=> saving prediction result into ", save_file)
+    result.save(save_file)
+    if idx == 209:
+        result.show()
+        break
+
 
 
