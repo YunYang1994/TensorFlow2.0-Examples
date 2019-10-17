@@ -23,7 +23,7 @@ VOC           # path:  /home/yang/dataset/VOC
 ```
 Finally you need to make some transformation and train it.
 ```bashrc
-$ python parser_voc.py --data_path /home/yang/dataset/VOC
+$ python parser_voc.py --voc_path /home/yang/dataset/VOC
 $ python train.py
 Epoch 1/30
 6000/6000 [==============================] - 3571s 595ms/step - loss: 1.2374 - accuracy: 0.7233
