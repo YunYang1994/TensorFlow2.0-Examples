@@ -15,7 +15,7 @@ import tensorflow as tf
 
 class RPNplus(tf.keras.Model):
     # VGG_MEAN = [103.939, 116.779, 123.68]
-    def __init__(self, image_size=[720, 960]):
+    def __init__(self):
         super(RPNplus, self).__init__()
         # conv1
         self.conv1_1 = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')
@@ -97,8 +97,8 @@ class RPNplus(tf.keras.Model):
         conv_cls_scores = self.scores_conv(region_proposal) # [1, 45, 60, 18]
         conv_cls_bboxes = self.bboxes_conv(region_proposal) # [1, 45, 60, 36]
 
-        cls_scores = tf.reshape(conv_cls_scores, [-1, 2])
-        cls_bboxes = tf.reshape(conv_cls_bboxes, [-1, 4])
+        cls_scores = tf.reshape(conv_cls_scores, [-1, 45, 60, 9, 2])
+        cls_bboxes = tf.reshape(conv_cls_bboxes, [-1, 45, 60, 9, 4])
 
         return cls_scores, cls_bboxes
 
