@@ -72,5 +72,21 @@ def load_gt_boxes(path):
         roi[iter_, :4] = bba
     return roi
 
+def compute_regression(box1, box2):
+    """
+    box1: ground-truth boxes
+    box2: anchor boxes
+    """
+    target_reg = np.zeros(shape=[4,])
+    w1 = box1[2] - box1[0]
+    h1 = box1[3] - box1[1]
+    w2 = box2[2] - box2[0]
+    h2 = box2[3] - box2[1]
 
+    target_reg[0] = (box1[0] - box2[0]) / w2
+    target_reg[1] = (box1[1] - box2[1]) / h2
+    target_reg[2] = np.log(w1 / w2)
+    target_reg[3] = np.log(h1 / h2)
+
+    return target_reg
 

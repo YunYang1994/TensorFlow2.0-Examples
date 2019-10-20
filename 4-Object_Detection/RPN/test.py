@@ -62,7 +62,7 @@ while len(pred_boxes) > 0:
     pred_boxes = np.concatenate([pred_boxes[:max_idx], pred_boxes[max_idx+1:]])
     pred_score = np.concatenate([pred_score[:max_idx], pred_score[max_idx+1:]])
     ious = compute_iou(selected_box, pred_boxes)
-    iou_mask = ious > iou_thresh
+    iou_mask = ious <= iou_thresh
     pred_boxes = pred_boxes[iou_mask]
     pred_score = pred_score[iou_mask]
 
