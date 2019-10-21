@@ -16,7 +16,7 @@ import cv2
 import random
 import tensorflow as tf
 import numpy as np
-from utils import compute_iou, plot_boxes_on_image, load_gt_boxes, wandhG, compute_regression
+from utils import compute_iou, plot_boxes_on_image, load_gt_boxes, wandhG, compute_regression, decode_output
 from PIL import Image
 from rpn import RPNplus
 
@@ -24,9 +24,8 @@ pos_thresh = 0.5
 neg_thresh = 0.1
 grid_width = grid_height = 16
 image_height, image_width = 720, 960
-synthetic_dataset_path="/Users/yangyun/synthetic_dataset"
 
-def encode_label(image, gt_boxes):
+def encode_label(gt_boxes):
     target_scores = np.zeros(shape=[45, 60, 9, 2]) # 0: background, 1: foreground, ,
     target_bboxes = np.zeros(shape=[45, 60, 9, 4]) # t_x, t_y, t_w, t_h
     target_masks  = np.zeros(shape=[45, 60, 9]) # negative_samples: -1, positive_samples: 1
@@ -50,11 +49,6 @@ def encode_label(image, gt_boxes):
                     negative_masks = ious < neg_thresh
 
                     if np.any(positive_masks):
-                        plot_boxes_on_image(image, anchor_boxes, thickness=1)
-                        print("=> encode: %d, %d, %d" %(i, j, k))
-                        cv2.circle(image, center=(int(0.5*(xmin+xmax)), int(0.5*(ymin+ymax))),
-                                        radius=1, color=[255,0,0], thickness=4)
-
                         target_scores[i, j, k, 1] = 1.
                         target_masks[i, j, k] = 1 # labeled as a positive sample
                         # find out which ground-truth box matches this anchor
@@ -65,26 +59,16 @@ def encode_label(image, gt_boxes):
                     if np.all(negative_masks):
                         target_scores[i, j, k, 0] = 1.
                         target_masks[i, j, k] = -1 # labeled as a negative sample
-                        cv2.circle(image, center=(int(0.5*(xmin+xmax)), int(0.5*(ymin+ymax))),
-                                        radius=1, color=[0,0,0], thickness=4)
-    Image.fromarray(image).show()
     return target_scores, target_bboxes, target_masks
 
 def process_image_label(image_path, label_path):
-    # image = Image.open(image_path)
     raw_image = cv2.imread(image_path)
     gt_boxes = load_gt_boxes(label_path)
-    # show_image_with_boxes = np.copy(raw_image)
-    # plot_boxes_on_image(show_image_with_boxes, gt_boxes)
-    # Image.fromarray(show_image_with_boxes).show()
-
-    show_image_with_posive_samples = np.copy(raw_image)
-    target = encode_label(show_image_with_posive_samples, gt_boxes)
+    target = encode_label(gt_boxes)
     return raw_image/255., target
 
 def create_image_label_path_generator(synthetic_dataset_path):
     image_num = 8000
-    image_num = 1
     image_label_paths = [(os.path.join(synthetic_dataset_path, "image/%d.jpg" %(idx+1)),
                           os.path.join(synthetic_dataset_path, "imageAno/%d.txt"%(idx+1))) for idx in range(image_num)]
     while True:
@@ -105,102 +89,60 @@ def DataGenerator(synthetic_dataset_path, batch_size):
 
         for i in range(batch_size):
             image_path, label_path = next(image_label_path_generator)
-            print("=> ", image_path, " ", label_path)
             image, target = process_image_label(image_path, label_path)
             images[i] = image
             target_scores[i] = target[0]
             target_bboxes[i] = target[1]
             target_masks[i]  = target[2]
-            yield images, target_scores, target_bboxes, target_masks
+        yield images, target_scores, target_bboxes, target_masks
 
+def compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_bboxes):
+    """
+    target_scores shape: [1, 45, 60, 9, 2],  pred_scores shape: [1, 45, 60, 9, 2]
+    target_bboxes shape: [1, 45, 60, 9, 4],  pred_bboxes shape: [1, 45, 60, 9, 4]
+    target_masks  shape: [1, 45, 60, 9]
+    """
+    score_loss = tf.nn.softmax_cross_entropy_with_logits(labels=target_scores, logits=pred_scores)
+    foreground_background_mask = (np.abs(target_masks) == 1).astype(np.int)
+    score_loss = tf.reduce_sum(score_loss * foreground_background_mask, axis=[1,2,3]) / np.sum(foreground_background_mask)
 
-TrainSet = DataGenerator(synthetic_dataset_path, 1)
-x, y1, y2, y3 = next(TrainSet)
+    boxes_loss = tf.abs(target_bboxes - pred_bboxes)
+    boxes_loss = 0.5 * tf.pow(boxes_loss, 2) * tf.cast(boxes_loss<1, tf.float32) + (boxes_loss - 1) * tf.cast(boxes_loss >=1, tf.float32)
+    boxes_loss = tf.reduce_sum(boxes_loss, axis=-1)
+    foreground_mask = (target_masks > 0).astype(np.float32)
+    boxes_loss = tf.reduce_sum(boxes_loss * foreground_mask, axis=[1,2,3]) / np.sum(foreground_mask)
 
-# model = RPNplus()
-# pred_y1, pred_y2 = model(x)
+    return score_loss, boxes_loss
 
-# score_loss = tf.nn.softmax_cross_entropy_with_logits(labels=y1, logits=pred_y1)
-# foreground_background_mask = (np.abs(y3) == 1).astype(np.int)
-# score_loss = tf.reduce_sum(score_loss * foreground_background_mask, axis=[1,2,3]) / np.sum(foreground_background_mask)
+EPOCHS = 30
+STEPS = 4000
+batch_size = 2
+synthetic_dataset_path="/Users/yangyun/synthetic_dataset"
+global_steps = tf.Variable(1, trainable=False, dtype=tf.int64)
+TrainSet = DataGenerator(synthetic_dataset_path, batch_size)
+image_data, target_scores, target_bboxes, target_masks = next(TrainSet)
 
-# boxes_loss = tf.abs(y2 - pred_y2)
-# boxes_loss = 0.5 * tf.pow(boxes_loss, 2) * tf.cast(boxes_loss<1, tf.float32) + (boxes_loss - 1) * tf.cast(boxes_loss >=1, tf.float32)
-# boxes_loss = tf.reduce_sum(boxes_loss, axis=-1)
-# foreground_mask = (y3 > 0).astype(np.float32)
-# boxes_loss = tf.reduce_sum(boxes_loss * foreground_mask, axis=[1,2,3]) / np.sum(foreground_mask)
-
-
-raw_image = x * 255.
-raw_image = raw_image[0]
-wandhG = np.array(wandhG)
-score = y1
-boxes = y2
-score = tf.reshape(score, shape=[45, 60, 9, 2]).numpy()
-boxes = tf.reshape(boxes, shape=[45, 60, 9, 4]).numpy()
-
-pred_boxes = []
-pred_score = []
-
-for i in range(45):
-    for j in range(60):
-        for k in range(9):
-            center_x = j * 16 + 8
-            center_y = i * 16 + 8
-
-            # 真实的 gt-boxes 坐标
-            anchor_xmin = center_x - 0.5 * wandhG[k, 0]
-            anchor_ymin = center_y - 0.5 * wandhG[k, 1]
-
-            xmin = boxes[i, j, k, 0] * wandhG[k, 0] + anchor_xmin
-            ymin = boxes[i, j, k, 1] * wandhG[k, 1] + anchor_ymin
-            xmax = tf.exp(boxes[i, j, k, 2]) * wandhG[k, 0] + xmin
-            ymax = tf.exp(boxes[i, j, k, 3]) * wandhG[k, 1] + ymin
-
-            # anchor的实际坐标
-            center_x = j * grid_width + grid_width * 0.5
-            center_y = i * grid_height + grid_height * 0.5
-            xmin = center_x - wandhG[k][0] * 0.5
-            ymin = center_y - wandhG[k][1] * 0.5
-            xmax = center_x + wandhG[k][0] * 0.5
-            ymax = center_y + wandhG[k][1] * 0.5
-
-            if score[i, j, k, 1] > 0:
-                print("=> decode: %d, %d, %d" %(i, j, k))
-                cv2.circle(raw_image, center=(int(0.5*(xmin+xmax)), int(0.5*(ymin+ymax))),
-                                radius=1, color=[255,0,0], thickness=4)
-                pred_boxes.append(np.array([xmin, ymin, xmax, ymax]))
-                pred_score.append(score[i, j, k, 1])
-
-pred_boxes = np.array(pred_boxes)
-pred_score = np.array(pred_score)
-
-# selected_boxes = pred_boxes
-selected_boxes = []
-while len(pred_boxes) > 0:
-    max_idx = np.argmax(pred_score)
-    selected_box = pred_boxes[max_idx]
-    selected_boxes.append(selected_box)
-    pred_boxes = np.concatenate([pred_boxes[:max_idx], pred_boxes[max_idx+1:]])
-    pred_score = np.concatenate([pred_score[:max_idx], pred_score[max_idx+1:]])
-    ious = compute_iou(selected_box, pred_boxes)
-    iou_mask = ious <= 0.1
-    pred_boxes = pred_boxes[iou_mask]
-    pred_score = pred_score[iou_mask]
-
-selected_boxes = np.array(selected_boxes)
-plot_boxes_on_image(raw_image, selected_boxes)
-Image.fromarray(np.uint8(raw_image)).show()
-
-
-grid_size = [45, 60]
-
-grid_x = tf.range(grid_size[0], dtype=tf.int32)
-grid_y = tf.range(grid_size[1], dtype=tf.int32)
-a, b = tf.meshgrid(grid_x, grid_y)
-x_offset = tf.reshape(a, (-1, 1))
-y_offset = tf.reshape(b, (-1, 1))
-xy_offset = tf.concat([x_offset, y_offset], axis=-1)
-xy_offset = tf.reshape(x_y_offset, [grid_size[0], grid_size[1], 1, 2])
-xy_offset = tf.cast(x_y_offset, tf.float32)
+model = RPNplus()
+optimizer = tf.keras.optimizers.Adam(lr=1e-4)
+writer = tf.summary.create_file_writer("./log")
+TrainSet = DataGenerator(synthetic_dataset_path, batch_size)
+for epoch in range(EPOCHS):
+    for step in range(STEPS):
+        global_steps.assign_add(1)
+        image_data, target_scores, target_bboxes, target_masks = next(TrainSet)
+        with tf.GradientTape() as tape:
+            pred_scores, pred_bboxes = model(image_data)
+            score_loss, boxes_loss = compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_bboxes)
+            total_loss = score_loss + boxes_loss
+            gradients = tape.gradient(total_loss, model.trainable_variables)
+            optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+        print("=> epoch %d step %d total_loss %.4f score_loss %.4f boxes_loss %.4f" %(epoch, step,
+                                                            total_loss.numpy(), score_loss.numpy(), boxes_loss.numpy()))
+        # # writing summary data
+        # with writer.as_default():
+            # tf.summary.scalar("total_loss", total_loss, step=global_steps)
+            # tf.summary.scalar("score_loss", score_loss, step=global_steps)
+            # tf.summary.scalar("boxes_loss", boxes_loss, step=global_steps)
+        # writer.flush()
+    model.save_weights("RPN.h5")
 

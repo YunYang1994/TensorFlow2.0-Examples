@@ -16,14 +16,16 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 from rpn import RPNplus
-from utils import compute_iou, plot_boxes_on_image, wandhG, load_gt_boxes, compute_regression
+from utils import compute_iou, plot_boxes_on_image, wandhG, load_gt_boxes, compute_regression, decode_output
 
 pos_thresh = 0.5
 neg_thresh = 0.1
 iou_thresh = 0.5
-grid_width = grid_height = 16
-image_height, image_width = 720, 960
-wandhG = np.array(wandhG)
+grid_width = 16
+grid_height = 16
+image_height = 720
+image_width = 960
+wandhG = np.array(wandhG, dtype=np.float32)
 
 image_path = "/Users/yangyun/synthetic_dataset/image/1.jpg"
 gt_boxes = load_gt_boxes("/Users/yangyun/synthetic_dataset/imageAno/1.txt")
@@ -48,7 +50,6 @@ for i in range(45):
             ymin = center_y - wandhG[k][1] * 0.5
             xmax = center_x + wandhG[k][0] * 0.5
             ymax = center_y + wandhG[k][1] * 0.5
-            # print(xmin, ymin, xmax, ymax)
             # ignore cross-boundary anchors
             if (xmin > -5) & (ymin > -5) & (xmax < (image_width+5)) & (ymax < (image_height+5)):
                 anchor_boxes = np.array([xmin, ymin, xmax, ymax])
@@ -88,9 +89,9 @@ pred_score = []
 for i in range(45):
     for j in range(60):
         for k in range(9):
-            # 真实的 gt-boxes 坐标
-            center_x = j * 16 + 8
-            center_y = i * 16 + 8
+            # 预测的 pred boxes 坐标
+            center_x = j * grid_width + 0.5 * grid_width
+            center_y = i * grid_height + 0.5 * grid_height
             anchor_xmin = center_x - 0.5 * wandhG[k, 0]
             anchor_ymin = center_y - 0.5 * wandhG[k, 1]
 
@@ -99,15 +100,7 @@ for i in range(45):
             xmax = tf.exp(target_bboxes[i, j, k, 2]) * wandhG[k, 0] + xmin
             ymax = tf.exp(target_bboxes[i, j, k, 3]) * wandhG[k, 1] + ymin
 
-            # # anchor的实际坐标
-            # center_x = j * grid_width + grid_width * 0.5
-            # center_y = i * grid_height + grid_height * 0.5
-            # xmin = center_x - wandhG[k][0] * 0.5
-            # ymin = center_y - wandhG[k][1] * 0.5
-            # xmax = center_x + wandhG[k][0] * 0.5
-            # ymax = center_y + wandhG[k][1] * 0.5
-
-            if target_scores[i, j, k, 1] > 0:
+            if target_scores[i, j, k, 1] > 0: # it is a positive sample
                 print("=> Decoding positive sample: %d, %d, %d" %(i, j, k))
                 cv2.circle(decode_image, center=(int(0.5*(xmin+xmax)), int(0.5*(ymin+ymax))),
                                 radius=1, color=[255,0,0], thickness=4)
@@ -115,10 +108,18 @@ for i in range(45):
                 pred_score.append(target_scores[i, j, k, 1])
 
 pred_boxes = np.array(pred_boxes)
-plot_boxes_on_image(decode_image, pred_boxes)
+plot_boxes_on_image(decode_image, pred_boxes, color=[0, 255, 0])
 Image.fromarray(np.uint8(decode_image)).show()
 
 
+############################## FASTER DECODE OUTPUT ###############################
 
+faster_decode_image = np.copy(raw_image)
+pred_bboxes = target_bboxes.astype(np.float32)
+pred_scores = target_scores.astype(np.float32)
+pred_boxes, pred_score = decode_output(pred_bboxes, pred_scores)
+
+plot_boxes_on_image(faster_decode_image, pred_boxes, color=[255, 0, 0]) # red boundig box
+Image.fromarray(np.uint8(faster_decode_image)).show()
 
 
