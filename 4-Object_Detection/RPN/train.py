@@ -118,14 +118,13 @@ EPOCHS = 30
 STEPS = 4000
 batch_size = 2
 synthetic_dataset_path="/Users/yangyun/synthetic_dataset"
-global_steps = tf.Variable(1, trainable=False, dtype=tf.int64)
 TrainSet = DataGenerator(synthetic_dataset_path, batch_size)
-image_data, target_scores, target_bboxes, target_masks = next(TrainSet)
 
 model = RPNplus()
 optimizer = tf.keras.optimizers.Adam(lr=1e-4)
 writer = tf.summary.create_file_writer("./log")
-TrainSet = DataGenerator(synthetic_dataset_path, batch_size)
+global_steps = tf.Variable(1, trainable=False, dtype=tf.int)
+
 for epoch in range(EPOCHS):
     for step in range(STEPS):
         global_steps.assign_add(1)
