@@ -11,18 +11,31 @@
 #
 #================================================================
 
+import os
+import cv2
 import numpy as np
 import tensorflow as tf
-from utils import wandhG
+from PIL import Image
+from rpn import RPNplus
+from utils import decode_output, plot_boxes_on_image, nms
 
-wandhG = np.array(wandhG)
+synthetic_dataset_path="/home/yang/dataset/synthetic_dataset"
+model = RPNplus()
+fake_data = np.ones(shape=[1, 720, 960, 3]).astype(np.float32)
+model(fake_data) # initialize model to load weights
+model.load_weights("./RPN.h5")
+
+# for idx in range(8000, 8200):
+for idx in range(8000, 8001):
+    image_path = os.path.join(synthetic_dataset_path, "image/%d.jpg" %(idx+1))
+    raw_image = cv2.imread(image_path)
+    image_data = np.expand_dims(raw_image / 255., 0)
+    pred_scores, pred_bboxes = model(image_data)
+    pred_scores = tf.nn.softmax(pred_scores, axis=-1)
+    pred_scores, pred_bboxes = decode_output(pred_bboxes, pred_scores)
+    pred_bboxes = nms(pred_bboxes, pred_scores, 0.5)
 
 
-grid_h = 45
-grid_w = 60
-
-grid_x, grid_y = tf.range(grid_w, dtype=tf.int32), tf.range(grid_h, dtype=tf.int32)
-grid_x, grid_y = tf.meshgrid(grid_x, grid_y)
-grid_x, grid_y = tf.expand_dims(grid_x, -1), tf.expand_dims(grid_y, -1)
-grid_xy = tf.stack([grid_x, grid_y], axis=-1)
+plot_boxes_on_image(raw_image, pred_bboxes)
+Image.fromarray(raw_image).show()
 

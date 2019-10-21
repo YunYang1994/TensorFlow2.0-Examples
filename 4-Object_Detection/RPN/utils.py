@@ -96,6 +96,10 @@ def compute_regression(box1, box2):
     return target_reg
 
 def decode_output(pred_bboxes, pred_scores, score_thresh=0.):
+    """
+    pred_bboxes shape: [1, 45, 60, 9, 4]
+    pred_scores shape: [1, 45, 60, 9, 2]
+    """
     grid_x, grid_y = tf.range(60, dtype=tf.int32), tf.range(45, dtype=tf.int32)
     grid_x, grid_y = tf.meshgrid(grid_x, grid_y)
     grid_x, grid_y = tf.expand_dims(grid_x, -1), tf.expand_dims(grid_y, -1)
@@ -108,10 +112,11 @@ def decode_output(pred_bboxes, pred_scores, score_thresh=0.):
     xy_max = tf.exp(pred_bboxes[..., 2:4]) * wandhG[:, 0:2] + xy_min
 
     pred_bboxes = tf.concat([xy_min, xy_max], axis=-1)
-    score_mask = pred_scores[..., 1] > score_thresh
+    pred_scores = pred_scores[..., 1]
+    score_mask = pred_scores > score_thresh
     pred_bboxes = tf.reshape(pred_bboxes[score_mask], shape=[-1,4]).numpy()
     pred_scores = tf.reshape(pred_scores[score_mask], shape=[-1,]).numpy()
-    return pred_bboxes, pred_scores
+    return  pred_scores, pred_bboxes
 
 
 def nms(pred_boxes, pred_score, iou_thresh):

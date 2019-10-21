@@ -16,8 +16,7 @@ import cv2
 import random
 import tensorflow as tf
 import numpy as np
-from utils import compute_iou, plot_boxes_on_image, load_gt_boxes, wandhG, compute_regression, decode_output
-from PIL import Image
+from utils import compute_iou, load_gt_boxes, wandhG, compute_regression
 from rpn import RPNplus
 
 pos_thresh = 0.5
@@ -105,25 +104,27 @@ def compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_b
     score_loss = tf.nn.softmax_cross_entropy_with_logits(labels=target_scores, logits=pred_scores)
     foreground_background_mask = (np.abs(target_masks) == 1).astype(np.int)
     score_loss = tf.reduce_sum(score_loss * foreground_background_mask, axis=[1,2,3]) / np.sum(foreground_background_mask)
+    score_loss = tf.reduce_mean(score_loss)
 
     boxes_loss = tf.abs(target_bboxes - pred_bboxes)
     boxes_loss = 0.5 * tf.pow(boxes_loss, 2) * tf.cast(boxes_loss<1, tf.float32) + (boxes_loss - 1) * tf.cast(boxes_loss >=1, tf.float32)
     boxes_loss = tf.reduce_sum(boxes_loss, axis=-1)
     foreground_mask = (target_masks > 0).astype(np.float32)
     boxes_loss = tf.reduce_sum(boxes_loss * foreground_mask, axis=[1,2,3]) / np.sum(foreground_mask)
+    boxes_loss = tf.reduce_mean(boxes_loss)
 
     return score_loss, boxes_loss
 
 EPOCHS = 30
-STEPS = 4000
+STEPS = 4
 batch_size = 2
-synthetic_dataset_path="/Users/yangyun/synthetic_dataset"
+synthetic_dataset_path="/home/yang/dataset/synthetic_dataset"
 TrainSet = DataGenerator(synthetic_dataset_path, batch_size)
 
 model = RPNplus()
 optimizer = tf.keras.optimizers.Adam(lr=1e-4)
 writer = tf.summary.create_file_writer("./log")
-global_steps = tf.Variable(1, trainable=False, dtype=tf.int)
+global_steps = tf.Variable(0, trainable=False, dtype=tf.int64)
 
 for epoch in range(EPOCHS):
     for step in range(STEPS):
@@ -137,11 +138,13 @@ for epoch in range(EPOCHS):
             optimizer.apply_gradients(zip(gradients, model.trainable_variables))
         print("=> epoch %d step %d total_loss %.4f score_loss %.4f boxes_loss %.4f" %(epoch, step,
                                                             total_loss.numpy(), score_loss.numpy(), boxes_loss.numpy()))
-        # # writing summary data
-        # with writer.as_default():
-            # tf.summary.scalar("total_loss", total_loss, step=global_steps)
-            # tf.summary.scalar("score_loss", score_loss, step=global_steps)
-            # tf.summary.scalar("boxes_loss", boxes_loss, step=global_steps)
-        # writer.flush()
+        # writing summary data
+        with writer.as_default():
+            tf.summary.scalar("total_loss", total_loss, step=global_steps)
+            tf.summary.scalar("score_loss", score_loss, step=global_steps)
+            tf.summary.scalar("boxes_loss", boxes_loss, step=global_steps)
+        writer.flush()
     model.save_weights("RPN.h5")
+
+
 
