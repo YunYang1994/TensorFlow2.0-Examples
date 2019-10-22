@@ -11,4 +11,8 @@ This repository is implemented for the paper ["Expecting the Unexpected: Trainin
 
 For training RPN, I use synthetic datasets which contains a set of 8239 images with one class (`pedestrian`). The data is available on the [BaiduCloud](https://pan.baidu.com/s/1QZAIakMVS0sJV0sjgv7v2w&shfl=sharepset). As for image preprocessing, these images have been resized into the shape of `width: 720, height: 960`. 
 
+<p align="center">
+    <img width="60%" src="https://user-images.githubusercontent.com/30433053/67255824-9f93ce80-f4b6-11e9-9e9d-decff496e7a5.png" style="max-width:80%;">
+    </a>
+</p>
 
