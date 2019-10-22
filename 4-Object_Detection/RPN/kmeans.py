@@ -13,6 +13,7 @@
 
 import glob
 import numpy as np
+from utils import load_gt_boxes
 
 def iou(box, clusters):
     '''
@@ -63,36 +64,9 @@ def kmeans(boxes, k, dist=np.median,seed=1):
 
     return clusters
 
-
-
-def load_gt_boxes(path):
-    """
-    Don't care about what shit it is. whatever, this function
-    returns many ground truth boxes with the shape of [-1, 4].
-
-    xmin, ymin, xmax, ymax
-    """
-    bbs = open(path).readlines()[1:]
-    roi = np.zeros([len(bbs), 4])
-    for iter_, bb in zip(range(len(bbs)), bbs):
-        bb = bb.replace('\n', '').split(' ')
-        bbtype = bb[0]
-        bba = np.array([float(bb[i]) for i in range(1, 5)])
-        occ = float(bb[5])
-        bbv = np.array([float(bb[i]) for i in range(6, 10)])
-        ignore = int(bb[10])
-
-        ignore = ignore or (bbtype != 'person')
-        ignore = ignore or (bba[3] < 40)
-        bba[2] += bba[0]
-        bba[3] += bba[1]
-
-        roi[iter_, :4] = bba
-    return roi
-
 def get_wh_from_boxes(boxes):
     """
-    box shape: [-1, 4]
+    box shape: [-1, 4], return the width and height of boxes
     """
     return boxes[..., 2:4] - boxes[..., 0:2]
 
@@ -102,6 +76,4 @@ all_boxes = np.vstack(all_boxes)
 all_boxes_wh = get_wh_from_boxes(all_boxes)
 anchors = kmeans(all_boxes_wh, k=9)
 print(anchors)
-
-
 
