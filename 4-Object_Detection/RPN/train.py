@@ -107,7 +107,7 @@ def compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_b
     score_loss = tf.reduce_mean(score_loss)
 
     boxes_loss = tf.abs(target_bboxes - pred_bboxes)
-    boxes_loss = 0.5 * tf.pow(boxes_loss, 2) * tf.cast(boxes_loss<1, tf.float32) + (boxes_loss - 1) * tf.cast(boxes_loss >=1, tf.float32)
+    boxes_loss = 0.5 * tf.pow(boxes_loss, 2) * tf.cast(boxes_loss<1, tf.float32) + (boxes_loss - 0.5) * tf.cast(boxes_loss >=1, tf.float32)
     boxes_loss = tf.reduce_sum(boxes_loss, axis=-1)
     foreground_mask = (target_masks > 0).astype(np.float32)
     boxes_loss = tf.reduce_sum(boxes_loss * foreground_mask, axis=[1,2,3]) / np.sum(foreground_mask)
