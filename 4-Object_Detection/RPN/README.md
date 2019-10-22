@@ -46,6 +46,7 @@ $ python kmeans.py
 
 ```bashrc
 $ python train.py
+$ python test.py
 ```
 the model will automatically save weights `./RPN.h5` in each epoch. Finally you can test `RPN.h5` with [test.py](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py). During neural network training， you can track the loss curve in Tensorboard and go to http://localhost:6006/ 
 
