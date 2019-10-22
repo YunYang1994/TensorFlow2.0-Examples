@@ -115,7 +115,7 @@ def compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_b
 
     return score_loss, boxes_loss
 
-EPOCHS = 20
+EPOCHS = 10
 STEPS = 4000
 batch_size = 2
 lambda_scale = 1.
