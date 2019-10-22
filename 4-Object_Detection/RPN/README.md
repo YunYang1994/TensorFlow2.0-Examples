@@ -48,13 +48,18 @@ $ python kmeans.py
 $ python train.py
 $ python test.py
 ```
-the model will automatically save weights `./RPN.h5` in each epoch. Finally you can test `RPN.h5` with [test.py](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py). During neural network training， you can track the loss curve in Tensorboard and go to http://localhost:6006/ 
+The model will automatically save weights `./RPN.h5` in each epoch. (https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py). During neural network training， you can track the loss curve in Tensorboard and go to http://localhost:6006/ 
 
 ```bashrc
 => epoch 1  step 1  total_loss: 0.402951  score_loss: 0.346327  boxes_loss: 0.056625
 => epoch 1  step 2  total_loss: 0.399650  score_loss: 0.344363  boxes_loss: 0.055287
 ......
 ```
+Finally you can test `RPN.h5` with [test.py] for 200 images. The prediction result are expected to save in "./prediction". 
+
+|![image](https://user-images.githubusercontent.com/30433053/67265442-5789a180-f4e0-11e9-9fcd-6e72136c2913.png)|![image](https://user-images.githubusercontent.com/30433053/67265549-915aa800-f4e0-11e9-91e8-87ee05b7748c.png)|
+|---|---
+|![image](https://user-images.githubusercontent.com/30433053/67265487-6c663500-f4e0-11e9-8bf9-f9d59d22b0a8.png)|![image](https://user-images.githubusercontent.com/30433053/67265620-c36c0a00-f4e0-11e9-8689-9d3b6efaff47.png)
 
 ## Citation
 --------------------
