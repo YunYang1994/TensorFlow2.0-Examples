@@ -137,8 +137,8 @@ for epoch in range(EPOCHS):
             total_loss = score_loss + lambda_scale * boxes_loss
             gradients = tape.gradient(total_loss, model.trainable_variables)
             optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-        print("=> epoch %d step %d total_loss %.4f score_loss %.4f boxes_loss %.4f" %(epoch, step,
-                                                            total_loss.numpy(), score_loss.numpy(), boxes_loss.numpy()))
+            print("=> epoch %d  step %d  total_loss: %.6f  score_loss: %.6f  boxes_loss: %.6f" %(epoch+1, step+1,
+                                                        total_loss.numpy(), score_loss.numpy(), boxes_loss.numpy()))
         # writing summary data
         with writer.as_default():
             tf.summary.scalar("total_loss", total_loss, step=global_steps)

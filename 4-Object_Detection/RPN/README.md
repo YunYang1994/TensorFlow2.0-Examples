@@ -50,7 +50,10 @@ $ python test.py
 ```
 the model will automatically save weights `./RPN.h5` in each epoch. Finally you can test `RPN.h5` with [test.py](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py). During neural network training， you can track the loss curve in Tensorboard and go to http://localhost:6006/ 
 
-
+```bashrc
+=> epoch 1  step 1  total_loss: 0.402951  score_loss: 0.346327  boxes_loss: 0.056625
+=> epoch 1  step 2  total_loss: 0.399650  score_loss: 0.344363  boxes_loss: 0.055287
+```
 
 ## Citation
 --------------------
