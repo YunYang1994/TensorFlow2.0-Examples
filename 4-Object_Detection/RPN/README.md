@@ -11,7 +11,7 @@ This repository is implemented for paper ["Expecting the Unexpected: Training De
 ## Synthetic datasets
 --------------------
 
-For training RPN, I use synthetic datasets which contains a set of 8239 images with one class (`pedestrian`). The data is available on the [BaiduCloud](https://pan.baidu.com/s/1QZAIakMVS0sJV0sjgv7v2w&shfl=sharepset). We isotropically scale each image to a resolution of 960×720, zero-padding as necessary.
+For training RPN, I use synthetic datasets which contains a set of 8239 images with one class (`pedestrian`). The data is available on [BaiduCloud](https://pan.baidu.com/s/1QZAIakMVS0sJV0sjgv7v2w&shfl=sharepset). We isotropically scale each image to a resolution of 960×720, zero-padding as necessary.
 
 <p align="center">
     <img width="70%" src="https://user-images.githubusercontent.com/30433053/67255940-306aaa00-f4b7-11e9-997b-f3cbeb249191.png" style="max-width:70%;">
