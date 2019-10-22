@@ -96,7 +96,7 @@ def get_wh_from_boxes(boxes):
     """
     return boxes[..., 2:4] - boxes[..., 0:2]
 
-text_paths = glob.glob("/Users/yangyun/synthetic_dataset/imageAno/*.txt")
+text_paths = glob.glob("./synthetic_dataset/imageAno/*.txt")
 all_boxes = [load_gt_boxes(path) for path in text_paths]
 all_boxes = np.vstack(all_boxes)
 all_boxes_wh = get_wh_from_boxes(all_boxes)
