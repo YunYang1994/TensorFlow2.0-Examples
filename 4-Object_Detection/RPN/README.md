@@ -1,7 +1,7 @@
 ## [RPN: RegionProposal Network](https://github.com/YunYang1994/Easy-Deep-Learning/blob/master/RPN.md)
 --------------------
 
-This repository is implemented for the paper ["Expecting the Unexpected: Training Detectors for Unusual Pedestrians with Adversarial Imposters(CVPR2017)"](https://arxiv.org/pdf/1703.06283), which makes some improvements on the basis of region proposal network in FasterRCNN. 
+This repository is implemented for paper ["Expecting the Unexpected: Training Detectors for Unusual Pedestrians with Adversarial Imposters(CVPR2017)"](https://arxiv.org/pdf/1703.06283), which makes some improvements on the basis of region proposal network in [Faster-RCNN](http://arxiv.org/abs/1506.01497). 
 
 <p align="center">
     <img width="60%" src="https://user-images.githubusercontent.com/30433053/66986053-a904eb80-f0f0-11e9-93fa-c56fb580f6ae.png" style="max-width:80%;">
@@ -43,10 +43,12 @@ $ python kmeans.py
 
 ## Network Training
 --------------------
+
 ```bashrc
 $ python train.py
 ```
-the model will automatically save weights `RPN.h5` in each epoch. Finally you can test `RPN.h5` with test.py
+the model will automatically save weights `./RPN.h5` in each epoch. Finally you can test `RPN.h5` with [test.py](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py). During neural network training， you can track the loss curve in Tensorboard and go to http://localhost:6006/ 
+
 
 
 ## Citation
