@@ -24,7 +24,6 @@ grid_width = 16
 grid_height = 16
 image_height = 720
 image_width = 960
-wandhG = np.array(wandhG, dtype=np.float32)
 
 image_path = "./synthetic_dataset/image/1.jpg"
 label_path = "./synthetic_dataset/imageAno/1.txt"
@@ -89,7 +88,7 @@ pred_score = []
 for i in range(45):
     for j in range(60):
         for k in range(9):
-            # 预测的 pred boxes 坐标
+            # pred boxes coordinate
             center_x = j * grid_width + 0.5 * grid_width
             center_y = i * grid_height + 0.5 * grid_height
             anchor_xmin = center_x - 0.5 * wandhG[k, 0]
@@ -115,33 +114,10 @@ Image.fromarray(np.uint8(decode_image)).show()
 ############################## FASTER DECODE OUTPUT ###############################
 
 faster_decode_image = np.copy(raw_image)
-# pred_bboxes = target_bboxes
-# pred_scores = target_scores.astype(np.float32)
 pred_bboxes = np.expand_dims(target_bboxes, 0).astype(np.float32)
 pred_scores = np.expand_dims(target_scores, 0).astype(np.float32)
 
 pred_scores, pred_bboxes = decode_output(pred_bboxes, pred_scores)
 plot_boxes_on_image(faster_decode_image, pred_bboxes, color=[255, 0, 0]) # red boundig box
 Image.fromarray(np.uint8(faster_decode_image)).show()
-
-## bboxes
-# grid_x, grid_y = tf.range(60, dtype=tf.int32), tf.range(45, dtype=tf.int32)
-# grid_x, grid_y = tf.meshgrid(grid_x, grid_y)
-# grid_x, grid_y = tf.expand_dims(grid_x, -1), tf.expand_dims(grid_y, -1)
-# grid_xy = tf.stack([grid_x, grid_y], axis=-1)
-# center_xy = grid_xy * 16 + 8
-# center_xy = tf.cast(center_xy, tf.float32)
-# anchor_xymin = center_xy - 0.5 * wandhG
-
-# xy_min = pred_bboxes[..., 0:2] * wandhG[:, 0:2] + anchor_xymin
-# xy_max = tf.exp(pred_bboxes[..., 2:4]) * wandhG[:, 0:2] + xy_min
-
-# pred_bboxes = tf.concat([xy_min, xy_max], axis=-1)
-
-
-# score_mask = pred_scores > 0.
-# pred_bboxes = tf.reshape(pred_bboxes[score_mask], shape=[-1,4]).numpy()
-# pred_scores = tf.reshape(pred_scores[score_mask], shape=[-1,]).numpy()
-
-
 
