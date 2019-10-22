@@ -18,6 +18,12 @@ import tensorflow as tf
 grid_h = 45
 grid_w = 60
 
+# # original paper anchors
+# wandhG = np.array([[100.0, 100.0], [300.0, 300.0], [500.0, 500.0],
+                   # [200.0, 100.0], [370.0, 185.0], [440.0, 220.0],
+                   # [100.0, 200.0], [185.0, 370.0], [220.0, 440.0]])
+
+# k-means anchors (recommend)
 wandhG = np.array([[ 74., 149.],
                    [ 34., 149.],
                    [ 86.,  74.],

@@ -118,7 +118,8 @@ def compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_b
 EPOCHS = 30
 STEPS = 4
 batch_size = 2
-synthetic_dataset_path="/home/yang/dataset/synthetic_dataset"
+lambda_scale = 1.
+synthetic_dataset_path="./synthetic_dataset"
 TrainSet = DataGenerator(synthetic_dataset_path, batch_size)
 
 model = RPNplus()
@@ -133,7 +134,7 @@ for epoch in range(EPOCHS):
         with tf.GradientTape() as tape:
             pred_scores, pred_bboxes = model(image_data)
             score_loss, boxes_loss = compute_loss(target_scores, target_bboxes, target_masks, pred_scores, pred_bboxes)
-            total_loss = score_loss + boxes_loss
+            total_loss = score_loss + lambda_scale * boxes_loss
             gradients = tape.gradient(total_loss, model.trainable_variables)
             optimizer.apply_gradients(zip(gradients, model.trainable_variables))
         print("=> epoch %d step %d total_loss %.4f score_loss %.4f boxes_loss %.4f" %(epoch, step,
