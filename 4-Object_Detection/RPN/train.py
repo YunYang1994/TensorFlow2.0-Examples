@@ -44,8 +44,8 @@ def encode_label(gt_boxes):
                     anchor_boxes = np.expand_dims(anchor_boxes, axis=0)
                     # compute iou between this anchor and all ground-truth boxes in image.
                     ious = compute_iou(anchor_boxes, gt_boxes)
-                    positive_masks = ious > pos_thresh
-                    negative_masks = ious < neg_thresh
+                    positive_masks = ious >= pos_thresh
+                    negative_masks = ious <= neg_thresh
 
                     if np.any(positive_masks):
                         target_scores[i, j, k, 1] = 1.

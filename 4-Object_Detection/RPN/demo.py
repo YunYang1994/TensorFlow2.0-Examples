@@ -15,7 +15,6 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from rpn import RPNplus
 from utils import compute_iou, plot_boxes_on_image, wandhG, load_gt_boxes, compute_regression, decode_output
 
 pos_thresh = 0.5
@@ -28,7 +27,8 @@ image_width = 960
 wandhG = np.array(wandhG, dtype=np.float32)
 
 image_path = "./synthetic_dataset/image/1.jpg"
-gt_boxes = load_gt_boxes("./synthetic_dataset/imageAno/1.txt")
+label_path = "./synthetic_dataset/imageAno/1.txt"
+gt_boxes = load_gt_boxes(label_path)
 raw_image = cv2.imread(image_path)
 image_with_gt_boxes = np.copy(raw_image)
 plot_boxes_on_image(image_with_gt_boxes, gt_boxes)

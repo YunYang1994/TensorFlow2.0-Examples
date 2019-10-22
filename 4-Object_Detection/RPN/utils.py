@@ -71,8 +71,8 @@ def load_gt_boxes(path):
         bb = bb.replace('\n', '').split(' ')
         bbtype = bb[0]
         bba = np.array([float(bb[i]) for i in range(1, 5)])
-        occ = float(bb[5])
-        bbv = np.array([float(bb[i]) for i in range(6, 10)])
+        # occ = float(bb[5])
+        # bbv = np.array([float(bb[i]) for i in range(6, 10)])
         ignore = int(bb[10])
 
         ignore = ignore or (bbtype != 'person')
