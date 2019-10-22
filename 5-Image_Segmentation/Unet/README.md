@@ -15,7 +15,6 @@ Membrane contains 90 images for training and 30 for testing.  The corresponding 
 you can download Membrane dataset on the [BaiduCloud Drive](https://pan.baidu.com/s/1O9U48zDjulhLYONksX569w) and put it in `./`, then you can train it and then evaluate your model
 
 ```bashrc
-$ git clone https://github.com/YunYang1994/membrane.git
 $ python train.py
 
 Epoch 1/5
