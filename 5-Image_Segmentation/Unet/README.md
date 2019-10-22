@@ -5,14 +5,14 @@
 
 ## Train membrane
 --------------------
-[membrane](https://github.com/YunYang1994/membrane) contains 90 images for training and 30 for testing.  The corresponding binary labels are provided in an in-out fashion, i.e. white for the pixels of segmented objects and black for the rest of pixels (which correspond mostly to membranes)
+Membrane contains 90 images for training and 30 for testing.  The corresponding binary labels are provided in an in-out fashion, i.e. white for the pixels of segmented objects and black for the rest of pixels (which correspond mostly to membranes)
 
 | input | ground truth | prediction |
 |---|---|:---:|
 |![image](./results/origin_0.png)|![image](./results/gt_0.png)|![image](./results/pred_0.png)|
 |![image](./results/origin_1.png)|![image](./results/gt_1.png)|![image](./results/pred_1.png)|
 
-Finally, you can train it and then evaluate your model
+you can download it on thte [BaiduCloud Drive](https://pan.baidu.com/s/1O9U48zDjulhLYONksX569w) and put it in `./`, then you can train it and then evaluate your model
 
 ```bashrc
 $ git clone https://github.com/YunYang1994/membrane.git
