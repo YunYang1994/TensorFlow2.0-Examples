@@ -1,4 +1,4 @@
-# TensorFlow2.x-YOLOv3 [[代码思路]](https://github.com/YunYang1994/Easy-Deep-Learning/blob/master/YOLOv3.md)
+# [TensorFlow2.x-YOLOv3](https://github.com/YunYang1994/Easy-Deep-Learning/blob/master/YOLOv3.md)
 --------------------
 A minimal tensorflow implementation of YOLOv3, with support for training, inference and evaluation.
 
@@ -58,7 +58,7 @@ $ tensorboard --logdir ./data/log
 ## Citation
 --------------------
 ```
-@inproceedings{Tensorflow2.0-Examples,
+@Github_Project{Tensorflow2.0-Examples,
   author       = YunYang1994,
   email        = www.dreameryangyun@sjtu.edu.cn,
   title        = "YOLOv3: An Incremental Improvement",

@@ -41,7 +41,7 @@ Epoch 30/30
 ## Citation
 --------------------
 ```
-@inproceedings{Tensorflow2.0-Examples
+@Github_Project{Tensorflow2.0-Examples,
   author       = YunYang1994,
   email        = www.dreameryangyun@sjtu.edu.cn,
   title        = "FCN: Fully Convolutional Networks for Semantic Segmentation.",
