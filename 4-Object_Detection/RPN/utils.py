@@ -101,7 +101,7 @@ def compute_regression(box1, box2):
 
     return target_reg
 
-def decode_output(pred_bboxes, pred_scores, score_thresh=0.):
+def decode_output(pred_bboxes, pred_scores, score_thresh=0.5):
     """
     pred_bboxes shape: [1, 45, 60, 9, 4]
     pred_scores shape: [1, 45, 60, 9, 2]

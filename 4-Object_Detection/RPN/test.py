@@ -34,7 +34,7 @@ for idx in range(8000, 8200):
     image_data = np.expand_dims(raw_image / 255., 0)
     pred_scores, pred_bboxes = model(image_data)
     pred_scores = tf.nn.softmax(pred_scores, axis=-1)
-    pred_scores, pred_bboxes = decode_output(pred_bboxes, pred_scores, 0.7)
+    pred_scores, pred_bboxes = decode_output(pred_bboxes, pred_scores, 0.9)
     pred_bboxes = nms(pred_bboxes, pred_scores, 0.5)
     plot_boxes_on_image(raw_image, pred_bboxes)
     save_path = os.path.join(prediction_result_path, str(idx)+".jpg")
