@@ -60,7 +60,7 @@ The model will automatically save weights `./RPN.h5` in each epoch. During neura
 ......
 => epoch 10  step 4000  total_loss: 0.001989  score_loss: 0.000015  boxes_loss: 0.001973
 ```
-Finally you can test `RPN.h5` with [test.py](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py) for 200 images. The prediction results are expected to save in `./prediction`. 
+Finally you can test `RPN.h5` with [test.py](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/4-Object_Detection/RPN/test.py) for 200 images. The prediction results are expected to save in `./prediction`. Here is my trained weight https://pan.baidu.com/s/1o6HeQou9sCczLA_rzkTPqg
 
 ```
 $ python test.py
