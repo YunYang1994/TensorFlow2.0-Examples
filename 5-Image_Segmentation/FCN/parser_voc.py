@@ -20,6 +20,7 @@ from scipy import misc
 if not os.path.exists("./data"): os.mkdir("./data")
 if not os.path.exists("./data/train_labels"): os.mkdir("./data/train_labels")
 if not os.path.exists("./data/test_labels"): os.mkdir("./data/test_labels")
+if not os.path.exists("./data/prediction"): os.mkdir("./data/prediction")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--voc_path", type=str, default="/home/yang/dataset/VOC")

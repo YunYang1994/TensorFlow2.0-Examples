@@ -10,12 +10,14 @@
 ## Train PASCAL VOC2012
 --------------------
 Download VOC PASCAL trainval and test data. 
+
 ```bashrc
 $ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 $ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 $ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 ```
 Extract all of these tars into one directory and rename them, which should have the following basic structure.
+
 ```bashrc
 VOC           # path:  /home/yang/dataset/VOC
 ├── test
@@ -26,7 +28,8 @@ VOC           # path:  /home/yang/dataset/VOC
          └──VOC2007 (from VOCtrainval_06-Nov-2007.tar)
          └──VOC2012 (from VOCtrainval_11-May-2012.tar)
 ```
-Finally you need to make some transformation and train it.
+Finally you need to make some transformation and train it. Here is my trained weight
+
 ```bashrc
 $ python parser_voc.py --voc_path /home/yang/dataset/VOC
 $ python train.py
@@ -37,6 +40,8 @@ Epoch 2/30
 ...
 Epoch 30/30
 6000/6000 [==============================] - 3552s 592ms/step - loss: 0.0811 - accuracy: 0.9797
+
+$ python test.py
 ```
 
 |![image](https://user-images.githubusercontent.com/30433053/66732790-d4d56680-ee8f-11e9-9120-07b0e8aa53d4.jpg)|![image](https://user-images.githubusercontent.com/30433053/66732791-d69f2a00-ee8f-11e9-9c5d-16cc84bc7e9e.jpg)|![image](https://user-images.githubusercontent.com/30433053/66732795-da32b100-ee8f-11e9-9d85-f0ddba7a3ab1.jpg)|
