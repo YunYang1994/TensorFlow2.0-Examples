@@ -28,7 +28,7 @@ VOC           # path:  /home/yang/dataset/VOC
          └──VOC2007 (from VOCtrainval_06-Nov-2007.tar)
          └──VOC2012 (from VOCtrainval_11-May-2012.tar)
 ```
-Finally you need to make some transformation and train it. Here is my trained weight
+Then you need parser_voc.py to parser PASCAL VOC dataset and train it. Finally you can evaluate model by `python test.py`. The prediction results are expected to save in `./data/prediction`. Here is my trained weight
 
 ```bashrc
 $ python parser_voc.py --voc_path /home/yang/dataset/VOC
