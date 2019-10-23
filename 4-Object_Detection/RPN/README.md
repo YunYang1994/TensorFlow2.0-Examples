@@ -50,7 +50,7 @@ $ python train.py
 The model will automatically save weights `./RPN.h5` in each epoch. During neural network training， you can track the loss curve in Tensorboard and go to http://localhost:6006/ 
 
 |score loss|boxes loss|total loss
-|:---:|:---:|:---
+|:---:|:---:|:---:
 |![image](https://user-images.githubusercontent.com/30433053/67396155-acf5a980-f5d9-11e9-85cf-0dc1642aa552.png)|![image](https://user-images.githubusercontent.com/30433053/67396155-acf5a980-f5d9-11e9-85cf-0dc1642aa552.png)|![image](https://user-images.githubusercontent.com/30433053/67396192-baab2f00-f5d9-11e9-886a-d0f2994ba401.png)
 
 
