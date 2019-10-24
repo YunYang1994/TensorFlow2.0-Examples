@@ -14,7 +14,7 @@
 import os
 import argparse
 import numpy as np
-from config import colormap
+from utils import colormap
 from scipy import misc
 
 if not os.path.exists("./data"): os.mkdir("./data")
