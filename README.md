@@ -29,9 +29,8 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **YOLOv3** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3/core/yolov3.py))([paper](https://arxiv.org/pdf/1804.02767.pdf)). YOLOv3: An Incremental Improvement.🔥🔥🔥🔥
 
 #### 5 - Image Segmentation
+- **FCN** ([notebook](5-Image_Segmentation/FCN)) ([code](5-Image_Segmentation/FCN/fcn8s.py))([paper](https://arxiv.org/abs/1411.4038)). FCN: Fully Convolutional Networks for Semantic Segmentation. 🔥🔥🔥🔥🔥
 - **Unet** ([notebook](5-Image_Segmentation/Unet)) ([code](5-Image_Segmentation/Unet/train.py))([paper](https://arxiv.org/abs/1505.04597)). U-Net: Convolutional Networks for Biomedical Image Segmentation. 🔥🔥
-- **FCN** ([notebook](5-Image_Segmentation/FCN)) ([code](5-Image_Segmentation/FCN/fcn8s.py))([paper](https://arxiv.org/abs/1411.4038)). FCN: Fully Convolutional Networks for Semantic Segmentation. 🔥🔥🔥
-
 
 #### 6 - Generative Adversarial Networks
 - **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/6-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](6-Generative_Adversarial_Networks/dcgan.py))([paper](https://arxiv.org/pdf/1511.06434.pdf)).  Deep Convolutional Generative Adversarial Network.
