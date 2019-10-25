@@ -76,20 +76,20 @@ prob = tf.nn.softmax(fc8)
 # Build model
 model = tf.keras.Model(input_layer, prob)
 
-# Load weighs
-weighs = np.load("./vgg16.npy", encoding='latin1').item()
-for layer_name in weighs.keys():
-    layer = model.get_layer(layer_name)
-    layer.set_weights(weighs[layer_name])
+# # Load weighs
+# weighs = np.load("./vgg16.npy", encoding='latin1').item()
+# for layer_name in weighs.keys():
+    # layer = model.get_layer(layer_name)
+    # layer.set_weights(weighs[layer_name])
 
-# Load image
-image_data = skimage.io.imread("./docs/cat.jpg").astype(np.float32)
+# # Load image
+# image_data = skimage.io.imread("./docs/cat.jpg").astype(np.float32)
 
-# Load labels
-labels = open("./docs/synset_words.txt", "r").readlines()
+# # Load labels
+# labels = open("./docs/synset_words.txt", "r").readlines()
 
-# Print result
-print(labels[np.argmax(model(np.expand_dims(image_data, 0)))])
+# # Print result
+# print(labels[np.argmax(model(np.expand_dims(image_data, 0)))])
 
 
 
