@@ -1,0 +1,19 @@
+TensorFlow2.0-Examples/3 - Neural Network Architecture
+============================================================
+
+This repo contains many state-of-art Neural Network Architectures(NNA). You can
+play with them on CIFAR-10 dataset for the classification works. You can change 
+model in the 'main.py', and then `python main.py`. 
+
+o  VGG16
+o  Resnet18, Resnet34, Resnet50, Resnet101, Resnet152
+o  FPN
+
+The codes are still on the development, Your suggestions are 
+so much for me. Best regards!
+
+October 25, 2019
+
+
+
+
