@@ -115,8 +115,8 @@ class FPN(tf.keras.Model):
 
         # Smooth
         d4 = self.smooth1(d4)
-        d3 = self.smooth1(d3)
-        d2 = self.smooth1(d2)
+        d3 = self.smooth2(d3)
+        d2 = self.smooth3(d2)
 
         return d2, d3, d4, d5
 
