@@ -110,8 +110,8 @@ class FPN(tf.keras.Model):
         # Top-down
         d5 = self.top_layer(p5)
         d4 = self._upsample_add(d5, self.lateral_layer1(p4))
-        d3 = self._upsample_add(d4, self.lateral_layer1(p3))
-        d2 = self._upsample_add(d3, self.lateral_layer1(p2))
+        d3 = self._upsample_add(d4, self.lateral_layer2(p3))
+        d2 = self._upsample_add(d3, self.lateral_layer3(p2))
 
         # Smooth
         d4 = self.smooth1(d4)
