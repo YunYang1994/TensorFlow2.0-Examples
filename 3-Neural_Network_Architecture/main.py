@@ -14,13 +14,13 @@
 import tensorflow as tf
 from resnet import ResNet18, ResNet34, ResNet50, ResNet101, ResNet152
 
-lr = 0.01
-batch_size = 128
-EPOCHS = 5
+lr = 0.0001
+batch_size = 32
+EPOCHS = 50
 
 # Build your model here
 model = ResNet18()
-optimizer = tf.keras.optimizers.SGD(lr, momentum=0.9, decay=1e-4)
+optimizer = tf.keras.optimizers.Adam(lr)
 
 # Load and prepare the cifar10 dataset.
 cifar10 = tf.keras.datasets.cifar10
@@ -30,7 +30,7 @@ y_train, y_test = tf.reshape(y_train, (-1,)), tf.reshape(y_test, (-1,))
 
 # Use tf.data to batch and shuffle the dataset
 train_ds = tf.data.Dataset.from_tensor_slices(
-        (x_train, y_train)).shuffle(10000).batch(batch_size)
+        (x_train, y_train)).shuffle(100).batch(batch_size)
 test_ds = tf.data.Dataset.from_tensor_slices(
         (x_test, y_test)).batch(batch_size)
 
@@ -49,7 +49,7 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 def train_step(images, labels):
     with tf.GradientTape() as tape:
         predictions = model(images, training=True)
-        print("=> label shape: ", labels.shape, "pred shape", predictions.shape)
+        # print("=> label shape: ", labels.shape, "pred shape", predictions.shape)
         loss = loss_object(labels, predictions)
     gradients = tape.gradient(loss, model.trainable_variables)
     optimizer.apply_gradients(zip(gradients, model.trainable_variables))
