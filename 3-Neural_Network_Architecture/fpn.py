@@ -124,7 +124,7 @@ def ResNet18_fpn():
     return FPN(BasicBlock, [2, 2, 2, 2])
 
 def ResNet34_fpn():
-    return FPN(BasicBlock, [2, 2, 2, 2])
+    return FPN(BasicBlock, [3, 4, 6, 3])
 
 if __name__ == "__main__":
     ## Test model
