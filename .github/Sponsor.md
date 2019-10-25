@@ -6,3 +6,5 @@
     <img width="100%" src="Sponsor.png" style="max-width:100%;">
     </a>
 </p>
+
+如果你跟我一样非常热爱编程，喜欢神经网络，也欢迎和我做朋友（WeChat ID: yy1186584388)。
