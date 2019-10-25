@@ -34,13 +34,14 @@ class BasicBlock(tf.keras.Model):
         """
         Adds a shortcut between input and residual block and merges them with "sum"
         """
-        self.shortcut = lambda x: x
         if strides != 1 or in_channels != self.expansion * out_channels:
             self.shortcut = tf.keras.Sequential([
                     tf.keras.layers.Conv2D(self.expansion*out_channels, kernel_size=1,
                                            strides=strides, use_bias=False),
                     tf.keras.layers.BatchNormalization()]
                     )
+        else:
+            self.shortcut = lambda x: x
 
     def call(self, x, training=False):
         # if training: print("=> training network ... ")
