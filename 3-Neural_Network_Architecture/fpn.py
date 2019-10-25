@@ -13,6 +13,11 @@
 
 import tensorflow as tf
 
+"""
+Implements a ResNet version of the FPN introduced in
+https://arxiv.org/pdf/1612.03144.pdf
+"""
+
 class BasicBlock(tf.keras.Model):
     expansion = 1
 
