@@ -103,9 +103,9 @@ class FPN(tf.keras.Model):
 
         # Bottom --> up
         p2 = self.layer1(p1)
-        p3 = self.layer1(p2)
-        p4 = self.layer1(p3)
-        p5 = self.layer1(p4)
+        p3 = self.layer2(p2)
+        p4 = self.layer3(p3)
+        p5 = self.layer4(p4)
 
         # Top-down
         d5 = self.top_layer(p5)
