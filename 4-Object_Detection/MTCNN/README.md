@@ -15,9 +15,9 @@ $ python main.py
 
 The detection results contains three part:
 
-- Face classification: the probability produced by the network that indi- cates a sample being a face
-- Bounding box regression: the bounding boxes’ left top, height, and width.
-- Facial landmark localization:There are five facial landmarks, including left eye, right eye, nose, left mouth corner, and right mouth corner
+- **Face classification**: the probability produced by the network that indi- cates a sample being a face
+- **Bounding box regression**: the bounding boxes’ left top, height, and width.
+- **Facial landmark localization**: There are five facial landmarks, including left eye, right eye, nose, left mouth corner, and right mouth corner
 
 ## Citation
 
