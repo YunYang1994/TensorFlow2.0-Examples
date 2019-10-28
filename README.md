@@ -28,7 +28,6 @@
    <img src="https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000"
         alt="Awesome">
 </p>
-<br>
 <div align="center">
   <sub>Created by
   <a href="https://github.com/YunYang1994">YunYang1994</a>
