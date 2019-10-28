@@ -32,7 +32,7 @@
   <sub>Created by
   <a href="https://github.com/YunYang1994">YunYang1994</a>
 </div>
-
+<br>
 This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. **It will be continuously updated !** 🐍🐍🐍🐍🐍🐍
 
 #### 1 - Introduction
