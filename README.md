@@ -3,13 +3,8 @@
     <img src="https://github.com/CriseLYJ/flask-video-streaming-recorder/blob/master/img/main.jpg?raw=true" 
         alt="Master">
 </p>
-
-<br>
-
 <p align="center">"<i>Talk is cheap, show me the code.</i>" 
   ----- Linus Torvalds</p>
-<br>
-
 <p align="center">
   <a href="https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master">
     <img src="https://img.shields.io/badge/Branch-master-green.svg?longCache=true"
@@ -33,7 +28,7 @@
    <img src="https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000"
         alt="Awesome">
 </p>
-<div align="right">
+<div align="center">
   <sub>Created by
   <a href="https://github.com/YunYang1994">YunYang1994</a>
 </div>
