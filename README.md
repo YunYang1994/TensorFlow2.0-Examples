@@ -33,19 +33,10 @@
    <img src="https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000"
         alt="Awesome">
 </p>
-<br>
-<div align="center">
+<div align="right">
   <sub>Created by
-  <a href="https://criselyj.github.io/">YunYang1994</a>
+  <a href="https://github.com/YunYang1994">YunYang1994</a>
 </div>
-
-<br>
-
-
-# Tensorflow2.0 Examples [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/LICENSE)
-
-> "Talk is cheap, show me the code." <br>
->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--------- Linus Torvalds
 
 This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. **It will be continuously updated !** 🐍🐍🐍🐍🐍🐍
 
