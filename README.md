@@ -1,8 +1,4 @@
 <h2 align="center"><code>🎉TensorFlow2.0-Examples🎉!</code></h2>
-<p align="center">
-    <img src="https://github.com/CriseLYJ/flask-video-streaming-recorder/blob/master/img/main.jpg?raw=true" 
-        alt="Master">
-</p>
 <p align="center">"<i>Talk is cheap, show me the code.</i>" 
   ----- Linus Torvalds</p>
 <p align="center">
