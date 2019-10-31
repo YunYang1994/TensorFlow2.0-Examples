@@ -83,6 +83,11 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 - **Unet** ([notebook](5-Image_Segmentation/Unet)) ([code](5-Image_Segmentation/Unet/train.py))([paper](https://arxiv.org/abs/1505.04597)). U-Net: Convolutional Networks for Biomedical Image Segmentation. 🔥🔥
 
+<p align="center">
+    <img width="50%" src="https://user-images.githubusercontent.com/30433053/67922238-2ba7a380-fbe5-11e9-96a0-55c6827bd024.png" style="max-width:50%;">
+    </a>
+</p>
+
 #### 6 - Generative Adversarial Networks
 - **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/6-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](6-Generative_Adversarial_Networks/dcgan.py))([paper](https://arxiv.org/pdf/1511.06434.pdf)).  Deep Convolutional Generative Adversarial Network.
 - **Pix2Pix** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/6-Generative_Adversarial_Networks/Pix2Pix.ipynb)) ([code](6-Generative_Adversarial_Networks/Pix2Pix.py))([paper](https://arxiv.org/pdf/1611.07004.pdf)).  Image-to-Image Translation with Conditional Adversarial Networks.
