@@ -54,7 +54,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **RPN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN/rpn.py))([paper](https://arxiv.org/pdf/1703.06283.pdf)). RPN:  a Region Proposal Network 🔥🔥🔥🔥🔥
 
 <p align="center">
-    <img width="60%" src="https://user-images.githubusercontent.com/30433053/67913231-4e2ac400-fbc7-11e9-9995-94ed6f7181d4.png" style="max-width:80%;">
+    <img width="80%" src="https://user-images.githubusercontent.com/30433053/67913231-4e2ac400-fbc7-11e9-9995-94ed6f7181d4.png" style="max-width:80%;">
     </a>
 </p>
 
