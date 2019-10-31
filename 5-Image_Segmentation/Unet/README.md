@@ -7,10 +7,10 @@
 --------------------
 Membrane contains 90 images for training and 30 for testing.  The corresponding binary labels are provided in an in-out fashion, i.e. white for the pixels of segmented objects and black for the rest of pixels (which correspond mostly to membranes)
 
-| input | ground truth | prediction |
-|---|---|:---:|
-|![image](./results/origin_0.png)|![image](./results/gt_0.png)|![image](./results/pred_0.png)|
-|![image](./results/origin_1.png)|![image](./results/gt_1.png)|![image](./results/pred_1.png)|
+<p align="center">
+    <img width="30%" src="./results/pred_0.png" style="max-width:30%;">
+    </a>
+</p>
 
 you can download Membrane dataset on the [BaiduCloud Drive](https://pan.baidu.com/s/1O9U48zDjulhLYONksX569w) and put it in `./`, then you can train it and then evaluate your model
 
