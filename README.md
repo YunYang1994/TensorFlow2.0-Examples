@@ -54,7 +54,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **RPN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/RPN/rpn.py))([paper](https://arxiv.org/pdf/1703.06283.pdf)). RPN:  a Region Proposal Network 🔥🔥🔥🔥🔥
 
 <p align="center">
-    <img width="80%" src="https://user-images.githubusercontent.com/30433053/67913231-4e2ac400-fbc7-11e9-9995-94ed6f7181d4.png" style="max-width:80%;">
+    <img width="70%" src="https://user-images.githubusercontent.com/30433053/67913231-4e2ac400-fbc7-11e9-9995-94ed6f7181d4.png" style="max-width:70%;">
     </a>
 </p>
 
@@ -68,7 +68,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **YOLOv3** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3/core/yolov3.py))([paper](https://arxiv.org/pdf/1804.02767.pdf)). YOLOv3: An Incremental Improvement.🔥🔥🔥🔥
 
 <p align="center">
-    <img width="50%" src="https://user-images.githubusercontent.com/30433053/67914531-656bb080-fbcb-11e9-9775-302a25faf747.png" style="max-width:50%;">
+    <img width="70%" src="https://user-images.githubusercontent.com/30433053/67914531-656bb080-fbcb-11e9-9775-302a25faf747.png" style="max-width:70%;">
     </a>
 </p>
 
