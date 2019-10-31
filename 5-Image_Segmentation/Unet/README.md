@@ -7,11 +7,10 @@
 --------------------
 Membrane contains 90 images for training and 30 for testing.  The corresponding binary labels are provided in an in-out fashion, i.e. white for the pixels of segmented objects and black for the rest of pixels (which correspond mostly to membranes)
 
-<center class="Third">
-    <img src="https://user-images.githubusercontent.com/30433053/67921821-ef277800-fbe3-11e9-822a-88e2a93e4048.png" width=150 hspace=5/>
-    <img src="https://user-images.githubusercontent.com/30433053/67921970-580ef000-fbe4-11e9-8141-699ae37373af.png" width=150 hspace=5/>
-    <img src="https://user-images.githubusercontent.com/30433053/67921454-baff8780-fbe2-11e9-8275-e42cc92604ff.png" width=150 hspace=5/>
-</center>
+<p align="center">
+    <img width="37%" src="https://user-images.githubusercontent.com/30433053/67922238-2ba7a380-fbe5-11e9-96a0-55c6827bd024.png" style="max-width:37%;">
+    </a>
+</p>
 
 
 you can download Membrane dataset on the [BaiduCloud Drive](https://pan.baidu.com/s/1O9U48zDjulhLYONksX569w) and put it in `./`, then you can train it and then evaluate your model
