@@ -11,6 +11,7 @@
 #
 #================================================================
 
+import os
 import cv2
 import numpy as np
 from Unet import Unet
@@ -66,6 +67,7 @@ model.save_weights("model.h5")
 testSet = DataGenerator("membrane/test", batch_size=1)
 alpha   = 0.3
 model.load_weights("model.h5")
+if not os.path.exists("./results"): os.mkdir("./results")
 
 for idx, (img, mask) in enumerate(testSet):
     oring_img = img[0]
