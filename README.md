@@ -59,6 +59,12 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 </p>
 
 - **MTCNN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/MTCNN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/MTCNN/mtcnn.py))([paper](https://arxiv.org/abs/1604.02878)). MTCNN: Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks. *(Face detection and Alignment)* 🔥🔥
+
+<p align="center">
+    <img width="60%" src="https://user-images.githubusercontent.com/30433053/67630296-52519b80-f8c0-11e9-8185-75f2e0d46ee8.png" style="max-width:60%;">
+    </a>
+</p>
+
 - **YOLOv3** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3/core/yolov3.py))([paper](https://arxiv.org/pdf/1804.02767.pdf)). YOLOv3: An Incremental Improvement.🔥🔥🔥🔥
 
 #### 5 - Image Segmentation
