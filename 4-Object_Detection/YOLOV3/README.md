@@ -61,7 +61,10 @@ Track training progress in Tensorboard and go to http://localhost:6006/
 ```
 $ tensorboard --logdir ./data/log
 ```
-![image](./docs/loss.png)
+<p align="center">
+    <img width="100%" src="https://user-images.githubusercontent.com/30433053/68088727-db5a6b00-fe9c-11e9-91d6-555b1089b450.png" style="max-width:100%;">
+    </a>
+</p>
 
 ## Citation
 --------------------
