@@ -19,7 +19,11 @@ In this part, we will use pretrained weights to make predictions on both image a
 $ python image_demo.py
 $ python video_demo.py # if use camera, set video_path = 0
 ```
-![image](./docs/kite_result.jpg)
+
+<p align="center">
+    <img width="100%" src="https://user-images.githubusercontent.com/30433053/68088581-9255e700-fe9b-11e9-8672-2672ab398abe.jpg" style="max-width:100%;">
+    </a>
+</p>
 
 ## Train yymnist
 --------------------
