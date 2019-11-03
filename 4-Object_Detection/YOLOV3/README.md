@@ -27,6 +27,14 @@ $ python video_demo.py # if use camera, set video_path = 0
 
 ## Train yymnist
 --------------------
+
+<p align="center">
+    <img width="60%" src="https://user-images.githubusercontent.com/30433053/68088639-01cbd680-fe9c-11e9-858c-db7fd1e6b8da.jpg" style="max-width:60%;">
+    </a>
+</p>
+
+
+
 Download [yymnist](https://github.com/YunYang1994/yymnist) dataset and make data.
 
 ```
@@ -54,6 +62,8 @@ Track training progress in Tensorboard and go to http://localhost:6006/
 $ tensorboard --logdir ./data/log
 ```
 ![image](./docs/loss.png)
+
+
 
 | train |test|
 |---|---
