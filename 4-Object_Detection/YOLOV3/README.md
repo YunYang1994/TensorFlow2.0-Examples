@@ -29,7 +29,7 @@ $ python video_demo.py # if use camera, set video_path = 0
 --------------------
 
 <p align="center">
-    <img width="30%" src="https://user-images.githubusercontent.com/30433053/68088639-01cbd680-fe9c-11e9-858c-db7fd1e6b8da.jpg" style="max-width:30%;">
+    <img width="45%" src="https://user-images.githubusercontent.com/30433053/68088705-90d8ee80-fe9c-11e9-8e61-589fdc45fe60.png" style="max-width:45%;">
     </a>
 </p>
 
@@ -62,12 +62,6 @@ Track training progress in Tensorboard and go to http://localhost:6006/
 $ tensorboard --logdir ./data/log
 ```
 ![image](./docs/loss.png)
-
-
-
-| train |test|
-|---|---
-|![image](./docs/01554.jpg)|![image](./docs/01567.jpg)|
 
 ## Citation
 --------------------
