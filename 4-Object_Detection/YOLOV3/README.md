@@ -29,7 +29,7 @@ $ python video_demo.py # if use camera, set video_path = 0
 --------------------
 
 <p align="center">
-    <img width="60%" src="https://user-images.githubusercontent.com/30433053/68088639-01cbd680-fe9c-11e9-858c-db7fd1e6b8da.jpg" style="max-width:60%;">
+    <img width="30%" src="https://user-images.githubusercontent.com/30433053/68088639-01cbd680-fe9c-11e9-858c-db7fd1e6b8da.jpg" style="max-width:30%;">
     </a>
 </p>
 
