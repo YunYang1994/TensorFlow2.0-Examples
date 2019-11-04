@@ -41,13 +41,13 @@ class BasicBlock(tf.keras.Model):
                     tf.keras.layers.BatchNormalization()]
                     )
         else:
-            self.shortcut = lambda x: x
+            self.shortcut = lambda x,_: x
 
     def call(self, x, training=False):
         # if training: print("=> training network ... ")
         out = tf.nn.relu(self.bn1(self.conv1(x), training=training))
         out = self.bn2(self.conv2(out), training=training)
-        out += self.shortcut(x)
+        out += self.shortcut(x, training)
         return tf.nn.relu(out)
 
 class FPN(tf.keras.Model):
@@ -103,10 +103,10 @@ class FPN(tf.keras.Model):
         p1 = tf.nn.max_pool2d(p1, ksize=3, strides=2, padding="SAME")
 
         # Bottom --> up
-        p2 = self.layer1(p1)
-        p3 = self.layer2(p2)
-        p4 = self.layer3(p3)
-        p5 = self.layer4(p4)
+        p2 = self.layer1(p1, training=training)
+        p3 = self.layer2(p2, training=training)
+        p4 = self.layer3(p3, training=training)
+        p5 = self.layer4(p4, training=training)
 
         # Top-down
         d5 = self.top_layer(p5)

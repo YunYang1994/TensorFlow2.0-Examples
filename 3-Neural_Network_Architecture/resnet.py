@@ -42,7 +42,7 @@ class BasicBlock(tf.keras.Model):
         # if training: print("=> training network ... ")
         out = tf.nn.relu(self.bn1(self.conv1(x), training=training))
         out = self.bn2(self.conv2(out), training=training)
-        out += self.shortcut(x)
+        out += self.shortcut(x, training=training)
         return tf.nn.relu(out)
 
 
@@ -66,13 +66,13 @@ class Bottleneck(tf.keras.Model):
                     tf.keras.layers.BatchNormalization()]
                     )
         else:
-            self.shortcut = lambda x: x
+            self.shortcut = lambda x,_: x
 
     def call(self, x, training=False):
         out = tf.nn.relu(self.bn1(self.conv1(x), training))
         out = tf.nn.relu(self.bn2(self.conv2(out), training))
         out = self.bn3(self.conv3(out), training)
-        out += self.shortcut(x)
+        out += self.shortcut(x, training)
         return tf.nn.relu(out)
 
 
@@ -102,10 +102,10 @@ class ResNet(tf.keras.Model):
 
     def call(self, x, training=False):
         out = tf.nn.relu(self.bn1(self.conv1(x), training))
-        out = self.layer1(out)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = self.layer4(out)
+        out = self.layer1(out, training=training)
+        out = self.layer2(out, training=training)
+        out = self.layer3(out, training=training)
+        out = self.layer4(out, training=training)
 
         # For classification
         out = self.avg_pool2d(out)

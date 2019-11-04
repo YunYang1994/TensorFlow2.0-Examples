@@ -49,59 +49,52 @@ def get_disparity_smoothness(disp, pyramid):
     smoothness_y = [disp_gradients_y[i] * weights_y[i] for i in range(4)]
     return smoothness_x + smoothness_y
 
-model = MonodepthNetwork()
-lr_disp = model(left_image)
-left_image = tf.ones(shape=[1, 256, 512, 3])
-right_image = tf.ones(shape=[1, 256, 512, 3]) * 3
+def compute_loss(left_image, right_image, lr_disp):
+    true_left_pyramid  = scale_pyramid(left_image, 4)
+    true_right_pyramid = scale_pyramid(right_image, 4)
 
+    left_disp, right_disp = split_lr_disp(lr_disp)
+    # generate images with disparity
+    pred_left_pyramid  = [generate_left_image(true_right_pyramid[i], left_disp[i]) for i in range(4)]
+    pred_right_pyramid = [generate_right_image(true_left_pyramid[i], right_disp[i]) for i in range(4)]
 
-true_left_pyramid  = scale_pyramid(left_image, 4)
-true_right_pyramid = scale_pyramid(right_image, 4)
+    # lr consitency
+    right_to_left_disp= [generate_left_image(right_disp[i], left_disp[i]) for i in range(4)]
+    left_to_right_disp= [generate_right_image(left_disp[i], right_disp[i]) for i in range(4)]
 
-left_disp, right_disp = split_lr_disp(lr_disp)
+    # disparity smoothness
+    disp_left_smoothness = get_disparity_smoothness(left_disp, true_left_pyramid)
+    disp_right_smoothness = get_disparity_smoothness(right_disp, true_right_pyramid)
 
-# generate images with disparity
-pred_left_pyramid  = [generate_left_image(true_right_pyramid[i], left_disp[i]) for i in range(4)]
-pred_right_pyramid = [generate_right_image(true_left_pyramid[i], right_disp[i]) for i in range(4)]
-# lr consitency
+    # IMAGE RECONSTRUCTION
+    # L1 loss
+    l1_left = [tf.abs(pred_left_pyramid[i]-true_left_pyramid[i]) for i in range(4)]
+    l1_reconstruction_loss_left = [tf.reduce_mean(l) for l in l1_left]
+    l1_right = [tf.abs(pred_right_pyramid[i]-true_right_pyramid[i]) for i in range(4)]
+    l1_reconstruction_loss_right = [tf.reduce_mean(l) for l in l1_right]
 
-right_to_left_disp= [generate_left_image(right_disp[i], left_disp[i]) for i in range(4)]
-left_to_right_disp= [generate_right_image(left_disp[i], right_disp[i]) for i in range(4)]
-# disparity smoothness
+    # SSIM loss
+    ssim_left = [SSIM(pred_left_pyramid[i], true_left_pyramid[i]) for i in range(4)]
+    ssim_loss_left = [tf.reduce_mean(s) for s in ssim_left]
+    ssim_right = [SSIM(pred_right_pyramid[i], true_right_pyramid[i]) for i in range(4)]
+    ssim_loss_right = [tf.reduce_mean(s) for s in ssim_right]
 
-disp_left_smoothness = get_disparity_smoothness(left_disp, true_left_pyramid)
-disp_right_smoothness = get_disparity_smoothness(right_disp, true_right_pyramid)
-# IMAGE RECONSTRUCTION
+    # WEIGTHED SUM
+    alpha = 0.85
+    image_loss_right =[alpha*ssim_loss_right[i] + (1-alpha) * l1_reconstruction_loss_right[i] for i in range(4)]
+    image_loss_left  =[alpha*ssim_loss_left[i] + (1-alpha) * l1_reconstruction_loss_left[i] for i in range(4)]
+    image_loss = tf.add_n(image_loss_left + image_loss_right)
 
-# L1 loss
-l1_left = [tf.abs(pred_left_pyramid[i]-true_left_pyramid[i]) for i in range(4)]
-l1_reconstruction_loss_left = [tf.reduce_mean(l) for l in l1_left]
-l1_right = [tf.abs(pred_right_pyramid[i]-true_right_pyramid[i]) for i in range(4)]
-l1_reconstruction_loss_right = [tf.reduce_mean(l) for l in l1_right]
+    # DISPARITY SMOOTHNESS
+    disp_left_loss = [tf.reduce_mean(tf.abs(disp_left_smoothness[i])) / 2 ** i for i in range(4)]
+    disp_right_loss = [tf.reduce_mean(tf.abs(disp_right_smoothness[i])) / 2 ** i for i in range(4)]
+    disp_gradient_loss = 0.1 * tf.add_n(disp_left_loss + disp_right_loss)
 
-# SSIM loss
-ssim_left = [SSIM(pred_left_pyramid[i], true_left_pyramid[i]) for i in range(4)]
-ssim_loss_left = [tf.reduce_mean(s) for s in ssim_left]
-ssim_right = [SSIM(pred_right_pyramid[i], true_right_pyramid[i]) for i in range(4)]
-ssim_loss_right = [tf.reduce_mean(s) for s in ssim_right]
+    # LR CONSISTENCY
+    lr_left_loss = [tf.reduce_mean(tf.abs(right_to_left_disp[i] - left_disp[i])) for i in range(4)]
+    lr_right_loss = [tf.reduce_mean(tf.abs(left_to_right_disp[i] - right_disp[i])) for i in range(4)]
+    lr_loss = tf.add_n(lr_left_loss + lr_right_loss)
 
-# WEIGTHED SUM
-alpha = 0.3
-image_loss_right =[alpha*ssim_loss_right[i] + (1-alpha) * l1_reconstruction_loss_right[i] for i in range(4)]
-image_loss_left  =[alpha*ssim_loss_left[i] + (1-alpha) * l1_reconstruction_loss_left[i] for i in range(4)]
-image_loss = tf.add_n(image_loss_left + image_loss_right)
-
-# DISPARITY SMOOTHNESS
-disp_left_loss = [tf.reduce_mean(tf.abs(disp_left_smoothness[i])) / 2 ** i for i in range(4)]
-disp_right_loss = [tf.reduce_mean(tf.abs(disp_right_smoothness[i])) / 2 ** i for i in range(4)]
-disp_gradient_loss = tf.add_n(disp_left_loss + disp_right_loss)
-
-# LR CONSISTENCY
-lr_left_loss = [tf.reduce_mean(tf.abs(right_to_left_disp[i] - left_disp[i])) for i in range(4)]
-lr_right_loss = [tf.reduce_mean(tf.abs(left_to_right_disp[i] - right_disp[i])) for i in range(4)]
-lr_loss = tf.add_n(lr_left_loss + lr_right_loss)
-
-# TOTAL LOSS
-total_loss = image_loss + 0.1 * disp_gradient_loss + lr_loss
+    return image_loss, disp_gradient_loss, lr_loss
 
 
