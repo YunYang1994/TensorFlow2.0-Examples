@@ -36,13 +36,13 @@ class BasicBlock(tf.keras.Model):
                     tf.keras.layers.BatchNormalization()]
                     )
         else:
-            self.shortcut = lambda x: x
+            self.shortcut = lambda x,_: x
 
     def call(self, x, training=False):
         # if training: print("=> training network ... ")
         out = tf.nn.relu(self.bn1(self.conv1(x), training=training))
         out = self.bn2(self.conv2(out), training=training)
-        out += self.shortcut(x, training=training)
+        out += self.shortcut(x, training)
         return tf.nn.relu(out)
 
 
@@ -127,6 +127,4 @@ def ResNet101():
 
 def ResNet152():
     return ResNet(Bottleneck, [3,8,36,3])
-
-
 
