@@ -51,7 +51,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **AutoEncoder** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/3-Neural_Network_Architecture/autoencoder.py))([paper](http://www.cs.toronto.edu/~hinton/science.pdf)). AutoEncoder: Reducing the Dimensionality of Data with Neural Networks.
 
 <p align="center">
-    <img width="75%" src="https://user-images.githubusercontent.com/30433053/68206851-b08d2580-0008-11ea-8b51-061e0cbead62.gif" style="max-width:75%;">
+    <img width="65%" src="https://user-images.githubusercontent.com/30433053/68206851-b08d2580-0008-11ea-8b51-061e0cbead62.gif" style="max-width:65%;">
     </a>
 </p>
 
