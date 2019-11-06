@@ -79,6 +79,12 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
     </a>
 </p>
 
+- **SSD** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/SSD)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/SSD/ssd.py))([paper](http://arxiv.org/abs/1512.02325)). SSD: Single Shot MultiBox Detector.
+
+<p align="center">
+    <img width="55%" src="https://user-images.githubusercontent.com/30433053/68289307-d83fc480-00c0-11ea-88fc-02ea2b5f576b.png" style="max-width:55%;">
+    </a>
+</p>
 
 #### 5 - Image Segmentation
 - **FCN** ([notebook](5-Image_Segmentation/FCN)) ([code](5-Image_Segmentation/FCN/fcn8s.py))([paper](https://arxiv.org/abs/1411.4038)). FCN: Fully Convolutional Networks for Semantic Segmentation. 🔥🔥🔥🔥🔥
