@@ -3,7 +3,7 @@
 如果你也想支持我的开源工作，可以请我喝一杯咖啡，并看到更好的内容, 赞助他一点点, 作为鼓励他继续开源的动力.
 
 <p align="center">
-    <img width="50%" src="Sponsor.png" style="max-width:50%;">
+    <img width="60%" src="https://user-images.githubusercontent.com/30433053/68356510-78432f80-014d-11ea-8f82-ac81eedf628a.png" style="max-width:60%;">
     </a>
 </p>
 
