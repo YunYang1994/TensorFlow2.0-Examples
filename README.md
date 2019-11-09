@@ -32,6 +32,8 @@
     
 This tutorial was designed for easily diving into TensorFlow2.0.  it includes both notebooks and source codes with explanation. **It will be continuously updated !** 🐍🐍🐍🐍🐍🐍
 
+## Contents
+
 #### 1 - Introduction
 - **Hello World** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/1-Introduction/helloworld.ipynb)) ([code](1-Introduction/helloworld.py)). Very simple example to learn how to print "hello world" using TensorFlow.
 - **Variable** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/1-Introduction/variable.ipynb)) ([code](1-Introduction/variable.py)). Learn to use variable in tensorflow.
@@ -109,5 +111,25 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 - **DQN** ([notebook](6-Reinforcement_Learning/YOLOV2.ipynb)) ([code](6-Reinforcement_Learning/YOLOV2.py)). deep Q-network (DQN).
 
+## Stargazers
 
 [![Stargazers over time](https://starcharts.herokuapp.com/YunYang1994/TensorFlow2.0-Examples.svg)](https://starcharts.herokuapp.com/YunYang1994/TensorFlow2.0-Examples)
+
+## Copyright
+
+```
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 1, JUNE 2019
+
+Copyright (C) 2019 YunYang1994 <dreameryangyun@sjtu.edu.cn>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. You just DO WHAT THE FUCK YOU WANT TO. DON'T ASK ME, JUST DO IT.
+ ```
+
