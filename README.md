@@ -117,19 +117,4 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 
 ## Copyright
 
-```
-           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-                   Version 1, JUNE 2019
-
-Copyright (C) 2019 YunYang1994 <dreameryangyun@sjtu.edu.cn>
-
-Everyone is permitted to copy and distribute verbatim or modified
-copies of this license document, and changing it is allowed as long
-as the name is changed.
-
-           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-
- 0. You just DO WHAT THE FUCK YOU WANT TO. DON'T ASK ME, JUST DO IT.
- ```
-
+This repo is implemented by YunYang1994. Using this under MIT License.
