@@ -114,7 +114,3 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 ## Stargazers
 
 [![Stargazers over time](https://starcharts.herokuapp.com/YunYang1994/TensorFlow2.0-Examples.svg)](https://starcharts.herokuapp.com/YunYang1994/TensorFlow2.0-Examples)
-
-## Copyright
-
-This repo is implemented by YunYang1994. Using this under MIT License.
