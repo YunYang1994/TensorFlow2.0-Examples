@@ -70,7 +70,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **MTCNN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/MTCNN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/MTCNN/mtcnn.py))([paper](https://arxiv.org/abs/1604.02878)). MTCNN: Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks. *(Face detection and Alignment)* 🔥🔥
 
 <p align="center">
-    <img width="40%" src="https://user-images.githubusercontent.com/30433053/67630296-52519b80-f8c0-11e9-8185-75f2e0d46ee8.png" style="max-width:40%;">
+    <img width="40%" src="https://user-images.githubusercontent.com/30433053/68547531-7e6f2f80-041d-11ea-8cfb-0c5a22af0921.jpg" style="max-width:40%;">
     </a>
 </p>
 
