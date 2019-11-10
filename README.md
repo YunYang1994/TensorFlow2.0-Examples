@@ -91,7 +91,7 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **Faster R-CNN** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/Faster-RCNN)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/Faster-RCNN/frcnn.py))([paper](http://arxiv.org/abs/1506.01497)). Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks.🔥🔥🔥🔥 【TO DO】
 
 <p align="center">
-    <img width="56%" src="https://user-images.githubusercontent.com/30433053/68546623-54187480-0413-11ea-9396-0a698c5a2580.png" style="max-width:56%;">
+    <img width="65%" src="https://user-images.githubusercontent.com/30433053/68546623-54187480-0413-11ea-9396-0a698c5a2580.png" style="max-width:65%;">
     </a>
 </p>
 
