@@ -110,7 +110,3 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 #### 7 - Reinforcement Learning
 
 - **DQN** ([notebook](6-Reinforcement_Learning/YOLOV2.ipynb)) ([code](6-Reinforcement_Learning/YOLOV2.py)). deep Q-network (DQN).
-
-## Stargazers
-
-[![Stargazers over time](https://starcharts.herokuapp.com/YunYang1994/TensorFlow2.0-Examples.svg)](https://starcharts.herokuapp.com/YunYang1994/TensorFlow2.0-Examples)
