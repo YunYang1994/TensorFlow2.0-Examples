@@ -21,7 +21,7 @@ class BatchNormalization(tf.keras.layers.BatchNormalization):
     and `beta` will not be updated !
     """
     def call(self, x, training=False):
-        if not training:
+        if isinstance(training, bool) and training == False:
             training = tf.constant(False)
         training = tf.logical_and(training, self.trainable)
         return super().call(x, training)
