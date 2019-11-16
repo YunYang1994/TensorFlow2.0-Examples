@@ -17,7 +17,6 @@ In this part, we will use pretrained weights to make predictions on both image a
 
 ```
 $ python image_demo.py
-$ python video_demo.py # if use camera, set video_path = 0
 ```
 
 <p align="center">
