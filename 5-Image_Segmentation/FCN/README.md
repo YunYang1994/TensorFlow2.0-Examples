@@ -1,4 +1,4 @@
-## [FCN: Fully Convolutional Networks for Semantic Segmentation](https://github.com/YunYang1994/ai-notebooks/blob/master/FCN.md)
+## [FCN: Fully Convolutional Networks for Semantic Segmentation](https://github.com/YunYang1994/cv-notebooks/blob/master/ai_algorithm/FCN.md)
 --------------------
  [This paper](https://arxiv.org/abs/1411.4038) shows that convolutional networks by themselves, trained end-to-end, pixels-to-pixels, exceed the state-of-the-art in semantic segmentation. This repo adapts vgg16 networks into fully convolutional networks and transfer their learned representations by fine-tuning to the segmentation task on PASCAL VOC2012 dataset. 
  
