@@ -6,5 +6,3 @@
     <img width="60%" src="https://user-images.githubusercontent.com/30433053/68356510-78432f80-014d-11ea-8f82-ac81eedf628a.png" style="max-width:60%;">
     </a>
 </p>
-
-如果你跟我一样非常热爱编程，喜欢神经网络，也欢迎和我做朋友（WeChat ID: yy1186584388)。
