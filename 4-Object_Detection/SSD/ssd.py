@@ -82,6 +82,7 @@ class SSD(tf.keras.Model):
         h = self.conv4_1(h)
         h = self.conv4_2(h)
         h = self.conv4_3(h)
+        conv4 = h
         print(h.shape)
         h = self.pool4(h)
 
@@ -92,27 +93,32 @@ class SSD(tf.keras.Model):
 
         h = self.fc6(h)     # [1,19,19,1024]
         h = self.fc7(h)     # [1,19,19,1024]
+        conv7 = h
         print(h.shape)
 
         h = self.conv8_1(h)
         h = self.conv8_2(h) # [1,10,10, 512]
+        conv8 = h
         print(h.shape)
 
         h = self.conv9_1(h)
         h = self.conv9_2(h) # [1, 5, 5, 256]
+        conv9 = h
         print(h.shape)
 
         h = self.conv10_1(h)
         h = self.conv10_2(h) # [1, 3, 3, 256]
+        conv10 = h
         print(h.shape)
 
         h = self.conv11_1(h)
         h = self.conv11_2(h) # [1, 1, 1, 256]
+        conv11 = h
         print(h.shape)
         return h
 
-model = SSD(21)
-x = model(tf.ones(shape=[1,300,300,3]))
+conv4, conv7, conv8, conv9, conv10, conv11 = SSD(21)
+x = conv11(tf.ones(shape=[1,300,300,3]))
 
 
 
