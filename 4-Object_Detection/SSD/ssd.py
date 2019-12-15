@@ -19,30 +19,29 @@ class SSD(tf.keras.Model):
         super(SSD, self).__init__()
         # conv1
         conv4, conv = vgg16(input_data)
-        self.conv4 = conv4
+        self.conv4 = tf.keras.layers.Conv2D(4*(num_class + 5),3, padding='same')(conv4)
         # fc6, from now they are all SSD blocks
         conv = tf.keras.layers.Conv2D(1024, 3, dilation_rate=6, activation='relu', padding='same')(conv)#fc6
         # fc7
         conv = tf.keras.layers.Conv2D(1024, 1, activation='relu', padding='same')(conv)#fc7
-        self.conv7 = conv
+        self.conv7 = tf.keras.layers.Conv2D(6*(num_class + 5), 3, padding='same')(conv)
         # Block 8/9/10/11: 1x1 and 3x3 convolutions strides 2 (except the last 2 layers)
-
         # conv8
         conv = tf.keras.layers.Conv2D(256, 1, activation='relu', padding='same')(conv)
         conv = tf.keras.layers.Conv2D(512, 3, strides=2, activation='relu', padding='same')(conv)
-        self.conv8 = conv
+        self.conv8 = tf.keras.layers.Conv2D(6*(num_class + 5),3, padding='same')(conv)
         # conv9
         conv = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')(conv)
         conv = tf.keras.layers.Conv2D(256, 3, strides=2, activation='relu', padding='same')(conv)
-        self.conv9 = conv
+        self.conv9 = tf.keras.layers.Conv2D(6*(num_class + 5),3, padding='same')(conv)
         # conv10
         conv = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')(conv)
         conv = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='valid')(conv)
-        self.conv10 = conv
+        self.conv10 = tf.keras.layers.Conv2D(4*(num_class + 5),3, padding='same')(conv)
         # conv11
         conv = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')(conv)
         conv = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='valid')(conv)
-        self.conv11 = conv
+        self.conv11 = tf.keras.layers.Conv2D(4*(num_class + 5),3, padding='same')(conv)
 
     def display(self):
         print(self.conv4.shape)
