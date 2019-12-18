@@ -84,7 +84,14 @@ def process_image_label(image_path, label_path):
     image = cv2.resize(image, (224, 224), interpolation=cv2.INTER_NEAREST)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     # data augmentation here
-    # pass
+    # randomly shift gamma
+    gamma = random.uniform(0.8, 1.2)
+    image = image.copy() ** gamma
+    image = np.clip(image, 0, 255)
+    # randomly shift brightness
+    brightness = random.uniform(0.5, 2.0)
+    image = image.copy() * brightness
+    image = np.clip(image, 0, 255)
     # image transformation here
     image = (image / 255. - rgb_mean) / rgb_std
 
