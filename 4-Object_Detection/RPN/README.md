@@ -1,4 +1,4 @@
-## [RPN: RegionProposal Network](https://github.com/YunYang1994/cv-notebooks/blob/master/ai_algorithm/RPN.md)
+## [RPN: RegionProposal Network](https://yunyang1994.github.io/posts/RPN/#more)
 --------------------
 
 This repository is implemented for paper ["Expecting the Unexpected: Training Detectors for Unusual Pedestrians with Adversarial Imposters(CVPR2017)"](https://arxiv.org/pdf/1703.06283), which makes some improvements on the basis of region proposal network in [Faster-RCNN](http://arxiv.org/abs/1506.01497). 
