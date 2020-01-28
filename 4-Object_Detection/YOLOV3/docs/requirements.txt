@@ -5,4 +5,4 @@ wget==3.2
 seaborn==0.9.0
 easydict==1.9
 grpcio>=1.24.3
-tensorflow==2.0.0
+tensorflow==2.0.1
