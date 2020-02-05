@@ -114,6 +114,5 @@ This tutorial was designed for easily diving into TensorFlow2.0.  it includes bo
 - **DCGAN** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/6-Generative_Adversarial_Networks/dcgan.ipynb)) ([code](6-Generative_Adversarial_Networks/dcgan.py))([paper](https://arxiv.org/pdf/1511.06434.pdf)).  Deep Convolutional Generative Adversarial Network.
 - **Pix2Pix** ([notebook](https://nbviewer.jupyter.org/github/YunYang1994/tensorflow2.0-examples/blob/master/6-Generative_Adversarial_Networks/Pix2Pix.ipynb)) ([code](6-Generative_Adversarial_Networks/Pix2Pix.py))([paper](https://arxiv.org/pdf/1611.07004.pdf)).  Image-to-Image Translation with Conditional Adversarial Networks.
 
-#### 7 - Reinforcement Learning
-
-- **DQN** ([notebook](6-Reinforcement_Learning/YOLOV2.ipynb)) ([code](6-Reinforcement_Learning/YOLOV2.py)). deep Q-network (DQN).
+#### 7 - Utils
+- **Multiple GPU Training** ([code](7-Utils/multi_gpu_train.py)). Use multiple GPU to train your model.
