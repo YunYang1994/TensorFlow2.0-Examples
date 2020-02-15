@@ -33,7 +33,7 @@ def load_weights(model, weights_file):
     return True
 
 pnet, rnet, onet = PNet(), RNet(), ONet()
-pnet(tf.ones(shape=[1, 224, 224, 3]))
+pnet(tf.ones(shape=[1,  12,  12, 3]))
 rnet(tf.ones(shape=[1,  24,  24 ,3]))
 onet(tf.ones(shape=[1,  48,  48, 3]))
 load_weights(pnet, "./det1.npy"), load_weights(rnet, "./det2.npy"), load_weights(onet, "./det3.npy")

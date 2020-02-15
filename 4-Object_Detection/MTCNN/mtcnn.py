@@ -56,13 +56,15 @@ class RNet(tf.keras.Model):
         self.dense5_1 = tf.keras.layers.Dense(2, name="conv5-1")
         self.dense5_2 = tf.keras.layers.Dense(4, name="conv5-2")
 
+        self.flatten = tf.keras.layers.Flatten()
+
     def call(self, x, training=False):
         out = self.prelu1(self.conv1(x))
         out = tf.nn.max_pool2d(out, 3, 2, padding="SAME")
         out = self.prelu2(self.conv2(out))
         out = tf.nn.max_pool2d(out, 3, 2, padding="VALID")
         out = self.prelu3(self.conv3(out))
-        out = tf.reshape(out, shape=(out.shape[0], -1))
+        out = self.flatten(out)
         out = self.prelu4(self.dense4(out))
         score = tf.nn.softmax(self.dense5_1(out), -1)
         boxes = self.dense5_2(out)
@@ -91,6 +93,8 @@ class ONet(tf.keras.Model):
         self.dense6_2 = tf.keras.layers.Dense(4  , name="conv6-2")
         self.dense6_3 = tf.keras.layers.Dense(10 , name="conv6-3")
 
+        self.flatten = tf.keras.layers.Flatten()
+
     def call(self, x, training=False):
         out = self.prelu1(self.conv1(x))
         out = tf.nn.max_pool2d(out, 3, 2, padding="SAME")
@@ -99,10 +103,13 @@ class ONet(tf.keras.Model):
         out = self.prelu3(self.conv3(out))
         out = tf.nn.max_pool2d(out, 2, 2, padding="SAME")
         out = self.prelu4(self.conv4(out))
-        out = self.dense5(tf.reshape(out, shape=(out.shape[0], -1)))
+
+
+        out = self.dense5(self.flatten(out))
         out = self.prelu5(out)
         score = tf.nn.softmax(self.dense6_1(out))
         boxes = self.dense6_2(out)
         lamks = self.dense6_3(out)
         return boxes, lamks, score
+
 
