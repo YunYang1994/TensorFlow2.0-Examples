@@ -11,31 +11,48 @@
 #
 #================================================================
 
+import os
+import shutil
 import tensorflow as tf
 from tqdm import tqdm
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import applications
-from tensorflow.keras.optimizers import SGD
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,2,3"
 
-BATCH_SIZE = 384  # 3 GPU and 128 batch size per GPU
-EPOCHS     = 30
-NUM_CLASS  = 10
-EMB_SIZE   = 512  # Embedding Size
-GPU_SIZE   = 30   # (G)  MemorySIZE per GPU
-IMG_SIZE   = 112  # Input Image Size
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+
+EPOCHS       = 40
+SCORE_THRESH = 0.8
+NUM_CLASS    = 10
+EMB_SIZE     = 2     # Embedding Size
+IMG_SIZE     = 112   # Input Image Size
+BATCH_SIZE   = 512   # Total 4 GPU, 128 batch per GPU
+GPU_SIZE     = 30    # (G)  MemorySIZE per GPU
+
+#------------------------------------ Prepare Dataset ------------------------------------#
 
 train_datagen = ImageDataGenerator(
         rescale=1./255,
         shear_range=0.2,
         zoom_range=0.2,
-        horizontal_flip=True)
+        horizontal_flip=False)
 
 train_generator = train_datagen.flow_from_directory(
-        '/home/yyang/mnist/train',
+        './mnist/train',
         target_size=(IMG_SIZE, IMG_SIZE),
         batch_size=BATCH_SIZE,
         class_mode='categorical')
+
+test_datagen = ImageDataGenerator(
+        rescale=1./255,
+        horizontal_flip=False)
+
+test_generator = test_datagen.flow_from_directory(
+        './mnist/test',
+        target_size=(IMG_SIZE, IMG_SIZE),
+        batch_size=2,
+        class_mode='categorical')
+
+#------------------------------------ Build Mode -----------------------------------#
 
 tf.debugging.set_log_device_placement(True)
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -52,18 +69,21 @@ strategy = tf.distribute.MirroredStrategy()
 
 # Defining Model
 with strategy.scope():
-    model = applications.mobilenet_v2.MobileNetV2(include_top=False, weights=None,
-                                                  input_shape=(IMG_SIZE,IMG_SIZE,3))
+    backbone = applications.mobilenet_v2.MobileNetV2(include_top=False,
+                                                    weights='imagenet', input_shape=(IMG_SIZE,IMG_SIZE,3))
     x = tf.keras.layers.Input(shape=(IMG_SIZE,IMG_SIZE,3))
-    y = model(x)
+    y = backbone(x)
     y = tf.keras.layers.AveragePooling2D()(y)
     y = tf.keras.layers.Flatten()(y)
     y = tf.keras.layers.Dense(EMB_SIZE,  activation=None)(y)
-    y = tf.keras.layers.Dense(NUM_CLASS, activation='softmax')(y)
-    model = tf.keras.models.Model(inputs=x, outputs=y)
+    featureExtractor = tf.keras.models.Model(inputs=x, outputs=y)
+    model = tf.keras.Sequential([
+        featureExtractor,
+        tf.keras.layers.Dense(NUM_CLASS, activation='softmax')
+    ])
 
+    model.build(input_shape=[1, IMG_SIZE, IMG_SIZE, 3])
     optimizer = tf.keras.optimizers.Adam(0.001)
-    checkpoint = tf.train.Checkpoint(optimizer=optimizer, model=model)
 
 # Defining Loss and Metrics
 with strategy.scope():
@@ -92,6 +112,8 @@ with strategy.scope():
         train_accuracy.update_state(labels, predictions)
         return loss
 
+#------------------------------------ Training Loop -----------------------------------#
+
 # Defining Training Loops
 with strategy.scope():
     @tf.function
@@ -100,20 +122,38 @@ with strategy.scope():
                                                           args=(dataset_inputs,))
         return strategy.reduce(tf.distribute.ReduceOp.SUM, per_replica_losses,
                                axis=None)
-    for epoch in range(EPOCHS):
+    for epoch in range(1, EPOCHS+1):
+        if epoch == 30: optimizer.lr.assign(0.0001)
+
         batchs_per_epoch = len(train_generator)
         train_dataset    = iter(train_generator)
+        test_dataset     = iter(test_generator)
 
         with tqdm(total=batchs_per_epoch,
-                  desc="Epoch %2d/%2d" %(epoch+1, EPOCHS)) as pbar:
+                  desc="Epoch %2d/%2d" %(epoch, EPOCHS)) as pbar:
+            loss_value = 0.
+            acc_value  = 0.
+            num_batch  = 0
+
             for _ in range(batchs_per_epoch):
+
+                num_batch  += 1
                 batch_loss = distributed_train_step(next(train_dataset))
                 batch_acc  = train_accuracy.result()
-                pbar.set_postfix({'loss' : '%.4f' %batch_loss,
-                                  'accuracy' : '%.6f' %batch_acc})
+
+                loss_value += batch_loss
+                acc_value  += batch_acc
+
+                pbar.set_postfix({'loss' : '%.4f'     %(loss_value / num_batch),
+                                  'accuracy' : '%.6f' %(acc_value  / num_batch)})
                 train_accuracy.reset_states()
                 pbar.update(1)
 
-model.save_weights("model.h5")
+        model_path = "./models/weights_%02d" %epoch
+        if not os.path.exists(model_path):
+            os.makedirs(model_path)
+
+        model.save(os.path.join(model_path, "model.h5"))
+        featureExtractor.save(os.path.join(model_path, "featureExtractor.h5"))
 
 
