@@ -47,7 +47,7 @@ while True:
     image_data = image_data[np.newaxis, ...].astype(np.float32)
 
     prev_time = time.time()
-    pred_bbox = model.predict(image_data)
+    pred_bbox = model.predict_on_batch(image_data)
     curr_time = time.time()
     exec_time = curr_time - prev_time
 
