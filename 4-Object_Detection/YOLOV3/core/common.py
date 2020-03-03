@@ -48,9 +48,8 @@ def convolutional(input_layer, filters_shape, downsample=False, activate=True, b
 def residual_block(input_layer, input_channel, filter_num1, filter_num2):
     short_cut = input_layer
     conv = convolutional(input_layer, filters_shape=(1, 1, input_channel, filter_num1))
-    conv = convolutional(conv       , filters_shape=(3, 3, filter_num1,   filter_num2))
-
-    residual_output = short_cut + conv
+    conv = convolutional(conv, filters_shape=(3, 3, filter_num1, filter_num2), activate=False)
+    residual_output = tf.nn.leaky_relu((short_cut + conv), alpha=0.1)
     return residual_output
 
 def upsample(input_layer):
