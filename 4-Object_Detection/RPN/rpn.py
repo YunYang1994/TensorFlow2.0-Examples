@@ -90,7 +90,7 @@ class RPNplus(tf.keras.Model):
         h = self.conv5_1(h)
         h = self.conv5_2(h)
         h = self.conv5_3(h)
-        pool5_p = self.region_proposal_conv2(h) # [1, 45, 60, 512]
+        pool5_p = self.region_proposal_conv3(h) # [1, 45, 60, 512]
 
         region_proposal = tf.concat([pool3_p, pool4_p, pool5_p], axis=-1) # [1, 45, 60, 1280]
 
