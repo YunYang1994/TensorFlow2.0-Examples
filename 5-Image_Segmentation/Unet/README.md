@@ -1,5 +1,5 @@
 
-## [U-Net: Convolutional Networks for Biomedical Image Segmentation.](https://github.com/YunYang1994/cv-notebooks/blob/master/ai_algorithm/Unet.md)
+## [U-Net: Convolutional Networks for Biomedical Image Segmentation.](https://yunyang1994.gitee.io/2018/11/12/Unet/)
 --------------------
  [this paper](https://arxiv.org/abs/1505.04597) presents a network and training strategy that relies on the strong use of data augmentation to use the available annotated samples more efficiently. The architecture consists of a contracting path to capture context and a symmetric expanding path that enables precise localization.
 
