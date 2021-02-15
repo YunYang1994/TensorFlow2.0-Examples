@@ -12,107 +12,48 @@
 #================================================================
 
 import tensorflow as tf
-
+from core.backbone import vgg16
 
 class SSD(tf.keras.Model):
-    def __init__(self, num_class=21):
+    def __init__(self, input_data, num_class=21):
         super(SSD, self).__init__()
         # conv1
-        self.conv1_1 = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')
-        self.conv1_2 = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')
-        self.pool1   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
-
-        # conv2
-        self.conv2_1 = tf.keras.layers.Conv2D(128, 3, activation='relu', padding='same')
-        self.conv2_2 = tf.keras.layers.Conv2D(128, 3, activation='relu', padding='same')
-        self.pool2   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
-
-        # conv3
-        self.conv3_1 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')
-        self.conv3_2 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')
-        self.conv3_3 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')
-        self.pool3   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
-
-        # conv4
-        self.conv4_1 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.conv4_2 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.conv4_3 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.pool4   = tf.keras.layers.MaxPooling2D(2, strides=2, padding='same')
-
-        # conv5
-        self.conv5_1 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.conv5_2 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.conv5_3 = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')
-        self.pool5   = tf.keras.layers.MaxPooling2D(3, strides=1, padding='same')
-
-        # fc6, => vgg backbone is finished. now they are all SSD blocks
-        self.fc6 = tf.keras.layers.Conv2D(1024, 3, dilation_rate=6, activation='relu', padding='same')
+        conv4, conv = vgg16(input_data)
+        self.conv4 = tf.keras.layers.Conv2D(4*(num_class + 5),3, padding='same')(conv4)
+        # fc6, from now they are all SSD blocks
+        conv = tf.keras.layers.Conv2D(1024, 3, dilation_rate=6, activation='relu', padding='same')(conv)#fc6
         # fc7
-        self.fc7 = tf.keras.layers.Conv2D(1024, 1, activation='relu', padding='same')
-        # Block 8/9/10/11: 1x1 and 3x3 convolutions strides 2 (except lasts)
+        conv = tf.keras.layers.Conv2D(1024, 1, activation='relu', padding='same')(conv)#fc7
+        self.conv7 = tf.keras.layers.Conv2D(6*(num_class + 5), 3, padding='same')(conv)
+        # Block 8/9/10/11: 1x1 and 3x3 convolutions strides 2 (except the last 2 layers)
         # conv8
-        self.conv8_1 = tf.keras.layers.Conv2D(256, 1, activation='relu', padding='same')
-        self.conv8_2 = tf.keras.layers.Conv2D(512, 3, strides=2, activation='relu', padding='same')
+        conv = tf.keras.layers.Conv2D(256, 1, activation='relu', padding='same')(conv)
+        conv = tf.keras.layers.Conv2D(512, 3, strides=2, activation='relu', padding='same')(conv)
+        self.conv8 = tf.keras.layers.Conv2D(6*(num_class + 5),3, padding='same')(conv)
         # conv9
-        self.conv9_1 = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')
-        self.conv9_2 = tf.keras.layers.Conv2D(256, 3, strides=2, activation='relu', padding='same')
+        conv = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')(conv)
+        conv = tf.keras.layers.Conv2D(256, 3, strides=2, activation='relu', padding='same')(conv)
+        self.conv9 = tf.keras.layers.Conv2D(6*(num_class + 5),3, padding='same')(conv)
         # conv10
-        self.conv10_1 = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')
-        self.conv10_2 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='valid')
+        conv = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')(conv)
+        conv = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='valid')(conv)
+        self.conv10 = tf.keras.layers.Conv2D(4*(num_class + 5),3, padding='same')(conv)
         # conv11
-        self.conv11_1 = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')
-        self.conv11_2 = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='valid')
+        conv = tf.keras.layers.Conv2D(128, 1, activation='relu', padding='same')(conv)
+        conv = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='valid')(conv)
+        self.conv11 = tf.keras.layers.Conv2D(4*(num_class + 5),3, padding='same')(conv)
 
+    def display(self):
+        print(self.conv4.shape)
+        print(self.conv7.shape)
+        print(self.conv8.shape)
+        print(self.conv9.shape)
+        print(self.conv10.shape)
+        print(self.conv11.shape)
+        return self.conv4, self.conv7, self.conv8, self.conv9, self.conv10, self.conv11
 
-
-    def call(self, x, training=False):
-        h = self.conv1_1(x)
-        h = self.conv1_2(h)
-        h = self.pool1(h)
-
-        h = self.conv2_1(h)
-        h = self.conv2_2(h)
-        h = self.pool2(h)
-
-        h = self.conv3_1(h)
-        h = self.conv3_2(h)
-        h = self.conv3_3(h)
-        h = self.pool3(h)
-
-        h = self.conv4_1(h)
-        h = self.conv4_2(h)
-        h = self.conv4_3(h)
-        print(h.shape)
-        h = self.pool4(h)
-
-        h = self.conv5_1(h)
-        h = self.conv5_2(h)
-        h = self.conv5_3(h)
-        h = self.pool5(h)
-
-        h = self.fc6(h)     # [1,19,19,1024]
-        h = self.fc7(h)     # [1,19,19,1024]
-        print(h.shape)
-
-        h = self.conv8_1(h)
-        h = self.conv8_2(h) # [1,10,10, 512]
-        print(h.shape)
-
-        h = self.conv9_1(h)
-        h = self.conv9_2(h) # [1, 5, 5, 256]
-        print(h.shape)
-
-        h = self.conv10_1(h)
-        h = self.conv10_2(h) # [1, 3, 3, 256]
-        print(h.shape)
-
-        h = self.conv11_1(h)
-        h = self.conv11_2(h) # [1, 1, 1, 256]
-        print(h.shape)
-        return h
-
-model = SSD(21)
-x = model(tf.ones(shape=[1,300,300,3]))
+model = SSD(tf.ones(shape=[1,300,300,3]),21)
+model.display()
 
 
 
